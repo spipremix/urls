@@ -32,6 +32,7 @@
 	</pipeline>
 
 	<bouton id='controler_urls' parent='bando_publication' position="-1">
+		<icone>images/url-16.png</icone>
 		<titre>urls:icone_controler_urls</titre>
 	</bouton>
 </plugin>
