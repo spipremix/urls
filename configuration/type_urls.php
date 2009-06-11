@@ -24,7 +24,6 @@ function configuration_type_urls_dist()
 
 	$dispo = array();
 	foreach (find_all_in_path('urls/', '\w+\.php$', array()) as $f) {
-var_dump($f);
 		$r = basename($f, '.php');
 		if ($r == 'index') continue;
 		include $f;
