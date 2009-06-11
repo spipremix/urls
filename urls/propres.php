@@ -101,7 +101,6 @@ function declarer_url_propre($type, $id_objet) {
 	$desc = $trouver_table(table_objet($type));
 	$table = $desc['table'];
 	$champ_titre = $desc['titre'];
-	spip_log('table = '.$desc.' - champ_titre = '.$champ_titre,'reflet');
 	$col_id =  @$desc['key']["PRIMARY KEY"];
 	if (!$col_id) return false; // Quand $type ne reference pas une table
 
