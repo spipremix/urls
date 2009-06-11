@@ -235,7 +235,8 @@ function declarer_url_arbo($type, $id_objet) {
 
 	// Eviter de tamponner les URLs a l'ancienne (cas d'un article
 	// intitule "auteur2")
-	if (preg_match(',^(article|breve|rubrique|mot|auteur|site)[0-9]*$,', $url, $r)
+	$objets = pipeline('url_objets');
+	if (preg_match(',^('.$objets.')[0-9]*$,', $url, $r)
 	AND $r[1] != $type)
 		$url = $url._url_arbo_sep_id.$id_objet;
 
@@ -339,7 +340,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 		// /article12.html
 		// /article.php3?id_article=12
 		// /spip.php?article12
-		$objets = 'article|breve|rubrique|mot|auteur|site|syndic';
+		$objets = pipeline('url_objets');
 		if (preg_match(
 		',^(?:[^?]*/)?('.$objets.')([0-9]+)(?:\.html)?([?&].*)?$,', $url, $regs)
 		OR preg_match(
