@@ -101,6 +101,7 @@ function declarer_url_propre($type, $id_objet) {
 	$desc = $trouver_table(table_objet($type));
 	$table = $desc['table'];
 	$champ_titre = $desc['titre'];
+	spip_log('table = '.$desc.' - champ_titre = '.$champ_titre,'reflet');
 	$col_id =  @$desc['key']["PRIMARY KEY"];
 	if (!$col_id) return false; // Quand $type ne reference pas une table
 
@@ -136,7 +137,8 @@ function declarer_url_propre($type, $id_objet) {
 
 	// Eviter de tamponner les URLs a l'ancienne (cas d'un article
 	// intitule "auteur2")
-	if (preg_match(',^(article|breve|rubrique|mot|auteur|site)[0-9]+$,', $url, $r)
+	$objets = pipeline('url_objets');
+	if (preg_match(',^('.$objets.')[0-9]+$,', $url, $r)
 	AND $r[1] != $type)
 		$url = $url.','.$id_objet;
 
@@ -246,7 +248,7 @@ function urls_propres_dist($i, $entite, $args='', $ancre='') {
 		// /article12.html
 		// /article.php3?id_article=12
 		// /spip.php?article12
-		$objets = 'article|breve|rubrique|mot|auteur|site|syndic';
+		$objets = pipeline('url_objets');
 		if (preg_match(
 		',^(?:[^?]*/)?('.$objets.')([0-9]+)(?:\.html)?([?&].*)?$,', $url, $regs)
 		OR preg_match(

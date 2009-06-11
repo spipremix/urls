@@ -37,7 +37,6 @@ define('URLS_HTML_EXEMPLE', 'article12.html');
 
 // http://doc.spip.org/@_generer_url_html
 function _generer_url_html($type, $id, $args='', $ancre='') {
-
 	if ($generer_url_externe = charger_fonction("generer_url_$type",'urls',true))
 		return $generer_url_externe($id, $args, $ancre);
 
@@ -64,7 +63,7 @@ function urls_html_dist($i, $entite, $args='', $ancre='') {
 	$url = $i;
 
 	// Decoder l'url html, page ou standard
-	$objets = 'article|breve|rubrique|mot|auteur|site|syndic';
+	$objets = pipeline('url_objets');
 	if (preg_match(
 	',^(?:[^?]*/)?('.$objets.')([0-9]+)(?:\.html)?([?&].*)?$,', $url, $regs)
 	OR preg_match(

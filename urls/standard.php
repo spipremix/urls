@@ -77,6 +77,8 @@ function recuperer_parametres_url(&$fond, $url) {
 		(isset($_ENV['url_propre']) ?
 			$_ENV['url_propre'] :
 			'');
+	
+	$objets = pipeline('url_objets');
 	if ($url_propre
 	AND in_array($fond, array('article','breve','rubrique','mot','auteur','site','type_urls','404'))) {
 		if ($GLOBALS['profondeur_url']<=0)
@@ -90,7 +92,7 @@ function recuperer_parametres_url(&$fond, $url) {
 	/* Compatibilite urls-page */
 	else if ($GLOBALS['profondeur_url']<=0
 	AND preg_match(
-	',[?/&](article|breve|rubrique|mot|auteur|site)[=]?([0-9]+),',
+	',[?/&]('.$objets.')[=]?([0-9]+),',
 	$url, $r)) {
 		$fond = $r[1];
 		$contexte[id_table_objet($r[1])] = $r[2];
