@@ -136,7 +136,8 @@ function declarer_url_propre($type, $id_objet) {
 
 	// Eviter de tamponner les URLs a l'ancienne (cas d'un article
 	// intitule "auteur2")
-	$objets = pipeline('url_objets');
+	include_spip('inc/urls');
+	$objets = urls_liste_objets();
 	if (preg_match(',^('.$objets.')[0-9]+$,', $url, $r)
 	AND $r[1] != $type)
 		$url = $url.','.$id_objet;

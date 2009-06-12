@@ -62,22 +62,10 @@ function urls_html_dist($i, $entite, $args='', $ancre='') {
 	}
 	$url = $i;
 
-	// Decoder l'url html, page ou standard
-	$objets = pipeline('url_objets');
-	if (preg_match(
-	',^(?:[^?]*/)?('.$objets.')([0-9]+)(?:\.html)?([?&].*)?$,', $url, $regs)
-	OR preg_match(
-	',^(?:[^?]*/)?('.$objets.')\.php3?[?]id_\1=([0-9]+)([?&].*)?$,', $url, $regs)
-	OR preg_match(
-	',^(?:[^?]*/)?(?:spip[.]php)?[?]('.$objets.')([0-9]+)(&.*)?$,', $url, $regs)) {
-		$type = preg_replace(',s$,', '', table_objet($regs[1]));
-		$_id = id_table_objet($regs[1]);
-		$id_objet = $regs[2];
-		$suite = $regs[3];
-		$contexte[$_id] = $id_objet;
-		if ($type == 'syndic') $type = 'site';
-		return array($contexte, $type, null, $type);
-	}
+	// voir s'il faut recuperer le id_* implicite et les &debut_xx;
+	include_spip('inc/urls');
+	$r = nettoyer_url_page($i, $contexte);
+	if ($r) return $r;
 
 	/*
 	 * Le bloc qui suit sert a faciliter les transitions depuis

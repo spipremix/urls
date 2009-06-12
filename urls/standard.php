@@ -78,9 +78,10 @@ function recuperer_parametres_url(&$fond, $url) {
 			$_ENV['url_propre'] :
 			'');
 	
-	$objets = pipeline('url_objets');
+	include_spip('inc/urls');
+	$objets = urls_liste_objets();
 	if ($url_propre
-	AND in_array($fond, array('article','breve','rubrique','mot','auteur','site','type_urls','404'))) {
+	AND preg_match(",^($objets|type_urls|404)$,",$fond)) {
 		if ($GLOBALS['profondeur_url']<=0)
 			$urls_anciennes = charger_fonction('propres','urls');
 		else

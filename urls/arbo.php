@@ -235,7 +235,8 @@ function declarer_url_arbo($type, $id_objet) {
 
 	// Eviter de tamponner les URLs a l'ancienne (cas d'un article
 	// intitule "auteur2")
-	$objets = pipeline('url_objets');
+	include_spip('inc/urls');
+	$objets = urls_liste_objets();
 	if (preg_match(',^('.$objets.')[0-9]*$,', $url, $r)
 	AND $r[1] != $type)
 		$url = $url._url_arbo_sep_id.$id_objet;
