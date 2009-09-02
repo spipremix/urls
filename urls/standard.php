@@ -86,7 +86,8 @@ function recuperer_parametres_url(&$fond, $url) {
 			$urls_anciennes = charger_fonction('propres','urls');
 		else
 			$urls_anciennes = charger_fonction('arbo','urls');
-		$urls_anciennes($url_propre,$fond);
+		$p = $urls_anciennes($url_propre,$fond,$contexte);
+		$contexte = $p[0];
 	}
 	/* Fin du bloc compatibilite url-propres */
 

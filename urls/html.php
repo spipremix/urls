@@ -51,10 +51,16 @@ function _generer_url_html($type, $id, $args='', $ancre='') {
 // retrouver les parametres d'une URL dite "html"
 // http://doc.spip.org/@urls_html_dist
 function urls_html_dist($i, $entite, $args='', $ancre='') {
-	$contexte = $GLOBALS['contexte']; // recuperer aussi les &debut_xx
 
 	if (is_numeric($i))
 		return _generer_url_html($entite, $i, $args, $ancre);
+
+	// recuperer les &debut_xx;
+	if (is_array($args))
+		$contexte = $args;
+	else
+		parse_str($args,$contexte);
+
 
 	// traiter les injections du type domaine.org/spip.php/cestnimportequoi/ou/encore/plus/rubrique23
 	if ($GLOBALS['profondeur_url']>0 AND $entite=='sommaire'){
@@ -88,7 +94,7 @@ function urls_html_dist($i, $entite, $args='', $ancre='') {
 			$urls_anciennes = charger_fonction('propres','urls');
 		else
 			$urls_anciennes = charger_fonction('arbo','urls');
-		return $urls_anciennes($url_propre,$entite);
+		return $urls_anciennes($url_propre, $entite, $contexte);
 	}
 	/* Fin du bloc compatibilite url-propres */
 }

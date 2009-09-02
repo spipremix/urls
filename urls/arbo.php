@@ -328,7 +328,12 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 		$entite = 'type_urls';
 	}
 
-	$contexte = $GLOBALS['contexte']; // recuperer aussi les &debut_xx
+	// recuperer les &debut_xx;
+	if (is_array($args))
+		$contexte = $args;
+	else
+		parse_str($args,$contexte);
+
 	$url = $i;
 	$id_objet = $type = 0;
 	$url_redirect = null;
@@ -454,7 +459,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 		if (($entite=='' OR $entite=='type_urls')
 		AND $GLOBALS['profondeur_url']<=0){
 			$urls_anciennes = charger_fonction('propres','urls');
-			return $urls_anciennes($url_propre,$entite);
+			return $urls_anciennes($url_propre, $entite, $contexte);
 		}
 	}
 	if ($entite=='' OR $entite=='type_urls' /* compat .htaccess 2.0 */) {

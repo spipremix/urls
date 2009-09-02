@@ -238,7 +238,12 @@ function urls_propres_dist($i, $entite, $args='', $ancre='') {
 	$url = $i;
 	$id_objet = $type = 0;
 	$url_redirect = null;
-	$contexte = $GLOBALS['contexte']; // recuperer aussi les &debut_xx
+	// recuperer les &debut_xx;
+	if (is_array($args))
+		$contexte = $args;
+	else
+		parse_str($args,$contexte);
+
 
 	// Migration depuis anciennes URLs ?
 	// traiter les injections domain.tld/spip.php/n/importe/quoi/rubrique23
@@ -306,7 +311,7 @@ function urls_propres_dist($i, $entite, $args='', $ancre='') {
 	// mais si url arbo ne trouve pas, on veut une 404 par securite
 	if ($GLOBALS['profondeur_url']>0){
 		$urls_anciennes = charger_fonction('arbo','urls');
-		return $urls_anciennes($url_propre,$entite);
+		return $urls_anciennes($url_propre, $entite, $contexte);
 	}
 	
 	include_spip('base/abstract_sql'); // chercher dans la table des URLS
