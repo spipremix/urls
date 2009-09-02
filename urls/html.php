@@ -71,7 +71,11 @@ function urls_html_dist($i, $entite, $args='', $ancre='') {
 	// voir s'il faut recuperer le id_* implicite et les &debut_xx;
 	include_spip('inc/urls');
 	$r = nettoyer_url_page($i, $contexte);
-	if ($r) return $r;
+	if ($r) {
+		array_pop($r); // nettoyer_url_page renvoie un argument de plus inutile ici
+		array_pop($r); // il n'est pas necessaire de forcer le fond en 4eme arg car l'url n'est pas query string
+		return $r;
+	}
 
 	/*
 	 * Le bloc qui suit sert a faciliter les transitions depuis

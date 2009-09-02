@@ -342,37 +342,24 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 	// traiter les injections domain.tld/spip.php/n/importe/quoi/rubrique23
 	if ($GLOBALS['profondeur_url']<=0
 	AND $_SERVER['REQUEST_METHOD'] != 'POST') {
-		// Decoder l'url html, page ou standard
-		// /article12.html
-		// /article.php3?id_article=12
-		// /spip.php?article12
-		$objets = pipeline('url_objets');
-		if (preg_match(
-		',^(?:[^?]*/)?('.$objets.')([0-9]+)(?:\.html)?([?&].*)?$,', $url, $regs)
-		OR preg_match(
-		',^(?:[^?]*/)?('.$objets.')\.php3?[?]id_\1=([0-9]+)([?&].*)?$,', $url, $regs)
-		OR preg_match(
-		',^(?:[^?]*/)?(?:spip[.]php)?[?]('.$objets.')([0-9]+)(&.*)?$,', $url, $regs)) {
-			$type = preg_replace(',s$,', '', table_objet($regs[1]));
-			$_id = id_table_objet($regs[1]);
-			$id_objet = $regs[2];
-			$suite = $regs[3];
-		}
-	}
-	if ($id_objet) {
-		$contexte = array($_id => $id_objet);
-		$url_propre = generer_url_entite($id_objet, $type);
-		if (strlen($url_propre)
-		AND !strstr($url,$url_propre)) {
-			list(,$hash) = explode('#', $url_propre);
-			$args = array();
-			foreach(array_filter(explode('&', $suite)) as $fragment) {
-				if ($fragment != "$_id=$id_objet")
-					$args[] = $fragment;
-			}
-			$url_redirect = generer_url_entite($id_objet, $type, join('&',array_filter($args)), $hash);
+		include_spip('inc/urls');
+		$r = nettoyer_url_page($i, array());
+		if ($r) {
+			list($contexte, $type,,, $suite) = $r;
+			list($_id,$id_objet) = each($contexte);
+			$url_propre = generer_url_entite($id_objet, $type);
+			if (strlen($url_propre)
+			AND !strstr($url,$url_propre)) {
+				list(,$hash) = explode('#', $url_propre);
+				$args = array();
+				foreach(array_filter(explode('&', $suite)) as $fragment) {
+					if ($fragment != "$_id=$id_objet")
+						$args[] = $fragment;
+				}
+				$url_redirect = generer_url_entite($id_objet, $type, join('&',array_filter($args)), $hash);
 
-			return array($contexte, $type, $url_redirect);
+				return array($contexte, $type, $url_redirect, $type);
+			}
 		}
 	}
 	/* Fin compatibilite anciennes urls */
@@ -394,7 +381,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 
 	// Mode Query-String ?
 	if (!$url_propre
-	AND preg_match(',[?]([^=/?&]+)(&.*)?$,', $GLOBALS['REQUEST_URI'], $r)) {
+	AND preg_match(',[?]([^=/?&]+)(&.*)?$,', $url, $r)) {
 		$url_propre = $r[1];
 	}
 
@@ -476,7 +463,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 	}
 	define('_SET_HTML_BASE',1);
 
-	return array($contexte, $entite);
+	return array($contexte, $entite, null, $is_qs?$entite:null);
 }
 
 ?>
