@@ -10,6 +10,11 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+
+function urls_declarer_tables_interfaces($interfaces) {
+	$interfaces['table_des_tables']['urls']='urls';
+	return $interfaces;
+}
 /**
  * Tables de jointures
  *

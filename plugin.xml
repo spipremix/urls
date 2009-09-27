@@ -13,6 +13,10 @@
 		<inclure>base/urls.php</inclure>
 	</pipeline>
 	<pipeline>
+		<nom>declarer_tables_interfaces</nom>
+		<inclure>base/urls.php</inclure>
+	</pipeline>
+	<pipeline>
 		<nom>affiche_milieu</nom>
 		<inclure>urls_pipeline.php</inclure>
 	</pipeline>
