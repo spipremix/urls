@@ -18,7 +18,7 @@
  * @return array
  */
 function formulaires_editer_url_objet_charger($type,$id){
-	$valeurs = array('url'=>'','url_lock'=>'');
+	$valeurs = array('url'=>'','url_lock'=>'','objet'=>$type,'id_objet'=>$id);
 
 	return $valeurs;
 }
