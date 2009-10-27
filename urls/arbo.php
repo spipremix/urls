@@ -73,6 +73,11 @@ define('CONFIRMER_MODIFIER_URL', false);
  * 
  */
 
+include_spip('inc/xcache');
+if (!function_exists('Cache')) {
+	function Cache(){return null;}
+}
+
 
 define ('_debut_urls_arbo', '');
 define ('_terminaison_urls_arbo', '');
@@ -177,6 +182,8 @@ function declarer_url_arbo_rec($url,$type,$parent,$type_parent){
 // http://doc.spip.org/@declarer_url_arbo
 function declarer_url_arbo($type, $id_objet) {
 	static $urls=array();
+	// utiliser un cache memoire pour aller plus vite
+	if(!is_null($C=Cache())) return$C;
 	
 	// Se contenter de cette URL si elle existe ;
 	// sauf si on invoque par "voir en ligne" avec droit de modifier l'url
