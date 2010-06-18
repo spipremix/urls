@@ -73,7 +73,10 @@ function urls_html_dist($i, $entite, $args='', $ancre='') {
 	$r = nettoyer_url_page($i, $contexte);
 	if ($r) {
 		array_pop($r); // nettoyer_url_page renvoie un argument de plus inutile ici
-		array_pop($r); // il n'est pas necessaire de forcer le fond en 4eme arg car l'url n'est pas query string
+		// il n'est pas necessaire de forcer le fond en 4eme arg car l'url n'est pas query string
+		// sauf si pas de fond connu
+		if ($entite)
+			array_pop($r);
 		return $r;
 	}
 
