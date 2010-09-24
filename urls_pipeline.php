@@ -12,7 +12,7 @@
 
 
 function urls_affiche_milieu($flux){
-	if ($flux['args']['exec']=='config_fonctions'){
+	if ($flux['args']['exec']=='configurer_avancees'){
 		$type_urls = charger_fonction('type_urls', 'configuration');
 	  $flux['data'] .= $type_urls(); // Choix de type_urls
 	}
