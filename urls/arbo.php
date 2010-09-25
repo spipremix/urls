@@ -459,7 +459,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 	}
 	if ($entite=='' OR $entite=='type_urls' /* compat .htaccess 2.0 */) {
 		if ($type)
-			$entite =  ($type == 'syndic') ?  'site' : $type;
+			$entite = objet_type ($type);
 		else {
 			// Si ca ressemble a une URL d'objet, ce n'est pas la home
 			// et on provoque un 404
