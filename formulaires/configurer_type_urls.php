@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2009                                                *
+ *  Copyright (c) 2001-2010                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -12,15 +12,39 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-// Choix du type d'url
-
-include_spip('inc/presentation');
-include_spip('inc/config');
-
-function configuration_type_urls_dist()
-{
+function formulaires_configurer_type_urls_charger_dist(){
 	if ($GLOBALS['type_urls'] != 'page') // fixe par mes_options
-		return '';
+		return false;
+
+	$valeurs = array(
+		'type_urls'=>$GLOBALS['meta']['type_urls'],
+		'_urls_dispos'=>type_urls_lister(),
+	);
+
+	return $valeurs;
+
+}
+
+function formulaires_configurer_type_urls_traiter_dist(){
+	ecrire_meta('type_urls',_request('type_urls'));
+
+	return array('message_ok'=>_T('config_info_enregistree'),'editable'=>true);
+}
+
+function type_url_choisir($liste,$name,$selected){
+	$res = "";
+	foreach($liste as $k=>$label)
+		$res .= '<div class="choix">'
+			.'<input type="radio" name="'.$name.'" id="'.$name.'_'.$k.'" value="'.$k.'"'
+			.($selected==$k ? ' checked="checked"':'')
+			.'/>'
+			.'<label for="'.$name.'_'.$k.'">'.$label.'</label>'
+			.'</div>'
+		  ."\n";
+	return $res;
+}
+
+function type_urls_lister(){
 
 	$dispo = array();
 	foreach (find_all_in_path('urls/', '\w+\.php$', array()) as $f) {
@@ -32,21 +56,6 @@ function configuration_type_urls_dist()
 		$dispo[$r] = "<em>$r</em> &mdash; <tt>" . $exemple . '</tt>';
 	}
 
-	$res = "<p class='verdana2'>"
-		. _T('texte_type_urls')
-		. "</p>"
-		. "<div class='verdana2'>"
-		. afficher_choix('type_urls', $GLOBALS['meta']['type_urls'], $dispo)
-		. "</div>"
-		. "<p><em>"
-		. _T('texte_type_urls_attention', array('htaccess' => '<tt>.htaccess</tt>'))
-		. "</em></p>";
-
-
-	$res = '<br />'.debut_cadre_trait_couleur("url-24.png", true, "",  _T('titre_type_urls'))
-	.  ajax_action_post('configurer', 'type_urls', 'config_fonctions', '', $res)
-	.  fin_cadre_trait_couleur(true);
-
-	return ajax_action_greffe("configurer-type_urls", '', $res);
+	return $dispo;
 }
 ?>
