@@ -104,7 +104,7 @@ function declarer_url_propre($type, $id_objet) {
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table(table_objet($type));
 	$table = $desc['table'];
-	$champ_titre = $desc['titre'];
+	$champ_titre = $desc['titre'] ? $desc['titre'] : 'titre';
 	$col_id =  @$desc['key']["PRIMARY KEY"];
 	if (!$col_id) return false; // Quand $type ne reference pas une table
 
