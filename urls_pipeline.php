@@ -19,9 +19,9 @@ function urls_affiche_milieu($flux){
 }
 
 function urls_boite_infos($flux){
-	$type = $flux['args']['type'];
-	if ($id = intval($flux['args']['id']))
-		$flux['data'] .= icone_horizontale(_T('urls:icone_controler_urls'), generer_url_ecrire('controler_urls',"id_objet=$id&type=$type"), "", "url-24.png", false);
+	#$type = $flux['args']['type'];
+	#if ($id = intval($flux['args']['id']))
+	#	$flux['data'] .= icone_horizontale(_T('urls:icone_controler_urls'), generer_url_ecrire('controler_urls',"id_objet=$id&type=$type"), "", "url-24.png", false);
 	return $flux;
 }
 ?>
