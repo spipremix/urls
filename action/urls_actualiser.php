@@ -18,7 +18,7 @@ function action_urls_actualiser_dist() {
 	$securiser_action = charger_fonction('securiser_action', 'inc');
 	$arg = $securiser_action();
 
-	$GLOBALS['var_urls'] = true; // forcer la maj
+	if (!defined('_VAR_URLS')) define('_VAR_URLS',true);
 	$type = $id = "";
 	$res = sql_select("type,id_objet","spip_urls","","","type,id_objet");
 	while ($row = sql_fetch($res)){

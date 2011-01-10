@@ -191,7 +191,7 @@ function declarer_url_arbo($type, $id_objet) {
 	// l'autorisation est verifiee apres avoir calcule la nouvelle url propre
 	// car si elle ne change pas, cela ne sert a rien de verifier les autorisations
 	// qui requetent en base
-	$modifier_url = $GLOBALS['var_urls'];
+	$modifier_url = (defined('_VAR_URLS') AND _VAR_URLS);
 	
 	if (!isset($urls[$type][$id_objet]) OR $modifier_url) {
 		$trouver_table = charger_fonction('trouver_table', 'base');
