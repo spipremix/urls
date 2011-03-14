@@ -473,7 +473,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 	}
 	define('_SET_HTML_BASE',1);
 
-	return array($contexte, $entite, null, $is_qs?$entite:null);
+	return array($contexte, $entite, null, null);
 }
 
 ?>
