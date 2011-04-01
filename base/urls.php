@@ -53,20 +53,26 @@ function urls_declarer_tables_auxiliaires($tables_auxiliaires){
  * @param string $version_cible
  */
 function urls_upgrade($nom_meta_base_version,$version_cible){
-	$current_version = 0.0;
-	if (   (!isset($GLOBALS['meta'][$nom_meta_base_version]) )
-			|| (($current_version = $GLOBALS['meta'][$nom_meta_base_version])!=$version_cible)){
-
-		if ($current_version==0.0){
-			include_spip('base/create');
-			// creer les tables
-			creer_base();
-			// mettre les metas par defaut
-			$config = charger_fonction('config','inc');
-			$config();
-			ecrire_meta($nom_meta_base_version,$current_version=$version_cible);
+	// cas particulier :
+	// si plugin pas installe mais que la table existe
+	// considerer que c'est un upgrade depuis v 1.0.0
+	// pour gerer l'historique des installations SPIP <=2.1
+	if (!isset($GLOBALS['meta'][$nom_meta_base_version])){
+		$trouver_table = charger_fonction('trouver_table','base');
+		if ($desc = $trouver_table('spip_urls')
+		  AND isset($desc['field'])){
+			ecrire_meta($nom_meta_base_version,'1.0.0');
 		}
+		// si pas de table en base, on fera une simple creation de base
 	}
+
+	$maj = array();
+	$maj['create'] = array(
+		array('maj_tables',array('spip_urls')),
+	);
+
+	include_spip('base/upgrade');
+	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }
 
 /**

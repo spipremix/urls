@@ -1,8 +1,8 @@
 <plugin>
 	<nom>Urls Etendues</nom>
 	<auteur>Collectif SPIP</auteur>
-	<version>1.0</version>
-	<version_base>1.0</version_base>
+	<version>1.0.0</version>
+	<version_base>1.0.0</version_base>
 	<etat>test</etat>
 	<description>Gestion des variantes d'URL Signifiantes ou non</description>
 	<prefix>urls</prefix>
