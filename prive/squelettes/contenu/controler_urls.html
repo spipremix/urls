@@ -1,10 +1,3 @@
-[(#REM)
-
-  Squelette
-  (c) xxx
-  Distribue sous licence GPL
-
-]
 #SET{self,#SELF|parametre_url{debut_urls,''}}
 #SET{recherche,#ENV{recherche}|?{#VAL{%}|concat{#ENV{recherche},%},'%'}}
 [(#OBJET|non)
@@ -21,7 +14,7 @@
 <B_urls>
 	[<p class="pagination">(#PAGINATION)</p>]
 	[(#ENV{id_objet,''}|non)
-	<p class="tri">[ (#TRI{<,#CHEMIN{img_pack/tri_asc-16.png}|balise_img})][ | (#TRI{>,#CHEMIN{img_pack/tri_desc-16.png}|balise_img})][ | (#TRI{date,<:urls:label_tri_date:>})][ | (#TRI{url,<:urls:label_tri_url:>})][ | (#TRI{id_objet,<:urls:label_tri_id:>})]</p>
+	<p class="tri">[ (#TRI{>,#CHEMIN_IMAGE{tri-asc-16.png}|balise_img})][ | (#TRI{<,#CHEMIN_IMAGE{tri-desc-16.png}|balise_img})][ | (#TRI{date,<:urls:label_tri_date:>})][ | (#TRI{url,<:urls:label_tri_url:>})][ | (#TRI{id_objet,<:urls:label_tri_id:>})]</p>
 	]
 	<ul class="liste_items urls">
 	<BOUCLE_urls(URLS){tri date,#ARRAY{0,direct,date,inverse}}{pagination}{type==#ENV{objet,'.*'}}{id_objet?}{url like #GET{recherche}}>
