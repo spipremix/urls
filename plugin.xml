@@ -4,7 +4,7 @@
 	<version>1.0.0</version>
 	<version_base>1.0.0</version_base>
 	<etat>test</etat>
-	<description>Gestion des variantes d'URL Signifiantes ou non</description>
+	<description>Gestion des variantes d'URL signifiantes ou non</description>
 	<prefix>urls</prefix>
 
 	<install>base/urls.php</install>
@@ -41,4 +41,5 @@
 	</bouton>
 	<categorie>statistique</categorie>
 	<traduire gestionnaire="salvatore" module="urls" reference="fr" />
+	<necessite id="SPIP" version="[3.0.0-dev;)" />
 </plugin>
