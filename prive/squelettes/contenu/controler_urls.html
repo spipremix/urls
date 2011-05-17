@@ -1,7 +1,7 @@
 #SET{self,#SELF|parametre_url{debut_urls,''}}
 #SET{recherche,#ENV{recherche}|?{#VAL{%}|concat{#ENV{recherche},%},'%'}}
 [(#OBJET|non)
-<h1><:urls:liste_des_urls:></h1>]
+<h1 class="grostitre"><:urls:liste_des_urls:></h1>]
 [<h2>(#OBJET|ucfirst) <:info_numero_abbreviation:>#ID_OBJET </h2>
 [(#VAL{91}|chr|concat{'->',#OBJET,#ID_OBJET,#VAL{93}|chr}|propre|PtoBR)]
 
