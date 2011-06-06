@@ -10,7 +10,7 @@
 		<ul>
 			#SET{htaccess,'<tt>.htaccess</tt>'}
 			#SET{name,type_urls}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
-			<li class="editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+			<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 				<label><:urls:texte_type_urls:></label>[
 				<span class='erreur_message'>(#GET{erreurs})</span>
 				]<p class="explication"><:urls:texte_type_urls_attention{htaccess=#GET{htaccess}}:></p>
