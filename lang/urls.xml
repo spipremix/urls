@@ -56,7 +56,9 @@
 	<langue code="ro" />
 	<langue code="ru" />
 	<langue code="sh" />
-	<langue code="sk" />
+	<langue code="sk">
+		<traducteur nom="jaro" />
+	</langue>
 	<langue code="sl" />
 	<langue code="sq" />
 	<langue code="sr" />

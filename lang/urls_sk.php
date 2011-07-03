@@ -23,9 +23,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'liste_des_urls' => 'Toutes les URLs', # NEW
 
 	// T
-	'texte_type_urls' => 'You can choose, below, the calculation mode of the pages URLs.', # MODIF
-	'texte_type_urls_attention' => 'Warning, this setting will only work if the file @htaccess@ is correctly installed at the site\'s root.',
-	'titre_type_urls' => 'Type of URL addresses', # MODIF
+	'texte_type_urls' => 'Môžete si vybrať, ako sa vytvoria adresy stránky.',
+	'texte_type_urls_attention' => 'Varovanie: toto nastavenie bude fungovať, iba ak je súbor @htaccess@ správne nainštalovaný v koreňovom adresári stránky.',
+	'titre_type_urls' => 'Typ www adries',
 	'tout_voir' => 'Voir toutes les URLs', # NEW
 
 	// U
