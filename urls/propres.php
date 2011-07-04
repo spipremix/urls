@@ -303,7 +303,10 @@ function urls_propres_dist($i, $entite, $args='', $ancre='') {
 		$is_qs = true;
 	}
 
-	if (!$url_propre OR $url_propre==_DIR_RESTREINT_ABS) return; // qu'est-ce qu'il veut ???
+	if (!$url_propre
+	  OR $url_propre==_DIR_RESTREINT_ABS
+	  OR $url_propre==_SPIP_SCRIPT) return; // qu'est-ce qu'il veut ???
+
 	
 	// gerer le cas de retour depuis des urls arbos
 	// mais si url arbo ne trouve pas, on veut une 404 par securite

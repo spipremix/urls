@@ -395,7 +395,10 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 		$url_propre = $r[1];
 	}
 
-	if (!$url_propre OR $url_propre==_DIR_RESTREINT_ABS) return; // qu'est-ce qu'il veut ???
+	if (!$url_propre
+	  OR $url_propre==_DIR_RESTREINT_ABS
+	  OR $url_propre==_SPIP_SCRIPT) return; // qu'est-ce qu'il veut ???
+
 	
 	include_spip('base/abstract_sql'); // chercher dans la table des URLS
 
