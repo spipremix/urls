@@ -419,16 +419,17 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 			$type=null;
 			if (count($url_arbo)>1)
 				$type = array_shift($url_arbo);
-			$url_propre = array_shift($url_arbo);
+			$url_segment = array_shift($url_arbo);
 			// Compatibilite avec les anciens marqueurs d'URL propres
 			// Tester l'entree telle quelle (avec 'url_libre' des sites ont pu avoir des entrees avec marqueurs dans la table spip_urls)
 			if (is_null($type)
-			OR !$row=sql_fetsel('id_objet, type, date', 'spip_urls',array('url='.sql_quote("$type/$url_propre")))) {
+			OR !$row=sql_fetsel('id_objet, type, date', 'spip_urls',array('url='.sql_quote("$type/$url_segment")))) {
 				if (!is_null($type)){
-					array_unshift($url_arbo,$url_propre);
-					$url_propre = $type;
+					array_unshift($url_arbo,$url_segment);
+					$url_segment = $type;
+					$type = null;
 				}
-				$row = sql_fetsel('id_objet, type, date', 'spip_urls',array('url='.sql_quote($url_propre)));
+				$row = sql_fetsel('id_objet, type, date', 'spip_urls',array('url='.sql_quote($url_segment)));
 			}
 			if ($row) {
 				$type = $row['type'];
