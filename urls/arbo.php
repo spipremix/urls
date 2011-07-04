@@ -409,38 +409,46 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 		  .implode('|',array_map('preg_quote',$t)).')$}i', '', $url_propre);
 
 	if (strlen($url_propre) AND !preg_match(',^[^/]*[.]php,',$url_propre)){
-		$types_parents = array();
+		$parents_vus = array();
 		
 		// recuperer tous les objets de larbo xxx/article/yyy/mot/zzzz
+		// on parcourt les segments de gauche a droite
+		// pour pouvoir contextualiser un segment par son parent
 		$url_arbo = explode('/',$url_propre);
 		while (count($url_arbo)>0){
-			$url_propre = array_pop($url_arbo);
-			if (count($url_arbo))
-				$type = array_pop($url_arbo);
-			else
-				$type=null;
+			$type=null;
+			if (count($url_arbo)>1)
+				$type = array_shift($url_arbo);
+			$url_propre = array_shift($url_arbo);
 			// Compatibilite avec les anciens marqueurs d'URL propres
 			// Tester l'entree telle quelle (avec 'url_libre' des sites ont pu avoir des entrees avec marqueurs dans la table spip_urls)
 			if (is_null($type)
 			OR !$row=sql_fetsel('id_objet, type, date', 'spip_urls',array('url='.sql_quote("$type/$url_propre")))) {
-				if (!is_null($type))
-					array_push($url_arbo,$type);
+				if (!is_null($type)){
+					array_unshift($url_arbo,$url_propre);
+					$url_propre = $type;
+				}
 				$row = sql_fetsel('id_objet, type, date', 'spip_urls',array('url='.sql_quote($url_propre)));
 			}
 			if ($row) {
 				$type = $row['type'];
 				$col_id = id_table_objet($type);
 				
-				// n'affecter que la premiere fois un parent de type id_rubrique
-				if (!isset($contexte[$col_id]))
-					$contexte[$col_id] = $row['id_objet'];
+				// le plus a droite l'emporte pour des objets presents plusieurs fois dans l'url (ie rubrique)
+				$contexte[$col_id] = $row['id_objet'];
 
-				if (!$entite
-				OR !in_array($type,$types_parents))
-					$entite = $type;
-	
+				$type_parent = '';
 				if ($p = url_arbo_parent($type))
-					$types_parents[]=end($p);
+					$type_parent=end($p);
+				// l'entite la plus a droite l'emporte, si le type de son parent a ete vu
+				// sinon c'est un segment contextuel supplementaire a ignorer
+				// ex : rub1/article/art1/mot1 : il faut ignorer le mot1, la vrai url est celle de l'article
+				if (!$entite
+				  OR isset($parents_vus[$type_parent]))
+					$entite = $type;
+
+				// on note le dernier parent vu de chaque type
+				$parents_vus[$type] = $col_id;
 			}
 			else {
 				// un segment est inconnu
