@@ -117,6 +117,9 @@ function declarer_url_propre($type, $id_objet) {
 	if (!$row) return ""; # Quand $id_objet n'est pas un numero connu
 
 	$url_propre = $row['url'];
+	// si l'url propre contient un / alors c'est une arbo qu'il faut ignorer !
+	if (strpos($url_propre,"/")!==false)
+		$url_propre = null;
 
 	// Se contenter de cette URL si elle existe ;
 	// sauf si on invoque par "voir en ligne" avec droit de modifier l'url
