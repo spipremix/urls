@@ -32,15 +32,18 @@ function formulaires_configurer_type_urls_traiter_dist(){
 }
 
 function type_url_choisir($liste,$name,$selected){
-	$res = "";
-	foreach($liste as $k=>$label)
-		$res .= '<div class="choix">'
+	$res = '<dl class="choix">';
+	foreach($liste as $url){
+		$k = $url[0];
+		$res .= '<dt>'
 			.'<input type="radio" name="'.$name.'" id="'.$name.'_'.$k.'" value="'.$k.'"'
 			.($selected==$k ? ' checked="checked"':'')
 			.'/>'
-			.'<label for="'.$name.'_'.$k.'">'.$label.'</label>'
-			.'</div>'
+			.'<label for="'.$name.'_'.$k.'">'.$url[1].'</label></dt>'
+		  .'<dd><tt>'.$url[2].'</tt></dd>'
 		  ."\n";
+	}
+	$res .= "</dl>";
 	return $res;
 }
 
@@ -53,8 +56,10 @@ function type_urls_lister(){
 		include_once $f;
 		$exemple = 'URLS_' . strtoupper($r) . '_EXEMPLE';
 		$exemple = defined($exemple) ? constant($exemple) : '?';
-		$dispo[$r] = "<em>$r</em> &mdash; <tt>" . $exemple . '</tt>';
+		$dispo[_T("urls:titre_type_$r")] = array($r, _T("urls:titre_type_$r"),$exemple);
 	}
+
+	ksort($dispo);
 
 	return $dispo;
 }
