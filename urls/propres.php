@@ -188,11 +188,6 @@ function _generer_url_propre($type, $id, $args='', $ancre='') {
 		if (NULL != $url) return $url;
 	}
 
-	if ($type == 'document') {
-		include_spip('inc/documents');
-		return generer_url_document_dist($id, $args, $ancre);
-	}
-
 	// Mode compatibilite pour conserver la distinction -Rubrique-
 	if (_MARQUEUR_URL) {
 		$marqueur = unserialize(_MARQUEUR_URL);

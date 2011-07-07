@@ -292,11 +292,6 @@ function _generer_url_arbo($type, $id, $args='', $ancre='') {
 		if (NULL != $url) return $url;
 	}
 
-	if ($type == 'document') {
-		include_spip('inc/documents');
-		return generer_url_document_dist($id, $args, $ancre);
-	}
-
 	// Mode propre
 	$propre = declarer_url_arbo($type, $id);
 

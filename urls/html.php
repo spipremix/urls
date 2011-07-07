@@ -42,11 +42,6 @@ function _generer_url_html($type, $id, $args='', $ancre='') {
 		if (NULL != $url) return $url;
 	}
 
-	if ($type == 'document') {
-		include_spip('inc/documents');
-		return generer_url_document_dist($id, $args, $ancre);
-	}
-
 	return _DIR_RACINE . $type . $id . '.html' . ($args ? "?$args" : '') .($ancre ? "#$ancre" : '');
 }
 
