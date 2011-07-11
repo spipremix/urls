@@ -288,7 +288,7 @@ function declarer_url_arbo($type, $id_objet) {
 function _generer_url_arbo($type, $id, $args='', $ancre='') {
 
 	if ($generer_url_externe = charger_fonction("generer_url_$type",'urls',true)) {
-		$url = $generer_url_externe($id, $args, $ancre);
+		$url = $generer_url_externe($id, $args, $ancre, $public);
 		if (NULL != $url) return $url;
 	}
 
