@@ -23,17 +23,17 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'Vous pouvez choisir ci-dessous le mode de calcul de l\'adresse des pages.',
 	'texte_type_urls_attention' => 'Attention ce réglage ne fonctionnera que si le fichier @htaccess@ est correctement installé à la racine du site.',
-	'titre_type_urls' => 'Type d\'adresses URL',
-	'tout_voir' => 'Voir toutes les URLs',
 	'titre_type_arbo' => 'Arborescentes',
 	'titre_type_html' => 'Objets HTML',
-	'titre_type_simple' => 'Simples',
-	'titre_type_standard' => 'Historiques',
 	'titre_type_libres' => 'Libres',
 	'titre_type_page' => 'Page',
 	'titre_type_propres' => 'Propres',
 	'titre_type_propres2' => 'Propres+<tt>.html</tt>',
 	'titre_type_propres_qs' => 'Propres en query-string',
+	'titre_type_simple' => 'Simples',
+	'titre_type_standard' => 'Historiques',
+	'titre_type_urls' => 'Type d\'adresses URL',
+	'tout_voir' => 'Voir toutes les URLs',
 
 	// U
 	'url_ajout_impossible' => 'Une erreur est survenue. Il n\'a pas &t& possible d\'enregistrer cette URL',

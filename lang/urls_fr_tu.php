@@ -25,6 +25,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'Tu peux choisir ci-dessous le mode de calcul de l\'adresse des pages.',
 	'texte_type_urls_attention' => 'Attention ce réglage ne fonctionnera que si le fichier @htaccess@ est correctement installé à la racine du site.',
+	'titre_type_arbo' => 'Arborescentes', # NEW
+	'titre_type_html' => 'Objets HTML', # NEW
+	'titre_type_libres' => 'Libres', # NEW
+	'titre_type_page' => 'Page', # NEW
+	'titre_type_propres' => 'Propres', # NEW
+	'titre_type_propres2' => 'Propres+<tt>.html</tt>', # NEW
+	'titre_type_propres_qs' => 'Propres en query-string', # NEW
+	'titre_type_simple' => 'Simples', # NEW
+	'titre_type_standard' => 'Historiques', # NEW
 	'titre_type_urls' => 'Type d\'adresses URL',
 	'tout_voir' => 'Voir toutes les URLs', # NEW
 

@@ -25,6 +25,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'Dir kënnt hei de Format vun der Adress vun de Säite wielen.',
 	'texte_type_urls_attention' => 'Opgepasst, dës Astellung fonktionnéiert nëmmen wann den @htaccess@-Fichier richteg an der Root vum Site ugeluegt ass.',
+	'titre_type_arbo' => 'Arborescentes', # NEW
+	'titre_type_html' => 'Objets HTML', # NEW
+	'titre_type_libres' => 'Libres', # NEW
+	'titre_type_page' => 'Page', # NEW
+	'titre_type_propres' => 'Propres', # NEW
+	'titre_type_propres2' => 'Propres+<tt>.html</tt>', # NEW
+	'titre_type_propres_qs' => 'Propres en query-string', # NEW
+	'titre_type_simple' => 'Simples', # NEW
+	'titre_type_standard' => 'Historiques', # NEW
 	'titre_type_urls' => 'Format vun den URL-Adressen',
 	'tout_voir' => 'Voir toutes les URLs', # NEW
 

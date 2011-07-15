@@ -25,6 +25,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'Embaxo pues escoyer el mou de cálculu de les señes de les páxines.',
 	'texte_type_urls_attention' => 'Atención esti axuste nun funcionará más que si l\'archivu @htaccess@ ta correutamente instaláu na raiz del sitiu.',
+	'titre_type_arbo' => 'Arborescentes', # NEW
+	'titre_type_html' => 'Objets HTML', # NEW
+	'titre_type_libres' => 'Libres', # NEW
+	'titre_type_page' => 'Page', # NEW
+	'titre_type_propres' => 'Propres', # NEW
+	'titre_type_propres2' => 'Propres+<tt>.html</tt>', # NEW
+	'titre_type_propres_qs' => 'Propres en query-string', # NEW
+	'titre_type_simple' => 'Simples', # NEW
+	'titre_type_standard' => 'Historiques', # NEW
 	'titre_type_urls' => 'Tipu de señes URL',
 	'tout_voir' => 'Voir toutes les URLs', # NEW
 

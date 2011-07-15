@@ -25,6 +25,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'Pudete puru sceglie quì sottu u modu di càlculu di l\'indirizzu di a pàgina.',
 	'texte_type_urls_attention' => 'Attenti : St\'opzione viaghja solu s\'ellu hè stallatu cum\'ellu ci vole u schedariu @htaccess@, à a ràdica di u situ.',
+	'titre_type_arbo' => 'Arborescentes', # NEW
+	'titre_type_html' => 'Objets HTML', # NEW
+	'titre_type_libres' => 'Libres', # NEW
+	'titre_type_page' => 'Page', # NEW
+	'titre_type_propres' => 'Propres', # NEW
+	'titre_type_propres2' => 'Propres+<tt>.html</tt>', # NEW
+	'titre_type_propres_qs' => 'Propres en query-string', # NEW
+	'titre_type_simple' => 'Simples', # NEW
+	'titre_type_standard' => 'Historiques', # NEW
 	'titre_type_urls' => 'Tippu d\'indirizzi URL',
 	'tout_voir' => 'Voir toutes les URLs', # NEW
 

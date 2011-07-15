@@ -25,6 +25,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'در زير مي‌توانيد حالت محاسبه‌ي نشاني صفحه‌ها را گزينش كنيد.',
 	'texte_type_urls_attention' => 'توجه! اين تنظيم فقط هنگامي كار خواهد كرد كه فايل @htaccess@ در ريشه‌ي سايت نصب شده باشد.',
+	'titre_type_arbo' => 'Arborescentes', # NEW
+	'titre_type_html' => 'Objets HTML', # NEW
+	'titre_type_libres' => 'Libres', # NEW
+	'titre_type_page' => 'Page', # NEW
+	'titre_type_propres' => 'Propres', # NEW
+	'titre_type_propres2' => 'Propres+<tt>.html</tt>', # NEW
+	'titre_type_propres_qs' => 'Propres en query-string', # NEW
+	'titre_type_simple' => 'Simples', # NEW
+	'titre_type_standard' => 'Historiques', # NEW
 	'titre_type_urls' => 'نوع نشاني‌هاي URL',
 	'tout_voir' => 'Voir toutes les URLs', # NEW
 

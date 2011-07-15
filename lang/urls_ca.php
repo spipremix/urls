@@ -25,6 +25,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'Podeu escollir més avall el mode de càlcul de l\'adreça de les pàgines.',
 	'texte_type_urls_attention' => 'Atenció, aquest ajust només funcionarà si el fitxer @htaccess@ està instal·lat correctament a l\'arrel del lloc. ',
+	'titre_type_arbo' => 'Arborescentes', # NEW
+	'titre_type_html' => 'Objets HTML', # NEW
+	'titre_type_libres' => 'Libres', # NEW
+	'titre_type_page' => 'Page', # NEW
+	'titre_type_propres' => 'Propres', # NEW
+	'titre_type_propres2' => 'Propres+<tt>.html</tt>', # NEW
+	'titre_type_propres_qs' => 'Propres en query-string', # NEW
+	'titre_type_simple' => 'Simples', # NEW
+	'titre_type_standard' => 'Historiques', # NEW
 	'titre_type_urls' => 'Tipus d\'adreça URL',
 	'tout_voir' => 'Voir toutes les URLs', # NEW
 

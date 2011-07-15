@@ -25,6 +25,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'Puteţi alege mai jos modul de calcul a adreselor paginilor.',
 	'texte_type_urls_attention' => 'Atenţie: acest reglaj nu va funcţiona corect decât dacă fişierul @htaccess@  este instalat în rădăcina site-ului.',
+	'titre_type_arbo' => 'Arborescentes', # NEW
+	'titre_type_html' => 'Objets HTML', # NEW
+	'titre_type_libres' => 'Libres', # NEW
+	'titre_type_page' => 'Page', # NEW
+	'titre_type_propres' => 'Propres', # NEW
+	'titre_type_propres2' => 'Propres+<tt>.html</tt>', # NEW
+	'titre_type_propres_qs' => 'Propres en query-string', # NEW
+	'titre_type_simple' => 'Simples', # NEW
+	'titre_type_standard' => 'Historiques', # NEW
 	'titre_type_urls' => 'Tip de adrese URL',
 	'tout_voir' => 'Voir toutes les URLs', # NEW
 
