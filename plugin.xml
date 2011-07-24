@@ -6,6 +6,7 @@
 	<etat>test</etat>
 	<slogan>Gestion des variantes d'URL signifiantes ou non</slogan>
 	<description>Gestion des variantes d'URL signifiantes ou non</description>
+	<icon>prive/themes/spip/images/url-32.png</icon>
 	<prefix>urls</prefix>
 
 	<install>base/urls.php</install>
