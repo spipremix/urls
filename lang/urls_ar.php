@@ -25,15 +25,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'يمكنك اختيار أسلوب حساب عناوين الصفحات.',
 	'texte_type_urls_attention' => 'تنبيه، لن يعمل هذا الاعداد الا اذا كان ملف @htaccess@ مثبتاً بشكل سليم في أصل الموقع.',
-	'titre_type_arbo' => 'Arborescentes', # NEW
-	'titre_type_html' => 'Objets HTML', # NEW
-	'titre_type_libres' => 'Libres', # NEW
-	'titre_type_page' => 'Page', # NEW
-	'titre_type_propres' => 'Propres', # NEW
-	'titre_type_propres2' => 'Propres+<tt>.html</tt>', # NEW
-	'titre_type_propres_qs' => 'Propres en query-string', # NEW
-	'titre_type_simple' => 'Simples', # NEW
-	'titre_type_standard' => 'Historiques', # NEW
+	'titre_type_arbo' => 'الهرمية',
+	'titre_type_html' => 'عناصر HTML',
+	'titre_type_libres' => 'حرة',
+	'titre_type_page' => 'صفحة',
+	'titre_type_propres' => 'نظيفة',
+	'titre_type_propres2' => 'نظيفة+<tt>.html</tt>',
+	'titre_type_propres_qs' => 'نظيفة باستفسار query-string',
+	'titre_type_simple' => 'بسيطة',
+	'titre_type_standard' => 'تاريخية',
 	'titre_type_urls' => 'نوع عناوين URL',
 	'tout_voir' => 'عرض كل عناوين URL',
 
