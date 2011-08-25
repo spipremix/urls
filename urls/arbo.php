@@ -79,10 +79,10 @@ if (!function_exists('Cache')) {
 }
 
 
-define ('_debut_urls_arbo', '');
-define ('_terminaison_urls_arbo', '');
-define ('_url_arbo_sep_id','-');
-define ('_url_arbo_minuscules',1);
+if (!defined('_debut_urls_arbo')) define('_debut_urls_arbo', '');
+if (!defined('_terminaison_urls_arbo')) define('_terminaison_urls_arbo', '');
+if (!defined('_url_arbo_sep_id')) define('_url_arbo_sep_id','-');
+if (!defined('_url_arbo_minuscules')) define('_url_arbo_minuscules',1);
 
 // Ces chaines servaient de marqueurs a l'epoque ou les URL propres devaient
 // indiquer la table ou les chercher (articles, auteurs etc),
@@ -91,8 +91,14 @@ define ('_url_arbo_minuscules',1);
 // mais les preg_match restent necessaires pour gerer les anciens signets.
 
 #define('_MARQUEUR_URL', serialize(array('rubrique1' => '-', 'rubrique2' => '-', 'breve1' => '+', 'breve2' => '+', 'site1' => '@', 'site2' => '@', 'auteur1' => '_', 'auteur2' => '_', 'mot1' => '+-', 'mot2' => '-+')));
-define('_MARQUEUR_URL', false);
+if (!defined('_MARQUEUR_URL')) define('_MARQUEUR_URL', false);
 
+/**
+ * Definir les parentees utilisees pour construire des urls arborescentes
+ *
+ * @param string $type
+ * @return string
+ */
 function url_arbo_parent($type){
 	static $parents = null;
 	if (is_null($parents)){
@@ -108,6 +114,14 @@ function url_arbo_parent($type){
 	return (isset($parents[$type])?$parents[$type]:'');
 }
 
+/**
+ * Definir les terminaisons des urls :
+ * / pour une rubrique
+ * .html pour une page etc..
+ *
+ * @param string $type
+ * @return string
+ */
 function url_arbo_terminaison($type){
 	static $terminaison_types = null;
 	if ($terminaison_types==null){
@@ -125,8 +139,15 @@ function url_arbo_terminaison($type){
 	return "";
 }
 
+/**
+ * Definir le prefixe qui designe le type et qu'on utilise pour chaque objet
+ * ex : "article"/truc
+ * par defaut les rubriques ne sont pas typees, mais le reste oui
+ *
+ * @param string $type
+ * @return array|string
+ */
 function url_arbo_type($type){
-	// par defaut les rubriques ne sont pas typees, mais le reste oui
 	static $synonymes_types = null;
 	if (!$synonymes_types){
 		$synonymes_types = array('rubrique'=>'');
@@ -141,32 +162,46 @@ function url_arbo_type($type){
 	  . ($t?'/':''); // le / eventuel pour separer, si le synonyme n'est pas vide
 }
 
-// Pipeline pour creation d'une adresse : il recoit l'url propose par le
-// precedent, un tableau indiquant le titre de l'objet, son type, son id,
-// et doit donner en retour une chaine d'url, sans se soucier de la
-// duplication eventuelle, qui sera geree apres
-// http://doc.spip.org/@creer_chaine_url
+/**
+ * Pipeline pour creation d'une adresse : il recoit l'url propose par le
+ * precedent, un tableau indiquant le titre de l'objet, son type, son id,
+ * et doit donner en retour une chaine d'url, sans se soucier de la
+ * duplication eventuelle, qui sera geree apres
+ * http://doc.spip.org/@creer_chaine_url
+ *
+ * @param array $x
+ * @return array
+ */
 function urls_arbo_creer_chaine_url($x) {
 	// NB: ici url_old ne sert pas, mais un plugin qui ajouterait une date
 	// pourrait l'utiliser pour juste ajouter la 
 	$url_old = $x['data'];
 	$objet = $x['objet'];
 	include_spip('inc/filtres');
-	@define('_URLS_ARBO_MAX', 35);
-	@define('_URLS_ARBO_MIN', 3);
+	if (!defined('_URLS_ARBO_MAX')) define('_URLS_ARBO_MAX', 35);
+	if (!defined('_URLS_ARBO_MIN')) define('_URLS_ARBO_MIN', 3);
 
 	include_spip('action/editer_url');
 	if (!$url = url_nettoyer($objet['titre'],_URLS_ARBO_MAX,_URLS_ARBO_MIN,'-',_url_arbo_minuscules?'strtolower':''))
 		$url = $objet['id_objet'];
 	
-	$x['data'] = 
+	$x['data'] =
 		url_arbo_type($objet['type']) // le type ou son synonyme
 	  . $url; // le titre
 
 	return $x;
 }
 
-// http://doc.spip.org/@declarer_url_arbo_rec
+/**
+ * Boucler sur le parent pour construire l'url complete a partir des segments
+ * http://doc.spip.org/@declarer_url_arbo_rec
+ *
+ * @param string $url
+ * @param string $type
+ * @param string $parent
+ * @param string $type_parent
+ * @return string
+ */
 function declarer_url_arbo_rec($url,$type,$parent,$type_parent){
 	if (is_null($parent)){
 		return $url;
@@ -179,7 +214,15 @@ function declarer_url_arbo_rec($url,$type,$parent,$type_parent){
 	}
 }
 
-// http://doc.spip.org/@declarer_url_arbo
+/**
+ * Retrouver/Calculer l'ensemble des segments d'url d'un objet
+ *
+ * http://doc.spip.org/@declarer_url_arbo
+ *
+ * @param string $type
+ * @param int $id_objet
+ * @return string
+ */
 function declarer_url_arbo($type, $id_objet) {
 	static $urls=array();
 	// utiliser un cache memoire pour aller plus vite
@@ -284,7 +327,17 @@ function declarer_url_arbo($type, $id_objet) {
 	return declarer_url_arbo_rec($urls[$type][$id_objet]['url'],$type,$urls[$type][$id_objet]['parent'],$urls[$type][$id_objet]['type_parent']);
 }
 
-// http://doc.spip.org/@_generer_url_arbo
+/**
+ * Generer l'url arbo complete constituee des segments + debut + fin
+ *
+ * http://doc.spip.org/@_generer_url_arbo
+ *
+ * @param string $type
+ * @param int $id
+ * @param string $args
+ * @param string $ancre
+ * @return string
+ */
 function _generer_url_arbo($type, $id, $args='', $ancre='') {
 
 	if ($generer_url_externe = charger_fonction("generer_url_$type",'urls',true)) {
@@ -321,8 +374,19 @@ function _generer_url_arbo($type, $id, $args='', $ancre='') {
 }
 
 
-// @return array([contexte],[type],[url_redirect],[fond]) : url decodee
-// http://doc.spip.org/@urls_arbo_dist
+/**
+ * API : retourner l'url d'un objet si i est numerique
+ * ou decoder cette url si c'est une chaine
+ * array([contexte],[type],[url_redirect],[fond]) : url decodee
+ *
+ * http://doc.spip.org/@urls_arbo_dist
+ *
+ * @param string|int $i
+ * @param string $entite
+ * @param string|array $args
+ * @param string $ancre
+ * @return array|string
+ */
 function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 	if (is_numeric($i))
 		return _generer_url_arbo($entite, $i, $args, $ancre);
@@ -394,7 +458,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 	  OR $url_propre==_DIR_RESTREINT_ABS
 	  OR $url_propre==_SPIP_SCRIPT) return; // qu'est-ce qu'il veut ???
 
-	
+
 	include_spip('base/abstract_sql'); // chercher dans la table des URLS
 
 	// Revenir en utf-8 si encodage type %D8%A7 (farsi)
