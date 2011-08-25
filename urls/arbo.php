@@ -186,7 +186,8 @@ function urls_arbo_creer_chaine_url($x) {
 		$url = $objet['id_objet'];
 	
 	$x['data'] =
-		url_arbo_type($objet['type']) // le type ou son synonyme
+		(strlen($objet['parent'])?$objet['parent']."://":"") // prefixe discriminant de l'id de son parent
+		. url_arbo_type($objet['type']) // le type ou son synonyme
 	  . $url; // le titre
 
 	return $x;
@@ -203,6 +204,10 @@ function urls_arbo_creer_chaine_url($x) {
  * @return string
  */
 function declarer_url_arbo_rec($url,$type,$parent,$type_parent){
+	// retirer le prefixe d'id du parent si besoin
+	if (($p=strpos($url,"://"))!==false){
+		$url = substr($url,$p+3);
+	}
 	if (is_null($parent)){
 		return $url;
 	}
@@ -477,21 +482,43 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 		// on parcourt les segments de gauche a droite
 		// pour pouvoir contextualiser un segment par son parent
 		$url_arbo = explode('/',$url_propre);
+		$url_arbo_new = array();
+		$dernier_parent_vu = false;
+		$objet_segments = 0;
 		while (count($url_arbo)>0){
 			$type=null;
 			if (count($url_arbo)>1)
 				$type = array_shift($url_arbo);
 			$url_segment = array_shift($url_arbo);
-			// Compatibilite avec les anciens marqueurs d'URL propres
-			// Tester l'entree telle quelle (avec 'url_libre' des sites ont pu avoir des entrees avec marqueurs dans la table spip_urls)
-			if (is_null($type)
-			OR !$row=sql_fetsel('id_objet, type, date', 'spip_urls',array('url='.sql_quote("$type/$url_segment")))) {
-				if (!is_null($type)){
-					array_unshift($url_arbo,$url_segment);
-					$url_segment = $type;
-					$type = null;
+			// Rechercher le segment de candidat
+			// si on est dans un contexte de parent, donne par le segment precedent,
+			// prefixer le segment recherche avec ce contexte
+			$cp = "0://"; // par defaut : parent racine, id=0
+			if ($dernier_parent_vu)
+				$cp = $parents_vus[$dernier_parent_vu] . "://";
+			$row = false;
+			// d'abord recherche avec prefixe parent, en une requete car aucun risque de colision
+			if ($cp){
+				$row=sql_fetsel('id_objet, type, url', 'spip_urls',sql_in('url',is_null($type)?array("$cp$url_segment"):array("$cp$type/$url_segment","$cp$type")));
+				if ($row){
+					if (!is_null($type) AND $row['url']=="$cp$type"){
+						array_unshift($url_arbo,$url_segment);
+						$url_segment = $type;
+						$type = null;
+					}
 				}
-				$row = sql_fetsel('id_objet, type, date', 'spip_urls',array('url='.sql_quote($url_segment)));
+			}
+			// sinon fallback sur strategie historique, en 2 requetes
+			if (!$row){
+				if (is_null($type)
+				OR !$row=sql_fetsel('id_objet, type, date, url', 'spip_urls',array('url='.sql_quote("$type/$url_segment")))) {
+					if (!is_null($type)){
+						array_unshift($url_arbo,$url_segment);
+						$url_segment = $type;
+						$type = null;
+					}
+					$row = sql_fetsel('id_objet, type, date, url', 'spip_urls',array('url='.sql_quote("$url_segment")));
+				}
 			}
 			if ($row) {
 				$type = $row['type'];
@@ -507,11 +534,21 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 				// sinon c'est un segment contextuel supplementaire a ignorer
 				// ex : rub1/article/art1/mot1 : il faut ignorer le mot1, la vrai url est celle de l'article
 				if (!$entite
-				  OR isset($parents_vus[$type_parent]))
-					$entite = $type;
+				  OR $dernier_parent_vu == $type_parent){
+					if ($objet_segments==0)
+						$entite = $type;
+				}
+				// sinon on change d'objet concerne
+				else{
+					$objet_segments++;
+				}
+
+				$url_arbo_new[$objet_segments]['id_objet'] = $row['id_objet'];
+				$url_arbo_new[$objet_segments]['objet'] = $type;
+				$url_arbo_new[$objet_segments]['segment'][] = $row['url'];
 
 				// on note le dernier parent vu de chaque type
-				$parents_vus[$type] = $col_id;
+				$parents_vus[$dernier_parent_vu = $type] = $row['id_objet'];
 			}
 			else {
 				// un segment est inconnu
@@ -520,6 +557,22 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 					return array(array(),'404');
 				}
 				return; // ?
+			}
+		}
+
+		if (count($url_arbo_new)){
+			foreach($url_arbo_new as $k=>$o)
+				if ($s = declarer_url_arbo($o['objet'],$o['id_objet']))
+					$url_arbo_new[$k] = $s;
+				else
+					$url_arbo_new[$k] = implode('/',$o['segment']);
+			$url_arbo_new = implode('/',$url_arbo_new);
+			
+			if ($url_arbo_new!==$url_propre){
+				$url_redirect = $url_arbo_new;
+				// en absolue, car assembler ne gere pas ce cas particulier
+				include_spip('inc/filtres_mini');
+				$url_redirect = url_absolue($url_redirect);
 			}
 		}
 
@@ -544,7 +597,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 	}
 	define('_SET_HTML_BASE',1);
 
-	return array($contexte, $entite, null, null);
+	return array($contexte, $entite, $url_redirect, null);
 }
 
 ?>
