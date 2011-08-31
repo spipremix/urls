@@ -44,15 +44,19 @@ c'est-a-dire sans utilisation de .htaccess ; les adresses sont de la forme
 	"/?Mon-titre-d-article"
 */
 
-define ('_terminaison_urls_propres', '');
-define ('_debut_urls_propres', '');
+if (!defined('_terminaison_urls_propres')) define ('_terminaison_urls_propres', '');
+if (!defined('_debut_urls_propres')) define ('_debut_urls_propres', '');
 
-// option pour tout passer en minuscules
-define ('_url_minuscules',0);
-
+$config_urls_propres = isset($GLOBALS['meta']['urls_propres'])?unserialize($GLOBALS['meta']['urls_propres']):array();
 // pour choisir le caractere de separation titre-id en cas de doublon
 // (ne pas utiliser '/')
 define ('_url_propres_sep_id',',');
+if (!defined('_url_propres_sep_id')) define('_url_propres_sep_id',isset($config_urls_propres['url_propres_sep_id'])?$config_urls_propres['url_propres_sep_id']:'-');
+// option pour tout passer en minuscules
+if (!defined('_url_minuscules')) define('_url_minuscules',isset($config_urls_propres['url_minuscules'])?$config_urls_propres['url_minuscules']:0);
+if (!defined('_URLS_PROPRES_MAX')) define('_URLS_PROPRES_MAX', isset($config_urls_propres['URLS_PROPRES_MAX'])?$config_urls_propres['URLS_PROPRES_MAX']:35);
+if (!defined('_URLS_PROPRES_MIN')) define('_URLS_PROPRES_MIN', isset($config_urls_propres['URLS_PROPRES_MIN'])?$config_urls_propres['URLS_PROPRES_MIN']:3);
+
 
 // Ces chaines servaient de marqueurs a l'epoque ou les URL propres devaient
 // indiquer la table ou les chercher (articles, auteurs etc),
@@ -60,7 +64,7 @@ define ('_url_propres_sep_id',',');
 // Elles peuvent a present etre definies a "" pour avoir des URL plus jolies.
 // Les preg_match restent necessaires pour gerer les anciens signets.
 
-define('_MARQUEUR_URL', serialize(array('rubrique1' => '-', 'rubrique2' => '-', 'breve1' => '+', 'breve2' => '+', 'site1' => '@', 'site2' => '@', 'auteur1' => '_', 'auteur2' => '_', 'mot1' => '+-', 'mot2' => '-+')));
+if (!defined('_MARQUEUR_URL')) define('_MARQUEUR_URL', serialize(array('rubrique1' => '-', 'rubrique2' => '-', 'breve1' => '+', 'breve2' => '+', 'site1' => '@', 'site2' => '@', 'auteur1' => '_', 'auteur2' => '_', 'mot1' => '+-', 'mot2' => '-+')));
 
 // Retire les marqueurs de type dans une URL propre ancienne maniere
 
@@ -88,8 +92,6 @@ function urls_propres_creer_chaine_url($x) {
 	$url_old = $x['data'];
 	$objet = $x['objet'];
 	include_spip('inc/filtres');
-	@define('_URLS_PROPRES_MAX', 35);
-	@define('_URLS_PROPRES_MIN', 3);
 
 	include_spip('action/editer_url');
 	if (!$url = url_nettoyer($objet['titre'],_URLS_PROPRES_MAX,_URLS_PROPRES_MIN,'-',_url_minuscules?'strtolower':''))

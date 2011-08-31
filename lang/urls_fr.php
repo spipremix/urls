@@ -22,11 +22,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'liberer_url' => 'Liberer',
 	'liste_des_urls' => 'Toutes les URLs',
 
-	'label_URLS_ARBO_MIN' => 'Nombre minimum de caractères',
-	'label_URLS_ARBO_MAX' => 'Nombre maximum de caractères',
-	'label_url_arbo_sep_id' => 'Caractère pour séparer le numéro ajouté en cas de doublon',
-	'label_url_arbo_minuscules_1' => 'Forcer les urls en minuscules',
-	'label_url_arbo_minuscules_0' => 'Conserver la casse du titre',
+	'label_urls_nb_min_car' => 'Nombre minimum de caractères',
+	'label_urls_nb_max_car' => 'Nombre maximum de caractères',
+	'label_url_sep_id' => 'Caractère pour séparer le numéro ajouté en cas de doublon',
+	'label_url_minuscules_1' => 'Forcer les urls en minuscules',
+	'label_url_minuscules_0' => 'Conserver la casse du titre',
 
 	// T
 	'texte_type_urls' => 'Vous pouvez choisir ci-dessous le mode de calcul de l\'adresse des pages.',
@@ -44,8 +44,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_gestion_des_urls' => 'Gestion des URLs',
 	'tout_voir' => 'Voir toutes les URLs',
 
-	'texte_URLS_ARBO_MIN' => 'Si le titre est plus court, c\'est son Numéro identifiant qui sera utilisé.',
-	'texte_URLS_ARBO_MAX' => 'Si le titre est plus long, il sera coupé.',
+	'texte_urls_nb_min_car' => 'Si le titre est plus court, c\'est son Numéro identifiant qui sera utilisé.',
+	'texte_urls_nb_max_car' => 'Si le titre est plus long, il sera coupé.',
 
 	// U
 	'url_ajout_impossible' => 'Une erreur est survenue. Il n\'a pas &t& possible d\'enregistrer cette URL',
