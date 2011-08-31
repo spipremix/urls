@@ -33,6 +33,7 @@ pouvez l'editer pour ne conserver que la partie concernant les URLS 'html'.
 
 if (!defined("_ECRIRE_INC_VERSION")) return; // securiser
 
+# donner un exemple d'url pour le formulaire de choix
 define('URLS_HTML_EXEMPLE', 'article12.html');
 
 // http://doc.spip.org/@_generer_url_html

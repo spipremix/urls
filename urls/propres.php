@@ -12,7 +12,10 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return; // securiser
 
+# donner un exemple d'url pour le formulaire de choix
 define('URLS_PROPRES_EXEMPLE', 'Titre-de-l-article -Rubrique-');
+# specifier le form de config utilise pour ces urls
+define('URLS_PROPRES_CONFIG', 'propres');
 
 // TODO: une interface permettant de verifier qu'on veut effectivment modifier
 // une adresse existante

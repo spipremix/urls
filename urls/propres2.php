@@ -17,7 +17,10 @@ Ce jeu d'URLs est une variation de inc-urls-propres, qui ajoute
 le suffixe '.html' aux adresses ;
 */
 
+# donner un exemple d'url pour le formulaire de choix
 define('URLS_PROPRES2_EXEMPLE', 'Titre-de-l-article.html -Rubrique-.html');
+# specifier le form de config utilise pour ces urls
+define('URLS_PROPRES2_CONFIG', 'propres');
 
 if (!defined('_terminaison_urls_propres'))
 	define ('_terminaison_urls_propres', '.html');

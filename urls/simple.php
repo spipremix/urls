@@ -12,6 +12,7 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+# donner un exemple d'url pour le formulaire de choix
 define('URLS_SIMPLE_EXEMPLE', 'spip.php?page=article&id_article=12');
 
 ####### modifications possibles dans ecrire/mes_options

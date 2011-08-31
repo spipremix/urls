@@ -24,7 +24,10 @@ Attention : le mode 'propres_qs' est moins fonctionnel que le mode 'propres' ou
 preferables au mode 'propres_qs'.
 */
 
+# donner un exemple d'url pour le formulaire de choix
 define('URLS_PROPRES_QS_EXEMPLE', '?Titre-de-l-article');
+# specifier le form de config utilise pour ces urls
+define('URLS_PROPRES_QS_CONFIG', 'propres');
 
 if (!defined('_terminaison_urls_propres'))
 	define ('_terminaison_urls_propres', '');

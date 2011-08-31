@@ -12,7 +12,10 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return; // securiser
 
+# donner un exemple d'url pour le formulaire de choix
 define('URLS_ARBO_EXEMPLE', '/article/titre');
+# specifier le form de config utilise pour ces urls
+define('URLS_ARBO_CONFIG', 'arbo');
 
 // TODO: une interface permettant de verifier qu'on veut effectivment modifier
 // une adresse existante
@@ -78,11 +81,13 @@ if (!function_exists('Cache')) {
 	function Cache(){return null;}
 }
 
-
+$config_urls_arbo = isset($GLOBALS['meta']['urls_arbo'])?unserialize($GLOBALS['meta']['urls_arbo']):array();
 if (!defined('_debut_urls_arbo')) define('_debut_urls_arbo', '');
 if (!defined('_terminaison_urls_arbo')) define('_terminaison_urls_arbo', '');
-if (!defined('_url_arbo_sep_id')) define('_url_arbo_sep_id','-');
-if (!defined('_url_arbo_minuscules')) define('_url_arbo_minuscules',1);
+if (!defined('_url_arbo_sep_id')) define('_url_arbo_sep_id',isset($config_urls_arbo['url_arbo_sep_id'])?$config_urls_arbo['url_arbo_sep_id']:'-');
+if (!defined('_url_arbo_minuscules')) define('_url_arbo_minuscules',isset($config_urls_arbo['url_arbo_minuscules'])?$config_urls_arbo['url_arbo_minuscules']:1);
+if (!defined('_URLS_ARBO_MAX')) define('_URLS_ARBO_MAX', isset($config_urls_arbo['URLS_ARBO_MAX'])?$config_urls_arbo['URLS_ARBO_MAX']:35);
+if (!defined('_URLS_ARBO_MIN')) define('_URLS_ARBO_MIN', isset($config_urls_arbo['URLS_ARBO_MIN'])?$config_urls_arbo['URLS_ARBO_MIN']:3);
 
 // Ces chaines servaient de marqueurs a l'epoque ou les URL propres devaient
 // indiquer la table ou les chercher (articles, auteurs etc),
@@ -178,8 +183,6 @@ function urls_arbo_creer_chaine_url($x) {
 	$url_old = $x['data'];
 	$objet = $x['objet'];
 	include_spip('inc/filtres');
-	if (!defined('_URLS_ARBO_MAX')) define('_URLS_ARBO_MAX', 35);
-	if (!defined('_URLS_ARBO_MIN')) define('_URLS_ARBO_MIN', 3);
 
 	include_spip('action/editer_url');
 	if (!$url = url_nettoyer($objet['titre'],_URLS_ARBO_MAX,_URLS_ARBO_MIN,'-',_url_arbo_minuscules?'strtolower':''))

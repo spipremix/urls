@@ -15,6 +15,7 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return; // securiser
 
+# donner un exemple d'url pour le formulaire de choix
 define('URLS_STANDARD_EXEMPLE', 'article.php3?id_article=12');
 
 if (!function_exists('generer_url_article')) { // si la place n'est pas prise
