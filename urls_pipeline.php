@@ -1,5 +1,4 @@
 <?php
-
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
@@ -10,18 +9,13 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-
-function urls_affiche_milieu($flux){
-	if ($flux['args']['exec']=='configurer_avancees')
-	  $flux['data'] .= recuperer_fond('prive/squelettes/inclure/configurer',array('configurer'=>'configurer_type_urls'));
-
-	return $flux;
+function autoriser_controlerurls_menu_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+	return (
+		isset($GLOBALS['meta']['urls_activer_controle'])
+		AND $GLOBALS['meta']['urls_activer_controle']=='oui'
+	  AND $qui['statut']=='0minirezo'
+	  AND !$qui['restreint']);
 }
 
-function urls_boite_infos($flux){
-	#$type = $flux['args']['type'];
-	#if ($id = intval($flux['args']['id']))
-	#	$flux['data'] .= icone_horizontale(_T('urls:icone_controler_urls'), generer_url_ecrire('controler_urls',"id_objet=$id&type=$type"), "", "url-24.png");
-	return $flux;
-}
+
 ?>

@@ -12,12 +12,13 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-function formulaires_configurer_type_urls_charger_dist(){
+function formulaires_configurer_urls_charger_dist(){
 	if ($GLOBALS['type_urls'] != 'page') // fixe par mes_options
 		return false;
 
 	$valeurs = array(
-		'type_urls'=>$GLOBALS['meta']['type_urls'],
+		'type_urls' => $GLOBALS['meta']['type_urls'],
+		'urls_activer_controle' => $GLOBALS['meta']['urls_activer_controle'],
 		'_urls_dispos'=>type_urls_lister(),
 	);
 
@@ -25,8 +26,9 @@ function formulaires_configurer_type_urls_charger_dist(){
 
 }
 
-function formulaires_configurer_type_urls_traiter_dist(){
+function formulaires_configurer_urls_traiter_dist(){
 	ecrire_meta('type_urls',_request('type_urls'));
+	ecrire_meta('urls_activer_controle',_request('urls_activer_controle')?'oui':'non');
 
 	return array('message_ok'=>_T('config_info_enregistree'),'editable'=>true);
 }

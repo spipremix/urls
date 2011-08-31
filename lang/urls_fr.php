@@ -10,6 +10,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// I
 	'icone_controler_urls' => 'URLs signifiantes',
+	'icone_configurer_urls' => 'Configurer les URLs',
 
 	// L
 	'label_tri_date' => 'Date',
@@ -17,6 +18,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_tri_url' => 'URL',
 	'label_url' => 'Nouvelle URL',
 	'label_url_permanente' => 'Verrouiller cette URL (pas de mise a jour apr&egrave;s edition de l\'objet)',
+	'label_urls_activer_controle_oui' => 'Activer la page de gestion avancée des URLs',
 	'liberer_url' => 'Liberer',
 	'liste_des_urls' => 'Toutes les URLs',
 
@@ -33,6 +35,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_type_simple' => 'Simples',
 	'titre_type_standard' => 'Historiques',
 	'titre_type_urls' => 'Type d\'adresses URL',
+	'titre_gestion_des_urls' => 'Gestion des URLs',
 	'tout_voir' => 'Voir toutes les URLs',
 
 	// U

@@ -1,7 +1,7 @@
 <paquet
 	prefix="urls"
 	categorie="statistique"
-	version="1.2.0"
+	version="1.2.1"
 	etat="test"
 	compatibilite="[3.0.0-alpha2;["
 	logo="prive/themes/spip/images/url-32.png"
@@ -15,12 +15,12 @@
 
 	<traduire module="urls" reference="fr" gestionnaire="salvatore" />
 
+	<pipeline nom="autoriser" inclure="urls_pipeline.php" />
 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/urls.php" />
 	<pipeline nom="declarer_tables_interfaces" inclure="base/urls.php" />
-	<pipeline nom="affiche_milieu" inclure="urls_pipeline.php" />
-	<pipeline nom="boite_infos" inclure="urls_pipeline.php" />
 	<pipeline nom="arbo_creer_chaine_url" action="arbo_creer_chaine_url" inclure="urls/arbo.php" />
 	<pipeline nom="propres_creer_chaine_url" action="propres_creer_chaine_url" inclure="urls/propres.php" />
 
-	<menu nom="controler_urls" titre="urls:icone_controler_urls" parent="menu_publication" position="-1" icone="images/url-16.png" />
+	<menu nom="configurer_urls" titre="urls:icone_configurer_urls" parent="menu_configuration" position="-1" icone="images/url-16.png" />
+	<menu nom="controler_urls" titre="urls:titre_gestion_des_urls" parent="menu_publication" position="-1" icone="images/url-16.png" />
 </paquet>
