@@ -80,6 +80,12 @@ function url_insert(&$set,$confirmer,$separateur){
 		$set['id_parent'] = 0;
 	if (!isset($set['segments']))
 		$set['segments'] = count(explode('/',$set['url']));
+	$perma = false;
+	if (isset($set['perma']) AND $set['perma']){
+		unset($set['perma']);
+		$perma = true;
+	}
+	$redate = true;
 
 	# le separateur ne peut pas contenir de /
 	if (strpos($separateur,'/')!==false)
@@ -109,40 +115,50 @@ function url_insert(&$set,$confirmer,$separateur){
 		}
 
 		// Sinon
-		else
+		else {
 
-		// Soit c'est un Come Back d'une ancienne url propre de l'objet
-		// Soit c'est un vrai conflit. Rajouter l'ID jusqu'a ce que ca passe,
-		// mais se casser avant que ca ne casse.
+			// Soit c'est un Come Back d'une ancienne url propre de l'objet
+			// Soit c'est un vrai conflit. Rajouter l'ID jusqu'a ce que ca passe,
+			// mais se casser avant que ca ne casse.
 
-		// il peut etre du a un changement de casse de l'url simplement
-		// pour ce cas, on reecrit systematiquement l'url en plus d'actualiser la date
-		do {
-			$where = "type=".sql_quote($set['type'])
-			         ." AND id_objet=".intval($set['id_objet'])
-			         ." AND id_parent=".intval($set['id_parent'])
-			         ." AND url=";
-			if (sql_countsel('spip_urls', $where  .sql_quote($set['url']))) {
-				sql_updateq('spip_urls', array('url'=>$set['url'], 'date' => date('Y-m-d H:i:s')), $where  .sql_quote($set['url']));
-				spip_log("reordonne ".$set['type']." ".$set['id_objet']);
-				return true;
-			}
-			else {
-				$set['url'] .= $separateur.$set['id_objet'];
-				if (strlen($set['url']) > 200)
-					//serveur out ? retourner au mieux
-					return false;
-				elseif (sql_countsel('spip_urls', $where . sql_quote($set['url']))) {
-					sql_updateq('spip_urls', array('url'=>$set['url'], 'date' => date('Y-m-d H:i:s')), $where .sql_quote($set['url']));
-					return true;
+			// il peut etre du a un changement de casse de l'url simplement
+			// pour ce cas, on reecrit systematiquement l'url en plus d'actualiser la date
+			do {
+				$where = "type=".sql_quote($set['type'])
+								 ." AND id_objet=".intval($set['id_objet'])
+								 ." AND id_parent=".intval($set['id_parent'])
+								 ." AND url=";
+				if (sql_countsel('spip_urls', $where  .sql_quote($set['url']))) {
+					sql_updateq('spip_urls', array('url'=>$set['url'], 'date' => date('Y-m-d H:i:s')), $where  .sql_quote($set['url']));
+					spip_log("reordonne ".$set['type']." ".$set['id_objet']);
+					$redate = false;
+					continue;
 				}
-			}
-		} while (@sql_insertq('spip_urls', $set) <= 0);
+				else {
+					$set['url'] .= $separateur.$set['id_objet'];
+					if (strlen($set['url']) > 200)
+						//serveur out ? retourner au mieux
+						return false;
+					elseif (sql_countsel('spip_urls', $where . sql_quote($set['url']))) {
+						sql_updateq('spip_urls', array('url'=>$set['url'], 'date' => date('Y-m-d H:i:s')), $where .sql_quote($set['url']));
+						$redate = false;
+						continue;
+					}
+				}
+			} while ($redate AND @sql_insertq('spip_urls', $set) <= 0);
+
+		}
 	}
 
 	$where_thisurl = 'url='.sql_quote($set['url'])." AND id_parent=".intval($set['id_parent']); // maj
-	sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s')), $where_thisurl);
-	spip_log("Creation de l'url propre '" . $set['url'] . "' pour ".$set['type']." ".$set['id_objet']);
+	if ($redate)
+		sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s')), $where_thisurl);
+
+	// si url perma, poser le flag sur la seule url qu'on vient de mettre
+	if ($perma)
+		sql_update('spip_urls', array('perma' => "($where_thisurl)"), "type=".sql_quote($set['type'])." AND id_objet=".intval($set['id_objet']));
+	
+	spip_log("Creation de l'url propre '" . $set['url'] . "' pour ".$set['type']." ".$set['id_objet']." (parent ".$set['id_parent']." perma $perma)");
 	return true;
 }
 

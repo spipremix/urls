@@ -48,6 +48,9 @@ function urls_upgrade($nom_meta_base_version,$version_cible){
 		array('sql_alter',"table spip_urls ADD segments SMALLINT(3) DEFAULT '1' NOT NULL"),
 		array('urls_migre_urls_segments'),
 	);
+	$maj['1.1.3'] = array(
+		array('sql_alter',"table spip_urls ADD perma TINYINT(1) DEFAULT '0' NOT NULL"),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);

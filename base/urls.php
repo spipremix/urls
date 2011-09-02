@@ -40,7 +40,10 @@ function urls_declarer_tables_auxiliaires($tables_auxiliaires){
 		// ATTENTION, pas on update CURRENT_TIMESTAMP implicite
 		// et pas le nom maj, surinterprete par inc/import_1_3
 		"date"			=> "DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL",
+		// nombre de segments dans url
 		"segments"	=> "SMALLINT(3) DEFAULT '1' NOT NULL",
+		// URL permanente, prioritaire
+		"perma"     => "TINYINT(1) DEFAULT '0' NOT NULL",
 	);
 
 	$spip_urls_key = array(

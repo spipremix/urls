@@ -268,11 +268,11 @@ function declarer_url_arbo($type, $id_objet) {
 			$order_by_parent = "O.".reset($champ_parent)."=U.id_parent DESC, ";
 		}
 		//  Recuperer une URL propre correspondant a l'objet.
-		$row = sql_fetsel("U.url, U.date, U.id_parent, O.$champ_titre $sel_parent",
+		$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, O.$champ_titre $sel_parent",
 		                  "$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
 		                  "O.$col_id=$id_objet",
 		                  '',
-		                  $order_by_parent.'U.date DESC', 1);
+		                  $order_by_parent.'U.perma DESC, U.date DESC', 1);
 		if ($row){
 			$urls[$type][$id_objet] = $row;
 			$urls[$type][$id_objet]['type_parent'] = $champ_parent?end($champ_parent):'';
@@ -282,17 +282,20 @@ function declarer_url_arbo($type, $id_objet) {
 	if (!isset($urls[$type][$id_objet])) return ""; # objet inexistant
 
 	$url_propre = $urls[$type][$id_objet]['url'];
-	
+
+	// si on a trouve l'url
+	// et que le parent est bon
+	// et (permanente ou pas de demande de modif)
 	if (!is_null($url_propre)
 	  AND $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
-	  AND !$modifier_url)
+	  AND ($urls[$type][$id_objet]['perma'] OR !$modifier_url))
 		return declarer_url_arbo_rec($url_propre,$type,
 		  isset($urls[$type][$id_objet]['parent'])?$urls[$type][$id_objet]['parent']:0,
 		  isset($urls[$type][$id_objet]['type_parent'])?$urls[$type][$id_objet]['type_parent']:null);
 
-	// Si URL inconnue ou maj forcee, recreer une url
+	// Si URL inconnue ou maj forcee sur une url non permanente, recreer une url
 	$url = $url_propre;
-	if (is_null($url_propre) OR $modifier_url) {
+	if (is_null($url_propre) OR ($modifier_url AND !$urls[$type][$id_objet]['perma'])) {
 		$url = pipeline('arbo_creer_chaine_url',
 			array(
 				'data' => $url_propre,  // le vieux url_propre
@@ -335,7 +338,7 @@ function declarer_url_arbo($type, $id_objet) {
 		die ("vous changez d'url ? $url_propre -&gt; $url");
 	}
 
-	$set = array('url' => $url, 'type' => $type, 'id_objet' => $id_objet, 'id_parent'=>$urls[$type][$id_objet]['parent']);
+	$set = array('url' => $url, 'type' => $type, 'id_objet' => $id_objet, 'id_parent'=>$urls[$type][$id_objet]['parent'],'perma'=>intval($urls[$type][$id_objet]['perma']));
 	include_spip('action/editer_url');
 	if (url_insert($set,$confirmer,_url_arbo_sep_id)){
 		$urls[$type][$id_objet]['url'] = $set['url'];
