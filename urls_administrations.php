@@ -35,9 +35,38 @@ function urls_upgrade($nom_meta_base_version,$version_cible){
 	$maj['create'] = array(
 		array('maj_tables',array('spip_urls')),
 	);
+	$maj['1.1.0'] = array(
+		array('sql_alter',"table spip_urls ADD id_parent bigint(21) DEFAULT '0' NOT NULL"),
+		array('sql_alter',"table spip_urls DROP PRIMARY KEY"),
+		array('sql_alter',"table spip_urls ADD PRIMARY KEY (id_parent, url)"),
+	);
+	$maj['1.1.1'] = array(
+		array('urls_migre_arbo_prefixes'),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
+	$trouver_table = charger_fonction('trouver_table','base');
+}
+
+function urls_migre_arbo_prefixes(){
+	$res = sql_select('*','spip_urls',"url REGEXP '\d+:\/\/'");
+	while($row = sql_fetch($res)){
+		$url = explode("://",$row['url']);
+		$set = array('id_parent'=>intval(reset($url)),'url'=>end($url));
+		if (!sql_updateq('spip_urls',$set,"id_parent=".intval($row['id_parent'])." AND url=".sql_quote($row['url']))){
+			if ($set['id_parent']==0
+			  AND sql_countsel('spip_urls',"id_parent=".intval($set['id_parent'])." AND url=".sql_quote($set['url'])." AND type=".sql_quote($row['type'])." AND id_objet=".sql_quote($row['id_objet']))){
+				spip_log('suppression url doublon '.var_export($row,1),'urls.'._LOG_INFO_IMPORTANTE);
+				sql_delete('spip_urls',"id_parent=".intval($row['id_parent'])." AND url=".sql_quote($row['url']));
+			}
+			else {
+				spip_log('Impossible de convertir url doublon '.var_export($row,1),'urls.'._LOG_ERREUR);
+				echo "Impossible de convertir l'url ".$row['url'].". Verifiez manuellement dans spip_urls";
+			}
+		}
+		if (time() >= _TIME_OUT);
+	}
 }
 
 /**

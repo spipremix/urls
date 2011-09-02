@@ -29,6 +29,8 @@ function urls_declarer_tables_interfaces($interfaces) {
 function urls_declarer_tables_auxiliaires($tables_auxiliaires){
 
 	$spip_urls = array(
+		// un id parent eventuel, pour discriminer les doublons arborescents
+		"id_parent"	=> "bigint(21) DEFAULT '0' NOT NULL",
 		"url"			=> "VARCHAR(255) NOT NULL",
 		// la table cible
 		"type"			=> "varchar(15) DEFAULT 'article' NOT NULL",
@@ -40,7 +42,7 @@ function urls_declarer_tables_auxiliaires($tables_auxiliaires){
 		"date"			=> "DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL");
 
 	$spip_urls_key = array(
-		"PRIMARY KEY"		=> "url",
+		"PRIMARY KEY"		=> "id_parent, url",
 		"KEY type"		=> "type, id_objet");
 
 	$tables_auxiliaires['spip_urls'] = array(

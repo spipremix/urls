@@ -75,13 +75,16 @@ function url_nettoyer($titre,$longueur_maxi,$longueur_min=0,$separateur='-',$fil
 }
 
 function url_insert(&$set,$confirmer,$separateur){
+	if (!isset($set['id_parent']))
+		$set['id_parent'] = 0;
 	// Si l'insertion echoue, c'est une violation d'unicite.
+	$where_thisurl = 'url='.sql_quote($set['url'])." AND id_parent=".intval($set['id_parent']);
 	if (@sql_insertq('spip_urls', $set) <= 0) {
 
 		// On veut chiper une ancienne adresse ?
 		if (
 		// un vieux url
-		$vieux = sql_fetsel('*', 'spip_urls', 'url='.sql_quote($set['url']))
+		$vieux = sql_fetsel('*', 'spip_urls', $where_thisurl)
 		// l'objet a une url plus recente
 		AND $courant = sql_fetsel('*', 'spip_urls',
 			'type='.sql_quote($vieux['type']).' AND id_objet='.sql_quote($vieux['id_objet'])
@@ -92,10 +95,9 @@ function url_insert(&$set,$confirmer,$separateur){
 					. $courant['id_objet']." qui a maintenant l'url "
 					. $courant['url']);
 			}
-
 			// si oui on le chipe
-			sql_updateq('spip_urls', $set, 'url='.sql_quote($set['url']));
-			sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s')), 'url='.sql_quote($set['url']));
+			sql_updateq('spip_urls', $set, $where_thisurl);
+			sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s')), $where_thisurl);
 		}
 
 		// Sinon
@@ -108,7 +110,10 @@ function url_insert(&$set,$confirmer,$separateur){
 		// il peut etre du a un changement de casse de l'url simplement
 		// pour ce cas, on reecrit systematiquement l'url en plus d'actualiser la date
 		do {
-			$where = "type=".sql_quote($set['type'])." AND id_objet=".intval($set['id_objet'])." AND url=";
+			$where = "type=".sql_quote($set['type'])
+			         ." AND id_objet=".intval($set['id_objet'])
+			         ." AND id_parent=".intval($set['id_parent'])
+			         ." AND url=";
 			if (sql_countsel('spip_urls', $where  .sql_quote($set['url']))) {
 				sql_updateq('spip_urls', array('url'=>$set['url'], 'date' => date('Y-m-d H:i:s')), $where  .sql_quote($set['url']));
 				spip_log("reordonne ".$set['type']." ".$set['id_objet']);
@@ -120,14 +125,15 @@ function url_insert(&$set,$confirmer,$separateur){
 					//serveur out ? retourner au mieux
 					return false;
 				elseif (sql_countsel('spip_urls', $where . sql_quote($set['url']))) {
-					sql_updateq('spip_urls', array('url'=>$set['url'], 'date' => date('Y-m-d H:i:s')), 'url='.sql_quote($set['url']));
+					sql_updateq('spip_urls', array('url'=>$set['url'], 'date' => date('Y-m-d H:i:s')), $where .sql_quote($set['url']));
 					return true;
 				}
 			}
 		} while (@sql_insertq('spip_urls', $set) <= 0);
 	}
 
-	sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s')), 'url='.sql_quote($set['url']));
+	$where_thisurl = 'url='.sql_quote($set['url'])." AND id_parent=".intval($set['id_parent']); // maj
+	sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s')), $where_thisurl);
 	spip_log("Creation de l'url propre '" . $set['url'] . "' pour ".$set['type']." ".$set['id_objet']);
 	return true;
 }

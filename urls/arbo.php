@@ -192,8 +192,7 @@ function urls_arbo_creer_chaine_url($x) {
 		$url = $objet['id_objet'];
 	
 	$x['data'] =
-		(strlen($objet['parent'])?$objet['parent']."://":"") // prefixe discriminant de l'id de son parent
-		. url_arbo_type($objet['type']) // le type ou son synonyme
+		  url_arbo_type($objet['type']) // le type ou son synonyme
 	  . $url; // le titre
 
 	return $x;
@@ -210,10 +209,6 @@ function urls_arbo_creer_chaine_url($x) {
  * @return string
  */
 function declarer_url_arbo_rec($url,$type,$parent,$type_parent){
-	// retirer le prefixe d'id du parent si besoin
-	if (($p=strpos($url,"://"))!==false){
-		$url = substr($url,$p+3);
-	}
 	if (is_null($parent)){
 		return $url;
 	}
@@ -265,10 +260,20 @@ function declarer_url_arbo($type, $id_objet) {
 			
 		// parent
 		$champ_parent = url_arbo_parent($type);
-		$sel_parent = ($champ_parent)?", O.".reset($champ_parent).' as parent':'';
-	
+		$sel_parent = '0 as parent';
+		$order_by_parent = "";
+		if ($champ_parent){
+			$sel_parent = ", O.".reset($champ_parent).' as parent';
+			// trouver l'url qui matche le parent en premier
+			$order_by_parent = "O.".reset($champ_parent)."=U.id_parent DESC, ";
+		}
+
 		//  Recuperer une URL propre correspondant a l'objet.
-		$row = sql_fetsel("U.url, U.date, O.$champ_titre $sel_parent", "$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)", "O.$col_id=$id_objet", '', 'U.date DESC', 1);
+		$row = sql_fetsel("U.url, U.date, U.id_parent, O.$champ_titre $sel_parent",
+		                  "$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
+		                  "O.$col_id=$id_objet",
+		                  '',
+		                  $order_by_parent.'U.date DESC', 1);
 		if ($row){
 			$urls[$type][$id_objet] = $row;
 			$urls[$type][$id_objet]['type_parent'] = $champ_parent?end($champ_parent):'';
@@ -278,34 +283,41 @@ function declarer_url_arbo($type, $id_objet) {
 	if (!isset($urls[$type][$id_objet])) return ""; # objet inexistant
 
 	$url_propre = $urls[$type][$id_objet]['url'];
-
-	if (!is_null($url_propre) AND !$modifier_url)
+	
+	if (!is_null($url_propre)
+	  AND $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
+	  AND !$modifier_url)
 		return declarer_url_arbo_rec($url_propre,$type,
-		  isset($urls[$type][$id_objet]['parent'])?$urls[$type][$id_objet]['parent']:null,
+		  isset($urls[$type][$id_objet]['parent'])?$urls[$type][$id_objet]['parent']:0,
 		  isset($urls[$type][$id_objet]['type_parent'])?$urls[$type][$id_objet]['type_parent']:null);
 
-	// Sinon, creer une URL
-	$url = pipeline('arbo_creer_chaine_url',
-		array(
-			'data' => $url_propre,  // le vieux url_propre
-			'objet' => array_merge($urls[$type][$id_objet],
-				array('type' => $type, 'id_objet' => $id_objet)
+	// Si URL inconnue ou maj forcee, recreer une url
+	$url = $url_propre;
+	if (is_null($url_propre) OR $modifier_url) {
+		$url = pipeline('arbo_creer_chaine_url',
+			array(
+				'data' => $url_propre,  // le vieux url_propre
+				'objet' => array_merge($urls[$type][$id_objet],
+					array('type' => $type, 'id_objet' => $id_objet)
+				)
 			)
-		)
-	);
+		);
 
-	// Eviter de tamponner les URLs a l'ancienne (cas d'un article
-	// intitule "auteur2")
-	include_spip('inc/urls');
-	$objets = urls_liste_objets();
-	if (preg_match(',^('.$objets.')[0-9]*$,', $url, $r)
-	AND $r[1] != $type)
-		$url = $url._url_arbo_sep_id.$id_objet;
+		// Eviter de tamponner les URLs a l'ancienne (cas d'un article
+		// intitule "auteur2")
+		include_spip('inc/urls');
+		$objets = urls_liste_objets();
+		if (preg_match(',^('.$objets.')[0-9]*$,', $url, $r)
+		AND $r[1] != $type)
+			$url = $url._url_arbo_sep_id.$id_objet;
+	}
 
-	// Pas de changement d'url
-	if ($url == $url_propre)
+
+	// Pas de changement d'url ni de parent
+	if ($url == $url_propre
+	  AND $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent'])
 		return declarer_url_arbo_rec($url_propre,$type,$urls[$type][$id_objet]['parent'],$urls[$type][$id_objet]['type_parent']);
-	
+
 	// verifier l'autorisation, maintenant qu'on est sur qu'on va agir
 	if ($modifier_url) {
 		include_spip('inc/autoriser');
@@ -324,10 +336,11 @@ function declarer_url_arbo($type, $id_objet) {
 		die ("vous changez d'url ? $url_propre -&gt; $url");
 	}
 
-	$set = array('url' => $url, 'type' => $type, 'id_objet' => $id_objet);
+	$set = array('url' => $url, 'type' => $type, 'id_objet' => $id_objet, 'id_parent'=>$urls[$type][$id_objet]['parent']);
 	include_spip('action/editer_url');
 	if (url_insert($set,$confirmer,_url_arbo_sep_id)){
 		$urls[$type][$id_objet]['url'] = $set['url'];
+		$urls[$type][$id_objet]['id_parent'] = $set['id_parent'];
 	}
 	else {
 		// l'insertion a echoue,
@@ -499,15 +512,15 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 			// Rechercher le segment de candidat
 			// si on est dans un contexte de parent, donne par le segment precedent,
 			// prefixer le segment recherche avec ce contexte
-			$cp = "0://"; // par defaut : parent racine, id=0
+			$cp = "0"; // par defaut : parent racine, id=0
 			if ($dernier_parent_vu)
-				$cp = $parents_vus[$dernier_parent_vu] . "://";
+				$cp = $parents_vus[$dernier_parent_vu];
 			$row = false;
 			// d'abord recherche avec prefixe parent, en une requete car aucun risque de colision
 			if ($cp){
-				$row=sql_fetsel('id_objet, type, url', 'spip_urls',sql_in('url',is_null($type)?array("$cp$url_segment"):array("$cp$type/$url_segment","$cp$type")));
+				$row=sql_fetsel('id_objet, type, url', 'spip_urls',"id_parent=".intval($cp) ." AND ". sql_in('url',is_null($type)?array($url_segment):array("$type/$url_segment",$type)));
 				if ($row){
-					if (!is_null($type) AND $row['url']=="$cp$type"){
+					if (!is_null($type) AND $row['url']==$type){
 						array_unshift($url_arbo,$url_segment);
 						$url_segment = $type;
 						$type = null;
