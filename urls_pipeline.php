@@ -9,12 +9,16 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-function autoriser_controlerurls_menu_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+function autoriser_url_administrer($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
 	return (
 		isset($GLOBALS['meta']['urls_activer_controle'])
 		AND $GLOBALS['meta']['urls_activer_controle']=='oui'
 	  AND $qui['statut']=='0minirezo'
 	  AND !$qui['restreint']);
+}
+
+function autoriser_controlerurls_menu_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+	return autoriser('administrer','url');
 }
 
 function urls_afficher_fiche_objet($flux){

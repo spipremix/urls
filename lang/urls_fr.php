@@ -26,7 +26,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_tri_url' => 'URL',
 	'label_url' => 'Nouvelle URL',
 	'label_url_permanente' => 'Verrouiller cette URL (pas de mise a jour apr&egrave;s edition de l\'objet)',
-	'label_urls_activer_controle_oui' => 'Activer la page de gestion avancée des URLs',
+	'label_urls_activer_controle_oui' => 'Activer la gestion avancée des URLs',
 	'liberer_url' => 'Liberer',
 	'liste_des_urls' => 'Toutes les URLs',
 
