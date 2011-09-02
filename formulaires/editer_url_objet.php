@@ -18,7 +18,7 @@
  * @return array
  */
 function formulaires_editer_url_objet_charger($type,$id){
-	$valeurs = array('url'=>'','url_lock'=>'','objet'=>$type,'id_objet'=>$id);
+	$valeurs = array('url'=>'','_objet'=>$type,'_id_objet'=>$id);
 
 	return $valeurs;
 }
@@ -26,11 +26,15 @@ function formulaires_editer_url_objet_charger($type,$id){
 function formulaires_editer_url_objet_verifier($type,$id){
 	$erreurs = array();
 	include_spip('action/editer_url');
-	$url = _request('url');
-	$url_clean = url_nettoyer($url, 255);
-	if ($url!=$url_clean){
-		set_request('url',$url_clean);
-		$erreurs['url'] = _T('urls:verifier_url_nettoyee');;
+	if (!$url = _request('url')){
+		$erreurs['url'] = _T('info_obligatoire');
+	}
+	else {
+		$url_clean = url_nettoyer($url, 255);
+		if ($url!=$url_clean){
+			set_request('url',$url_clean);
+			$erreurs['url'] = _T('urls:verifier_url_nettoyee');;
+		}
 	}
 
 	return $erreurs;
@@ -47,14 +51,22 @@ function formulaires_editer_url_objet_traiter($type,$id){
 	$valeurs = array('editable'=>true);
 
 	include_spip('action/editer_url');
-	$set = array('url' => _request('url'), 'type' => $type, 'id_objet' => $id);
-	if (url_insert($set,false,","))
+	// les urls manuelles sont toujours permanentes
+	$set = array('url' => _request('url'), 'type' => $type, 'id_objet' => $id, 'perma'=>1);
+
+	$type_urls = $GLOBALS['meta']['type_urls'];
+	if (include_spip("urls/$type_urls")
+		AND function_exists($renseigner_url = "renseigner_url_$type_urls")
+		AND $r = $renseigner_url($type,$id)
+		AND isset($r['parent']))
+		$set['id_parent'] = $r['parent'];
+
+	if (url_insert($set,false,",")) {
+		set_request('url');
 		$valeurs['message_ok'] = _T("urls:url_ajoutee");
+	}
 	else
 		$valeurs['message_erreur'] = _T("urls:url_ajout_impossible");
-
-	if (_request('url_lock'))
-		url_verrouiller($set['type'],$set['id_objet'],$set['url']);
 
 	return $valeurs;
 }

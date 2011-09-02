@@ -221,6 +221,52 @@ function declarer_url_arbo_rec($url,$type,$parent,$type_parent){
 }
 
 /**
+ * Renseigner les infos les plus recentes de l'url d'un objet
+ * et de quoi la (re)construire si besoin
+ * @param string $type
+ * @param int $id_objet
+ * @return bool|null|array
+ */
+function renseigner_url_arbo($type,$id_objet){
+	$urls = array();
+	$trouver_table = charger_fonction('trouver_table', 'base');
+	$desc = $trouver_table(table_objet($type));
+	$table = $desc['table'];
+	$col_id =  @$desc['key']["PRIMARY KEY"];
+	if (!$col_id) return false; // Quand $type ne reference pas une table
+	$id_objet = intval($id_objet);
+
+	// Auteurs : on prend le nom
+	if ($type == 'auteur')
+		$champ_titre = 'nom AS titre';
+	else if ($type == 'site' OR $type=='syndic')
+		$champ_titre = 'nom_site AS titre';
+	else
+		$champ_titre = 'titre';
+
+	// parent
+	$champ_parent = url_arbo_parent($type);
+	$sel_parent = ', 0 as parent';
+	$order_by_parent = "";
+	if ($champ_parent){
+		$sel_parent = ", O.".reset($champ_parent).' as parent';
+		// trouver l'url qui matche le parent en premier
+		$order_by_parent = "O.".reset($champ_parent)."=U.id_parent DESC, ";
+	}
+	//  Recuperer une URL propre correspondant a l'objet.
+	$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, O.$champ_titre $sel_parent",
+										"$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
+										"O.$col_id=$id_objet",
+										'',
+										$order_by_parent.'U.perma DESC, U.date DESC', 1);
+	if ($row){
+		$urls[$type][$id_objet] = $row;
+		$urls[$type][$id_objet]['type_parent'] = $champ_parent?end($champ_parent):'';
+	}
+	return isset($urls[$type][$id_objet])?$urls[$type][$id_objet]:null;
+}
+
+/**
  * Retrouver/Calculer l'ensemble des segments d'url d'un objet
  *
  * http://doc.spip.org/@declarer_url_arbo
@@ -243,40 +289,13 @@ function declarer_url_arbo($type, $id_objet) {
 	$modifier_url = (defined('_VAR_URLS') AND _VAR_URLS);
 	
 	if (!isset($urls[$type][$id_objet]) OR $modifier_url) {
-		$trouver_table = charger_fonction('trouver_table', 'base');
-		$desc = $trouver_table(table_objet($type));
-		$table = $desc['table'];
-		$col_id =  @$desc['key']["PRIMARY KEY"];
-		if (!$col_id) return false; // Quand $type ne reference pas une table
-		$id_objet = intval($id_objet);
-	
-		// Auteurs : on prend le nom
-		if ($type == 'auteur')
-			$champ_titre = 'nom AS titre';
-		else if ($type == 'site' OR $type=='syndic')
-			$champ_titre = 'nom_site AS titre';
-		else
-			$champ_titre = 'titre';
-			
-		// parent
-		$champ_parent = url_arbo_parent($type);
-		$sel_parent = ', 0 as parent';
-		$order_by_parent = "";
-		if ($champ_parent){
-			$sel_parent = ", O.".reset($champ_parent).' as parent';
-			// trouver l'url qui matche le parent en premier
-			$order_by_parent = "O.".reset($champ_parent)."=U.id_parent DESC, ";
-		}
-		//  Recuperer une URL propre correspondant a l'objet.
-		$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, O.$champ_titre $sel_parent",
-		                  "$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
-		                  "O.$col_id=$id_objet",
-		                  '',
-		                  $order_by_parent.'U.perma DESC, U.date DESC', 1);
-		if ($row){
-			$urls[$type][$id_objet] = $row;
-			$urls[$type][$id_objet]['type_parent'] = $champ_parent?end($champ_parent):'';
-		}
+		$r = renseigner_url_arbo($type,$id_objet);
+		// Quand $type ne reference pas une table
+		if ($r===false)
+			return false;
+
+		if (!is_null($r))
+			$urls[$type][$id_objet] = $r;
 	}
 
 	if (!isset($urls[$type][$id_objet])) return ""; # objet inexistant

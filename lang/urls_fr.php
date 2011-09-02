@@ -7,10 +7,15 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
 	'actualiser_toutes' => 'Mettre &agrave; jour toutes les urls',
+	'bouton_supprimer_url' => 'Supprimer cette URL',
 
 	// I
 	'icone_controler_urls' => 'URLs signifiantes',
 	'icone_configurer_urls' => 'Configurer les URLs',
+	'info_1_url' => '1 URL',
+	'info_nb_urls' => '@nb@ URLs',
+	'info_objet' => 'Objet',
+	'info_id_parent' => '#parent',
 
 	// L
 	'label_tri_date' => 'Date',

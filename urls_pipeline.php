@@ -17,5 +17,17 @@ function autoriser_controlerurls_menu_dist($faire, $type='', $id=0, $qui = NULL,
 	  AND !$qui['restreint']);
 }
 
+function urls_afficher_fiche_objet($flux){
+	if (isset($GLOBALS['meta']['urls_activer_controle'])
+		AND $GLOBALS['meta']['urls_activer_controle']=='oui'
+		AND $objet = $flux['args']['type']
+		AND $id_objet = $flux['args']['id']){
+		$p = strpos($flux['data'],'fiche_objet');
+		$p = strpos($flux['data'],'</div>',$p);
 
+		$res = recuperer_fond('prive/objets/editer/url',array('id_objet'=>$id_objet,'objet'=>$objet),array('ajax'=>true));
+		$flux['data'] = substr_replace($flux['data'],$res, $p, 0);
+	}
+	return $flux;
+}
 ?>
