@@ -30,10 +30,24 @@ function formulaires_editer_url_objet_verifier($type,$id){
 		$erreurs['url'] = _T('info_obligatoire');
 	}
 	else {
-		$url_clean = url_nettoyer($url, 255);
-		if ($url!=$url_clean){
+		$type_urls = $GLOBALS['meta']['type_urls'];
+		if ($type_urls=='arbo' AND strpos($url,'/')!==false){
+			$url = explode('/',$url);
+			if (count($url)>2)
+				$erreurs['url'] = _T('urls:erreur_arbo_2_segments_max');
+			else{
+				foreach($url as $u){
+					$url_clean[] = url_nettoyer($u, 255);
+				}
+				$url = implode('/',$url);
+				$url_clean = implode('/',$url_clean);
+			}
+		}
+		else
+			$url_clean = url_nettoyer($url, 255);
+		if (!isset($erreurs['url']) AND $url!=$url_clean){
 			set_request('url',$url_clean);
-			$erreurs['url'] = _T('urls:verifier_url_nettoyee');;
+			$erreurs['url'] = _T('urls:verifier_url_nettoyee');
 		}
 	}
 

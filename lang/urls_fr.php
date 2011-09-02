@@ -9,6 +9,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actualiser_toutes' => 'Mettre &agrave; jour toutes les urls',
 	'bouton_supprimer_url' => 'Supprimer cette URL',
 
+	// E
+	'erreur_arbo_2_segments_max' => 'Vous ne pouvez pas utiliser plus de deux segments d\'URL pour un objet',
+
 	// I
 	'icone_controler_urls' => 'URLs signifiantes',
 	'icone_configurer_urls' => 'Configurer les URLs',
