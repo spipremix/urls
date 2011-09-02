@@ -260,14 +260,13 @@ function declarer_url_arbo($type, $id_objet) {
 			
 		// parent
 		$champ_parent = url_arbo_parent($type);
-		$sel_parent = '0 as parent';
+		$sel_parent = ', 0 as parent';
 		$order_by_parent = "";
 		if ($champ_parent){
 			$sel_parent = ", O.".reset($champ_parent).' as parent';
 			// trouver l'url qui matche le parent en premier
 			$order_by_parent = "O.".reset($champ_parent)."=U.id_parent DESC, ";
 		}
-
 		//  Recuperer une URL propre correspondant a l'objet.
 		$row = sql_fetsel("U.url, U.date, U.id_parent, O.$champ_titre $sel_parent",
 		                  "$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
@@ -515,31 +514,23 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 			$cp = "0"; // par defaut : parent racine, id=0
 			if ($dernier_parent_vu)
 				$cp = $parents_vus[$dernier_parent_vu];
-			$row = false;
 			// d'abord recherche avec prefixe parent, en une requete car aucun risque de colision
-			if ($cp){
-				$row=sql_fetsel('id_objet, type, url', 'spip_urls',"id_parent=".intval($cp) ." AND ". sql_in('url',is_null($type)?array($url_segment):array("$type/$url_segment",$type)));
-				if ($row){
-					if (!is_null($type) AND $row['url']==$type){
-						array_unshift($url_arbo,$url_segment);
-						$url_segment = $type;
-						$type = null;
-					}
+			$row=sql_fetsel('id_objet, type, url',
+											'spip_urls',
+											is_null($type)?"url=".sql_quote($url_segment):sql_in('url',array("$type/$url_segment",$type)),
+											'',
+											// en priorite celui qui a le bon parent et les deux segments
+											// puis le bon parent avec 1 segment
+											// puis un parent indefini et les deux segments
+											// puis un parent indefini et 1 segment
+											(intval($cp)?"id_parent=".intval($cp)." DESC, ":"")."segments DESC"
+			);
+			if ($row){
+				if (!is_null($type) AND $row['url']==$type){
+					array_unshift($url_arbo,$url_segment);
+					$url_segment = $type;
+					$type = null;
 				}
-			}
-			// sinon fallback sur strategie historique, en 2 requetes
-			if (!$row){
-				if (is_null($type)
-				OR !$row=sql_fetsel('id_objet, type, date, url', 'spip_urls',array('url='.sql_quote("$type/$url_segment")))) {
-					if (!is_null($type)){
-						array_unshift($url_arbo,$url_segment);
-						$url_segment = $type;
-						$type = null;
-					}
-					$row = sql_fetsel('id_objet, type, date, url', 'spip_urls',array('url='.sql_quote("$url_segment")));
-				}
-			}
-			if ($row) {
 				$type = $row['type'];
 				$col_id = id_table_objet($type);
 				

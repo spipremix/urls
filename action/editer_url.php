@@ -75,8 +75,16 @@ function url_nettoyer($titre,$longueur_maxi,$longueur_min=0,$separateur='-',$fil
 }
 
 function url_insert(&$set,$confirmer,$separateur){
+	# assurer la coherence des champs techniques si non fournis
 	if (!isset($set['id_parent']))
 		$set['id_parent'] = 0;
+	if (!isset($set['segments']))
+		$set['segments'] = count(explode('/',$set['url']));
+
+	# le separateur ne peut pas contenir de /
+	if (strpos($separateur,'/')!==false)
+		$separateur = "-";
+
 	// Si l'insertion echoue, c'est une violation d'unicite.
 	$where_thisurl = 'url='.sql_quote($set['url'])." AND id_parent=".intval($set['id_parent']);
 	if (@sql_insertq('spip_urls', $set) <= 0) {

@@ -44,9 +44,13 @@ function urls_upgrade($nom_meta_base_version,$version_cible){
 		array('urls_migre_arbo_prefixes'),
 	);
 
+	$maj['1.1.2'] = array(
+		array('sql_alter',"table spip_urls ADD segments SMALLINT(3) DEFAULT '1' NOT NULL"),
+		array('urls_migre_urls_segments'),
+	);
+
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
-	$trouver_table = charger_fonction('trouver_table','base');
 }
 
 function urls_migre_arbo_prefixes(){
@@ -65,7 +69,23 @@ function urls_migre_arbo_prefixes(){
 				echo "Impossible de convertir l'url ".$row['url'].". Verifiez manuellement dans spip_urls";
 			}
 		}
-		if (time() >= _TIME_OUT);
+		if (time() >= _TIME_OUT){
+			sql_free($res);
+			return;
+		}
+	}
+}
+
+function urls_migre_urls_segments(){
+	sql_updateq('spip_urls',array('segments'=>1),"segments<1 OR NOT(url REGEXP '\/')");
+	$res = sql_select('DISTINCT url','spip_urls',"url REGEXP '\/' AND segments=1");
+	while($row = sql_fetch($res)){
+		$segments = count(explode('/',$row['url']));
+		sql_updateq('spip_urls',array('segments'=>$segments),"url=".sql_quote($row['url']));
+		if (time() >= _TIME_OUT){
+			sql_free($res);
+			return;
+		}
 	}
 }
 
