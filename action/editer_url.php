@@ -95,8 +95,8 @@ function url_insert(&$set,$confirmer,$separateur){
 	$where_thisurl = 'url='.sql_quote($set['url'])." AND id_parent=".intval($set['id_parent']);
 	if (@sql_insertq('spip_urls', $set) <= 0) {
 
-		// On veut chiper une ancienne adresse ?
-		if (
+		// On veut chiper une ancienne adresse ou prendre celle d'un repertoire deja present?
+		if ((!is_dir($set['url']) AND !file_exists($set['url'])) AND
 		// un vieux url
 		$vieux = sql_fetsel('*', 'spip_urls', $where_thisurl)
 		// l'objet a une url plus recente
@@ -128,7 +128,7 @@ function url_insert(&$set,$confirmer,$separateur){
 								 ." AND id_objet=".intval($set['id_objet'])
 								 ." AND id_parent=".intval($set['id_parent'])
 								 ." AND url=";
-				if (sql_countsel('spip_urls', $where  .sql_quote($set['url']))) {
+				if (!is_dir($set['url']) && !file_exists($set['url']) && sql_countsel('spip_urls', $where  .sql_quote($set['url']))) {
 					sql_updateq('spip_urls', array('url'=>$set['url'], 'date' => date('Y-m-d H:i:s')), $where  .sql_quote($set['url']));
 					spip_log("reordonne ".$set['type']." ".$set['id_objet']);
 					$redate = false;
