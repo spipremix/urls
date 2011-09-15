@@ -17,14 +17,13 @@
 	<langue code="el">
 		<traducteur nom="yann7" />
 	</langue>
-	<langue code="en">
-		<traducteur nom="squonk" />
-	</langue>
 	<langue code="eo" />
 	<langue code="es" />
 	<langue code="et" />
 	<langue code="eu" />
-	<langue code="fa" />
+	<langue code="fa">
+		<traducteur nom="davood" />
+	</langue>
 	<langue code="fi" />
 	<langue code="fr_biblio" />
 	<langue code="fr_stal" />

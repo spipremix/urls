@@ -8,42 +8,62 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'actualiser_toutes' => 'Mettre &agrave; jour toutes les urls', # NEW
+	'actualiser_toutes' => 'به هنگام سازي تمام يو.آر.ال ها',
+
+	// B
+	'bouton_supprimer_url' => 'Supprimer cette URL', # NEW
+
+	// E
+	'erreur_arbo_2_segments_max' => 'Vous ne pouvez pas utiliser plus de deux segments d\'URL pour un objet', # NEW
 
 	// I
-	'icone_controler_urls' => 'URLs signifiantes', # NEW
+	'icone_configurer_urls' => 'Configurer les URLs', # NEW
+	'icone_controler_urls' => 'يو.آر.ال هاي صحيح',
+	'info_1_url' => '1 URL', # NEW
+	'info_id_parent' => '#parent', # NEW
+	'info_nb_urls' => '@nb@ URLs', # NEW
+	'info_objet' => 'Objet', # NEW
 
 	// L
-	'label_tri_date' => 'Date', # NEW
-	'label_tri_id' => 'ID', # NEW
-	'label_tri_url' => 'URL', # NEW
-	'label_url' => 'Nouvelle URL', # NEW
-	'label_url_permanente' => 'Verrouiller cette URL (pas de mise a jour apr&egrave;s edition de l\'objet)', # NEW
-	'liberer_url' => 'Liberer', # NEW
-	'liste_des_urls' => 'Toutes les URLs', # NEW
+	'label_tri_date' => 'تاريخ',
+	'label_tri_id' => 'آي.دي (شناشه)',
+	'label_tri_url' => 'يو.آر.ال',
+	'label_url' => 'يو.آر.ال جديد',
+	'label_url_minuscules_0' => 'Conserver la casse du titre', # NEW
+	'label_url_minuscules_1' => 'Forcer les urls en minuscules', # NEW
+	'label_url_permanente' => 'حفظ اين يو.آر.ال (بعد از ويرايش اوبژه به هنگام سازي نشود)',
+	'label_url_sep_id' => 'Caractère pour séparer le numéro ajouté en cas de doublon', # NEW
+	'label_urls_activer_controle_oui' => 'Activer la gestion avancée des URLs', # NEW
+	'label_urls_nb_max_car' => 'Nombre maximum de caractères', # NEW
+	'label_urls_nb_min_car' => 'Nombre minimum de caractères', # NEW
+	'liberer_url' => 'آزادسازي',
+	'liste_des_urls' => 'تمام يو.آر.ال‌ ها',
 
 	// T
 	'texte_type_urls' => 'در زير مي‌توانيد حالت محاسبه‌ي نشاني صفحه‌ها را گزينش كنيد.',
 	'texte_type_urls_attention' => 'توجه! اين تنظيم فقط هنگامي كار خواهد كرد كه فايل @htaccess@ در ريشه‌ي سايت نصب شده باشد.',
-	'titre_type_arbo' => 'Arborescentes', # NEW
-	'titre_type_html' => 'Objets HTML', # NEW
-	'titre_type_libres' => 'Libres', # NEW
-	'titre_type_page' => 'Page', # NEW
-	'titre_type_propres' => 'Propres', # NEW
-	'titre_type_propres2' => 'Propres+<tt>.html</tt>', # NEW
-	'titre_type_propres_qs' => 'Propres en query-string', # NEW
-	'titre_type_simple' => 'Simples', # NEW
-	'titre_type_standard' => 'Historiques', # NEW
+	'texte_urls_nb_max_car' => 'Si le titre est plus long, il sera coupé.', # NEW
+	'texte_urls_nb_min_car' => 'Si le titre est plus court, c\'est son Numéro identifiant qui sera utilisé.', # NEW
+	'titre_gestion_des_urls' => 'Gestion des URLs', # NEW
+	'titre_type_arbo' => 'شجره‌ها (درخت‌‌ مانندها)', # MODIF
+	'titre_type_html' => 'اوبژه‌هاي اچ‌تي‌ام‌ال', # MODIF
+	'titre_type_libres' => 'آزاد‌', # MODIF
+	'titre_type_page' => 'صفحه', # MODIF
+	'titre_type_propres' => 'صحيح', # MODIF
+	'titre_type_propres2' => 'صحيح+<tt>.html</tt>', # MODIF
+	'titre_type_propres_qs' => 'زنجيره‌ي جستجوي صحيح', # MODIF
+	'titre_type_simple' => 'ساده', # MODIF
+	'titre_type_standard' => 'تاريخي', # MODIF
 	'titre_type_urls' => 'نوع نشاني‌هاي URL',
-	'tout_voir' => 'Voir toutes les URLs', # NEW
+	'tout_voir' => 'تمام يو.آر.ال‌ها را بنگريد',
 
 	// U
-	'url_ajout_impossible' => 'Une erreur est survenue. Il n\'a pas &t& possible d\'enregistrer cette URL', # NEW
-	'url_ajoutee' => 'L\'URL a &eacute;t&eacute; ajout&eacute;e', # NEW
+	'url_ajout_impossible' => 'خطاي ناگهاني. امكان ثبت اين يو.آر.ال نيست.',
+	'url_ajoutee' => 'يو.آر.ال افزوده شد',
 
 	// V
-	'verifier_url_nettoyee' => 'L\'URL a &eacute;t&eacute; corrig&eacute;e, vous pouvez verifier avant de l\'enregistrer.', # NEW
-	'verrouiller_url' => 'Verrouiller' # NEW
+	'verifier_url_nettoyee' => 'يو.آر.ال تصحيح شد. مي‌توانيد قبل از ثبت چك كنيد.',
+	'verrouiller_url' => 'توقيف'
 );
 
 ?>
