@@ -9,6 +9,8 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+if (!defined('_ECRIRE_INC_VERSION')) return;
+
 function urls_autoriser($f){return $f;}
 
 function autoriser_url_administrer($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
