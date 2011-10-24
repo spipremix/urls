@@ -30,7 +30,7 @@ function urls_afficher_fiche_objet($flux){
 		AND $GLOBALS['meta']['urls_activer_controle']=='oui'
 		AND $objet = $flux['args']['type']
 		AND $id_objet = $flux['args']['id']
-	  AND objet_info('zone','page')){
+	  AND objet_info($objet,'page')){
 		$p = strpos($flux['data'],'fiche_objet');
 		$p = strpos($flux['data'],'</div>',$p);
 
