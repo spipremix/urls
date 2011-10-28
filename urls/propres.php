@@ -50,7 +50,6 @@ if (!defined('_debut_urls_propres')) define ('_debut_urls_propres', '');
 $config_urls_propres = isset($GLOBALS['meta']['urls_propres'])?unserialize($GLOBALS['meta']['urls_propres']):array();
 // pour choisir le caractere de separation titre-id en cas de doublon
 // (ne pas utiliser '/')
-define ('_url_propres_sep_id',',');
 if (!defined('_url_propres_sep_id')) define('_url_propres_sep_id',isset($config_urls_propres['url_propres_sep_id'])?$config_urls_propres['url_propres_sep_id']:'-');
 // option pour tout passer en minuscules
 if (!defined('_url_minuscules')) define('_url_minuscules',isset($config_urls_propres['url_minuscules'])?$config_urls_propres['url_minuscules']:0);
