@@ -56,6 +56,7 @@ if (!defined('_url_minuscules')) define('_url_minuscules',isset($config_urls_pro
 if (!defined('_URLS_PROPRES_MAX')) define('_URLS_PROPRES_MAX', isset($config_urls_propres['URLS_PROPRES_MAX'])?$config_urls_propres['URLS_PROPRES_MAX']:35);
 if (!defined('_URLS_PROPRES_MIN')) define('_URLS_PROPRES_MIN', isset($config_urls_propres['URLS_PROPRES_MIN'])?$config_urls_propres['URLS_PROPRES_MIN']:3);
 
+if (!defined('_url_sep_id')) define('_url_sep_id',_url_propres_sep_id);
 
 // Ces chaines servaient de marqueurs a l'epoque ou les URL propres devaient
 // indiquer la table ou les chercher (articles, auteurs etc),

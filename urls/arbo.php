@@ -92,6 +92,8 @@ if (!defined('_url_arbo_minuscules')) define('_url_arbo_minuscules',isset($confi
 if (!defined('_URLS_ARBO_MAX')) define('_URLS_ARBO_MAX', isset($config_urls_arbo['URLS_ARBO_MAX'])?$config_urls_arbo['URLS_ARBO_MAX']:35);
 if (!defined('_URLS_ARBO_MIN')) define('_URLS_ARBO_MIN', isset($config_urls_arbo['URLS_ARBO_MIN'])?$config_urls_arbo['URLS_ARBO_MIN']:3);
 
+if (!defined('_url_sep_id')) define('_url_sep_id',_url_arbo_sep_id);
+
 // Ces chaines servaient de marqueurs a l'epoque ou les URL propres devaient
 // indiquer la table ou les chercher (articles, auteurs etc),
 // et elles etaient retirees par les preg_match dans la fonction ci-dessous.
