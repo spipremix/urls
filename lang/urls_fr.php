@@ -13,6 +13,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// E
 	'erreur_arbo_2_segments_max' => 'Vous ne pouvez pas utiliser plus de deux segments d\'URL pour un objet',
+	'explication_editer' => 'Vous pouvez &eacute;diter l\'url des pages de chaque objet &eacute;ditorial et g&eacute;rer l\'historique de leur &eacute;volution.',
 
 	// I
 	'icone_configurer_urls' => 'Configurer les URLs',
