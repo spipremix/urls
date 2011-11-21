@@ -325,11 +325,11 @@ function urls_propres_dist($i, $entite, $args='', $ancre='') {
 
 	// Compatibilite avec les anciens marqueurs d'URL propres
 	// Tester l'entree telle quelle (avec 'url_libre' des sites ont pu avoir des entrees avec marqueurs dans la table spip_urls)
-	if (!$row = sql_fetsel('id_objet, type, date', 'spip_urls', 'url='.sql_quote($url_propre))) {
+	if (!$row = sql_fetsel('id_objet, type, date, url', 'spip_urls', 'url='.sql_quote($url_propre))) {
 		// Sinon enlever les marqueurs eventuels
 		$url_propre2 = retirer_marqueurs_url_propre($url_propre);
 
-		$row = sql_fetsel('id_objet, type, date', 'spip_urls', 'url='.sql_quote($url_propre2));
+		$row = sql_fetsel('id_objet, type, date, url', 'spip_urls', 'url='.sql_quote($url_propre2));
 	}
 
 	if ($row) {
