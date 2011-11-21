@@ -341,7 +341,8 @@ function urls_propres_dist($i, $entite, $args='', $ancre='') {
 		// Si l'url est vieux, donner le nouveau
 		if ($recent = sql_fetsel('url, date', 'spip_urls',
 		'type='.sql_quote($row['type']).' AND id_objet='.sql_quote($row['id_objet'])
-		.' AND date>'.sql_quote($row['date']), '', 'date DESC', 1)) {
+		.' AND date>'.sql_quote($row['date'])
+		.' AND url<>'.sql_quote($row['url']), '', 'date DESC', 1)) {
 			// Mode compatibilite pour conserver la distinction -Rubrique-
 			if (_MARQUEUR_URL) {
 				$marqueur = unserialize(_MARQUEUR_URL);
