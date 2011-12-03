@@ -238,14 +238,8 @@ function renseigner_url_arbo($type,$id_objet){
 	if (!$col_id) return false; // Quand $type ne reference pas une table
 	$id_objet = intval($id_objet);
 
-	// Auteurs : on prend le nom
-	if ($type == 'auteur')
-		$champ_titre = 'nom AS titre';
-	else if ($type == 'site' OR $type=='syndic')
-		$champ_titre = 'nom_site AS titre';
-	else
-		$champ_titre = 'titre';
-
+	$champ_titre = $desc['titre'] ? $desc['titre'] : 'titre';
+	
 	// parent
 	$champ_parent = url_arbo_parent($type);
 	$sel_parent = ', 0 as parent';
