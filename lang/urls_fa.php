@@ -15,6 +15,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// E
 	'erreur_arbo_2_segments_max' => 'نمي‌توانيد براي يك چيز بيش دو قطعه‌ از يو.آر.ال استفاده كنيد',
+	'explication_editer' => 'La gestion avanc&eacute;e des urls vous permet d\'&eacute;diter l\'url des pages de chaque objet &eacute;ditorial, et de g&eacute;rer l\'historique de leur &eacute;volution.', # NEW
 
 	// I
 	'icone_configurer_urls' => 'پيكربندي يو.آر.آل‌‌ها',
