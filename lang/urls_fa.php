@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://www.spip.net/trad-lang/
+// extrait automatiquement de http://trad.spip.org
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
@@ -15,7 +15,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// E
 	'erreur_arbo_2_segments_max' => 'نمي‌توانيد براي يك چيز بيش دو قطعه‌ از يو.آر.ال استفاده كنيد',
-	'explication_editer' => 'La gestion avanc&eacute;e des urls vous permet d\'&eacute;diter l\'url des pages de chaque objet &eacute;ditorial, et de g&eacute;rer l\'historique de leur &eacute;volution.', # NEW
+	'explication_editer' => 'La gestion avancée des urls vous permet d\'éditer l\'url des pages de chaque objet éditorial, et de gérer l\'historique de leur évolution.', # NEW
 
 	// I
 	'icone_configurer_urls' => 'پيكربندي يو.آر.آل‌‌ها',
