@@ -8,14 +8,14 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'actualiser_toutes' => 'Aktualizovať všetky adresy',
+	'actualiser_toutes' => 'Aktualizovať všetky adresy', # MODIF
 
 	// B
 	'bouton_supprimer_url' => 'Odstrániť túto internetovú adresu',
 
 	// E
 	'erreur_arbo_2_segments_max' => 'Pre objekt nemôžete použiť viac ako dve zložky adresy',
-	'explication_editer' => 'Pokročilé riadenie internetových adries vám umožňuje upravovať internetové adresy redakčných stránok každého objektu a spravovať históriu ich vývoja.',
+	'explication_editer' => 'Pokročilé riadenie internetových adries vám umožňuje upravovať internetové adresy redakčných stránok každého objektu a spravovať históriu ich vývoja.', # MODIF
 
 	// I
 	'icone_configurer_urls' => 'Nastaviť internetové adresy',
@@ -31,13 +31,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_tri_url' => 'Adresa',
 	'label_url' => 'Nová adresa',
 	'label_url_minuscules_0' => 'Nechať veľké/malé písmená podľa nadpisu',
-	'label_url_minuscules_1' => 'V internetových adresách používať malé písmená',
-	'label_url_permanente' => 'Zamknúť túto adresu (žiadne aktualizácie po úprave objektu)',
+	'label_url_minuscules_1' => 'V internetových adresách používať malé písmená', # MODIF
+	'label_url_permanente' => 'Zamknúť túto adresu (žiadne aktualizácie po úprave objektu)', # MODIF
 	'label_url_sep_id' => 'Znak na oddelenie čísla, ktoré sa pridá v prípade duplikátu',
 	'label_urls_activer_controle_oui' => 'Aktivovať pokročilé riadenie internetových adries',
 	'label_urls_nb_max_car' => 'Maximálny počet znakov',
 	'label_urls_nb_min_car' => 'Minimálny počet znakov',
-	'liberer_url' => 'Potvrdiť',
+	'liberer_url' => 'Potvrdiť', # MODIF
 	'liste_des_urls' => 'Všetky internetové adresy',
 
 	// T
@@ -59,11 +59,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_voir' => 'Zobraziť všetky internetové adresy',
 
 	// U
-	'url_ajout_impossible' => 'Došlo k chybe. Táto adresa sa nedá zaregistrovať.',
+	'url_ajout_impossible' => 'Došlo k chybe. Táto adresa sa nedá zaregistrovať.', # MODIF
 	'url_ajoutee' => 'Internetová adresa bola pridaná',
 
 	// V
-	'verifier_url_nettoyee' => 'Internetová adresa bola opravená, môžete ju pred uložením skontrolovať.',
+	'verifier_url_nettoyee' => 'Internetová adresa bola opravená, môžete ju pred uložením skontrolovať.', # MODIF
 	'verrouiller_url' => 'Zamknúť'
 );
 

@@ -8,7 +8,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'actualiser_toutes' => 'به هنگام سازي تمام يو.آر.ال ها',
+	'actualiser_toutes' => 'به هنگام سازي تمام يو.آر.ال ها', # MODIF
 
 	// B
 	'bouton_supprimer_url' => 'حذف اين يو.آر.ال',
@@ -31,13 +31,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_tri_url' => 'يو.آر.ال',
 	'label_url' => 'يو.آر.ال جديد',
 	'label_url_minuscules_0' => 'حفظ شكستگي تيتر',
-	'label_url_minuscules_1' => 'اعمال قواعد در جزئيات',
-	'label_url_permanente' => 'حفظ اين يو.آر.ال (بعد از ويرايش اوبژه به هنگام سازي نشود)',
+	'label_url_minuscules_1' => 'اعمال قواعد در جزئيات', # MODIF
+	'label_url_permanente' => 'حفظ اين يو.آر.ال (بعد از ويرايش اوبژه به هنگام سازي نشود)', # MODIF
 	'label_url_sep_id' => 'كاراكتر براي جدا كردن شماره‌ي افزوده شده در مورد جفت',
 	'label_urls_activer_controle_oui' => 'فعال سازي مديريت پيشرفته‌ي يو.آر.ال‌ها',
 	'label_urls_nb_max_car' => 'بيشترين تعداد كاراكتر‌ها',
 	'label_urls_nb_min_car' => 'كم‌ترين تعداد كاراركتر‌ها',
-	'liberer_url' => 'آزادسازي',
+	'liberer_url' => 'آزادسازي', # MODIF
 	'liste_des_urls' => 'تمام يو.آر.ال‌ ها',
 
 	// T
@@ -59,11 +59,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_voir' => 'تمام يو.آر.ال‌ها را بنگريد',
 
 	// U
-	'url_ajout_impossible' => 'خطاي ناگهاني. امكان ثبت اين يو.آر.ال نيست.',
+	'url_ajout_impossible' => 'خطاي ناگهاني. امكان ثبت اين يو.آر.ال نيست.', # MODIF
 	'url_ajoutee' => 'يو.آر.ال افزوده شد',
 
 	// V
-	'verifier_url_nettoyee' => 'يو.آر.ال تصحيح شد. مي‌توانيد قبل از ثبت چك كنيد.',
+	'verifier_url_nettoyee' => 'يو.آر.ال تصحيح شد. مي‌توانيد قبل از ثبت چك كنيد.', # MODIF
 	'verrouiller_url' => 'توقيف'
 );
 

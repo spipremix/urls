@@ -8,7 +8,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'actualiser_toutes' => 'تحديث كل عناوين URL',
+	'actualiser_toutes' => 'تحديث كل عناوين URL', # MODIF
 
 	// B
 	'bouton_supprimer_url' => 'حذف هذا العنوان',
@@ -31,13 +31,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_tri_url' => 'عنوان URL',
 	'label_url' => 'عنوان URL جديد',
 	'label_url_minuscules_0' => 'الحفاظ على حجم أحرف العنوان',
-	'label_url_minuscules_1' => 'فرض العناوين بالأحرف الصغيرة',
-	'label_url_permanente' => 'إقفال هذا العنوان (لا تحديث بعد تحرير العنصر)',
+	'label_url_minuscules_1' => 'فرض العناوين بالأحرف الصغيرة', # MODIF
+	'label_url_permanente' => 'إقفال هذا العنوان (لا تحديث بعد تحرير العنصر)', # MODIF
 	'label_url_sep_id' => 'حرف لفصل الرقم المضاف في حال التكرار',
 	'label_urls_activer_controle_oui' => 'تفعيل ادارة العناوين المتطورة',
 	'label_urls_nb_max_car' => 'العدد الاقصى للأحرف',
 	'label_urls_nb_min_car' => 'العدد الأدنى للأحرف',
-	'liberer_url' => 'إلغاء القفل',
+	'liberer_url' => 'إلغاء القفل', # MODIF
 	'liste_des_urls' => 'كل عناوين URL',
 
 	// T
@@ -59,11 +59,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_voir' => 'عرض كل عناوين URL',
 
 	// U
-	'url_ajout_impossible' => 'حصل خطأ. لم يتم تسجيل هذا العنوان',
+	'url_ajout_impossible' => 'حصل خطأ. لم يتم تسجيل هذا العنوان', # MODIF
 	'url_ajoutee' => 'تمت إضافة هذا العنوان',
 
 	// V
-	'verifier_url_nettoyee' => 'تم تصحيح العنوان، يمكنك التأكد قبل تسجيله.',
+	'verifier_url_nettoyee' => 'تم تصحيح العنوان، يمكنك التأكد قبل تسجيله.', # MODIF
 	'verrouiller_url' => 'إقفال'
 );
 

@@ -8,14 +8,14 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'actualiser_toutes' => 'Update all urls',
+	'actualiser_toutes' => 'Update all urls', # MODIF
 
 	// B
 	'bouton_supprimer_url' => 'Delete this URL',
 
 	// E
 	'erreur_arbo_2_segments_max' => 'You can\'t use more than two URL segments for an object',
-	'explication_editer' => 'The advanced management of urls allows you to edit the url of the pages of each editorial object, and to manage the history of their evolution.',
+	'explication_editer' => 'The advanced management of urls allows you to edit the url of the pages of each editorial object, and to manage the history of their evolution.', # MODIF
 
 	// I
 	'icone_configurer_urls' => 'Setup the URLs',
@@ -31,13 +31,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_tri_url' => 'URL',
 	'label_url' => 'New URL',
 	'label_url_minuscules_0' => 'Keep the title case',
-	'label_url_minuscules_1' => 'Forcing lowercase urls',
-	'label_url_permanente' => 'Lock this URL (no update after modification of the object)',
+	'label_url_minuscules_1' => 'Forcing lowercase urls', # MODIF
+	'label_url_permanente' => 'Lock this URL (no update after modification of the object)', # MODIF
 	'label_url_sep_id' => 'Character to separate the number added in case of duplicate',
 	'label_urls_activer_controle_oui' => 'Enable advanced management of URLs',
 	'label_urls_nb_max_car' => 'Maximum number of characters',
 	'label_urls_nb_min_car' => 'Minimum number of characters',
-	'liberer_url' => 'Release',
+	'liberer_url' => 'Release', # MODIF
 	'liste_des_urls' => 'All URLs',
 
 	// T
@@ -59,11 +59,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_voir' => 'Show all URLs',
 
 	// U
-	'url_ajout_impossible' => 'An error has occurred. This URL couldn\'t be saved',
+	'url_ajout_impossible' => 'An error has occurred. This URL couldn\'t be saved', # MODIF
 	'url_ajoutee' => 'The URL has been added',
 
 	// V
-	'verifier_url_nettoyee' => 'The URL has been corrected, you can check before saving.',
+	'verifier_url_nettoyee' => 'The URL has been corrected, you can check before saving.', # MODIF
 	'verrouiller_url' => 'Lock'
 );
 
