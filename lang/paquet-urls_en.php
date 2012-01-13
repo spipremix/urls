@@ -8,8 +8,8 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// U
-	'urls_description' => 'Management of the URL variants, meaningfull or not',
-	'urls_slogan' => 'Management of the URL variants, meaningfull or not'
+	'urls_description' => 'Management of the URL variants, meaningful or not',
+	'urls_slogan' => 'Management of the URL variants, meaningful or not'
 );
 
 ?>
