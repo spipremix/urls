@@ -21,6 +21,7 @@
 	<pipeline nom="arbo_creer_chaine_url" action="arbo_creer_chaine_url" inclure="urls/arbo.php" />
 	<pipeline nom="propres_creer_chaine_url" action="propres_creer_chaine_url" inclure="urls/propres.php" />
 	<pipeline nom="afficher_fiche_objet" inclure="urls_pipeline.php" />
+	<pipeline nom="ieconfig_metas" inclure="urls_ieconfig.php" />
 
 	<menu nom="configurer_urls" titre="urls:icone_configurer_urls" parent="menu_configuration" position="-1" icone="images/url-16.png" />
 	<menu nom="controler_urls" titre="urls:titre_gestion_des_urls" parent="menu_publication" position="-1" icone="images/url-16.png" />
