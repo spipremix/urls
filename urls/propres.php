@@ -118,7 +118,7 @@ function declarer_url_propre($type, $id_objet) {
 
 	// Recuperer une URL propre correspondant a l'objet.
 	// mais urls a 1 segment uniquement (pas d'urls /)
-	$row = sql_fetsel("U.url, U.date, U.perma, O.$champ_titre",
+	$row = sql_fetsel("U.url, U.date, U.perma, $champ_titre",
 	                  "$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
 	                  "O.$col_id=$id_objet AND (U.segments IS NULL OR U.segments=1)", '', 'U.date DESC', 1);
 	

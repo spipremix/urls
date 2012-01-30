@@ -250,7 +250,7 @@ function renseigner_url_arbo($type,$id_objet){
 		$order_by_parent = "O.".reset($champ_parent)."=U.id_parent DESC, ";
 	}
 	//  Recuperer une URL propre correspondant a l'objet.
-	$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, O.$champ_titre $sel_parent",
+	$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, $champ_titre $sel_parent",
 										"$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
 										"O.$col_id=$id_objet",
 										'',
