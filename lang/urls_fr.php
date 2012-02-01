@@ -14,6 +14,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// E
 	'erreur_arbo_2_segments_max' => 'Vous ne pouvez pas utiliser plus de deux segments d\'URL pour un objet',
 	'explication_editer' => 'La gestion avancée des URLs vous permet d\'éditer l\'URL des pages de chaque objet éditorial, et de gérer l\'historique de leur évolution.',
+	'erreur_config_url_forcee' => 'La configuration des URLs est forcée dans le fichier <tt>mes_options.php</tt>.',
 
 	// I
 	'icone_configurer_urls' => 'Configurer les URLs',
