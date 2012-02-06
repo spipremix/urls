@@ -15,6 +15,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// E
 	'erreur_arbo_2_segments_max' => 'نمي‌توانيد براي يك چيز بيش دو قطعه‌ از يو.آر.ال استفاده كنيد',
+	'erreur_config_url_forcee' => 'La configuration des URLs est forcée dans le fichier <tt>mes_options.php</tt>.', # NEW
 	'explication_editer' => 'La gestion avancée des urls vous permet d\'éditer l\'url des pages de chaque objet éditorial, et de gérer l\'historique de leur évolution.', # NEW
 
 	// I

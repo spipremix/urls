@@ -15,6 +15,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// E
 	'erreur_arbo_2_segments_max' => 'لا يمكن استخدام اكثر من قطعتي عنوان URL لاي عنصر',
+	'erreur_config_url_forcee' => 'La configuration des URLs est forcée dans le fichier <tt>mes_options.php</tt>.', # NEW
 	'explication_editer' => 'تتيح لك إدارة عناوين URL المتطورة تحرير عناوين صفحات اي عنصر تحريري وإنتاج سرد لتطورها', # NEW
 
 	// I
