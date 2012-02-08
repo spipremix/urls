@@ -15,7 +15,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// E
 	'erreur_arbo_2_segments_max' => 'Pre objekt nemôžete použiť viac ako dve zložky adresy',
-	'erreur_config_url_forcee' => 'La configuration des URLs est forcée dans le fichier <tt>mes_options.php</tt>.', # NEW
+	'erreur_config_url_forcee' => 'Nastavenia internetových adries sú uložené v súbore <tt>mes_options.php</tt>.',
 	'explication_editer' => 'Pokročilé riadenie internetových adries vám umožňuje upravovať internetové adresy (URL) redakčných stránok každého objektu a spravovať históriu ich vývoja.',
 
 	// I
