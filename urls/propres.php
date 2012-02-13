@@ -214,8 +214,11 @@ function _generer_url_propre($type, $id, $args='', $ancre='') {
 			. $marqueur2
 			. _terminaison_urls_propres;
 
-		// Repositionne l'URL par rapport a la racine du site (#GLOBALS)
-		$url = str_repeat('../', $GLOBALS['profondeur_url']).$url;
+		if (!defined('_SET_HTML_BASE') OR !_SET_HTML_BASE)
+			// Repositionne l'URL par rapport a la racine du site (#GLOBALS)
+			$url = str_repeat('../', $GLOBALS['profondeur_url']).$url;
+		else
+			$url = _DIR_RACINE . $url;
 	} else {
 
 		// objet connu mais sans possibilite d'URL lisible, revenir au defaut
