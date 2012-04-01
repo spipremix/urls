@@ -8,15 +8,16 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'actualiser_toutes' => 'به هنگام سازي تمام يو.آر.ال ها', # MODIF
+	'actualiser_toutes' => 'به هنگام سازي تمام يو.آر.ال ها (URLs)',
 
 	// B
 	'bouton_supprimer_url' => 'حذف اين يو.آر.ال',
 
 	// E
 	'erreur_arbo_2_segments_max' => 'نمي‌توانيد براي يك چيز بيش دو قطعه‌ از يو.آر.ال استفاده كنيد',
-	'erreur_config_url_forcee' => 'La configuration des URLs est forcée dans le fichier <tt>mes_options.php</tt>.', # NEW
-	'explication_editer' => 'La gestion avancée des urls vous permet d\'éditer l\'url des pages de chaque objet éditorial, et de gérer l\'historique de leur évolution.', # NEW
+	'erreur_config_url_forcee' => 'پيكربندي يو.آر.ال‌ها در پرونده‌ي  <tt>mes_options.php</tt> تنظيم مي‌شود. ',
+	'explication_editer' => 'مديريت پيشرفته‌ي يو.آر.ال‌ها به شما ازجاه مي‌دهد تا تو.آر.ال صفحه‌هاي هر مووضوع ويرايشي را ويرايش كنيد و تاريخچه‌ي تغيير آن‌ها را مديريت نماييد. 
+',
 
 	// I
 	'icone_configurer_urls' => 'پيكربندي يو.آر.آل‌‌ها',
@@ -32,13 +33,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_tri_url' => 'يو.آر.ال',
 	'label_url' => 'يو.آر.ال جديد',
 	'label_url_minuscules_0' => 'حفظ شكستگي تيتر',
-	'label_url_minuscules_1' => 'اعمال قواعد در جزئيات', # MODIF
-	'label_url_permanente' => 'حفظ اين يو.آر.ال (بعد از ويرايش اوبژه به هنگام سازي نشود)', # MODIF
+	'label_url_minuscules_1' => 'الزام يو.آر.ال‌ها به حروف كوچك',
+	'label_url_permanente' => ' قف كردن اين يو.ار.ال (بعد از اصلاح اين سوژه به هنگام سازي نمي‌شود). ',
 	'label_url_sep_id' => 'كاراكتر براي جدا كردن شماره‌ي افزوده شده در مورد جفت',
 	'label_urls_activer_controle_oui' => 'فعال سازي مديريت پيشرفته‌ي يو.آر.ال‌ها',
 	'label_urls_nb_max_car' => 'بيشترين تعداد كاراكتر‌ها',
 	'label_urls_nb_min_car' => 'كم‌ترين تعداد كاراركتر‌ها',
-	'liberer_url' => 'آزادسازي', # MODIF
+	'liberer_url' => 'آزادسازي',
 	'liste_des_urls' => 'تمام يو.آر.ال‌ ها',
 
 	// T
@@ -60,11 +61,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_voir' => 'تمام يو.آر.ال‌ها را بنگريد',
 
 	// U
-	'url_ajout_impossible' => 'خطاي ناگهاني. امكان ثبت اين يو.آر.ال نيست.', # MODIF
+	'url_ajout_impossible' => 'خطايي رخ داده است. ثبت اين يو.آر.ال ممكن نيست. ',
 	'url_ajoutee' => 'يو.آر.ال افزوده شد',
 
 	// V
-	'verifier_url_nettoyee' => 'يو.آر.ال تصحيح شد. مي‌توانيد قبل از ثبت چك كنيد.', # MODIF
+	'verifier_url_nettoyee' => 'يو.آر.ال تصحيح شد. مي‌توانيد قبل از ثبت چك كنيد.',
 	'verrouiller_url' => 'توقيف'
 );
 
