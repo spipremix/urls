@@ -587,7 +587,8 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 				// ici on a bien reconnu un segment en amont, mais le segment en cours est inconnu
 				// on pourrait renvoyer sur le dernier segment identifie
 				// mais de fait l'url entiere est inconnu : 404 aussi
-				return array(array(),'404');
+				// mais conserver le contexte qui peut contenir un fond d'ou venait peut etre $entite (reecriture urls)
+				return array($contexte,'404');
 			}
 		}
 
