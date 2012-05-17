@@ -598,7 +598,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 					$url_arbo_new[$k] = $s;
 				else
 					$url_arbo_new[$k] = implode('/',$o['segment']);
-			$url_arbo_new = implode('/',$url_arbo_new);
+			$url_arbo_new = ltrim(implode('/',$url_arbo_new),'/');
 			
 			if ($url_arbo_new!==$url_propre){
 				$url_redirect = $url_arbo_new;
