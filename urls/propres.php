@@ -196,8 +196,8 @@ function _generer_url_propre($type, $id, $args='', $ancre='') {
 	// Mode compatibilite pour conserver la distinction -Rubrique-
 	if (_MARQUEUR_URL) {
 		$marqueur = unserialize(_MARQUEUR_URL);
-		$marqueur1 = $marqueur[$type.'1']; // debut '+-'
-		$marqueur2 = $marqueur[$type.'2']; // fin '-+'
+		$marqueur1 = isset($marqueur[$type.'1']) ? $marqueur[$type.'1'] : '' ; // debut '+-'
+		$marqueur2 = isset($marqueur[$type.'2']) ? $marqueur[$type.'2'] : '' ; // fin '-+'
 	} else
 		$marqueur1 = $marqueur2 = '';
 	// fin
