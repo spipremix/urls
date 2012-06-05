@@ -19,7 +19,7 @@ define('URLS_PROPRES_CONFIG', 'propres');
 
 // TODO: une interface permettant de verifier qu'on veut effectivment modifier
 // une adresse existante
-define('CONFIRMER_MODIFIER_URL', false);
+defined('CONFIRMER_MODIFIER_URL') || define('CONFIRMER_MODIFIER_URL', false);
 
 /*
 
