@@ -52,8 +52,8 @@ function generer_url_auteur($id_auteur) {
 
 // http://doc.spip.org/@generer_url_document
 function generer_url_document($id_document) {
-	include_spip('inc/documents');
-	return generer_url_document_dist($id_document);
+	$generer_url_document = charger_fonction("generer_url_document","urls");
+	return $generer_url_document($id_document);
 }
 
 // http://doc.spip.org/@recuperer_parametres_url
