@@ -10,9 +10,24 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
+/**
+ * Gestion de l'action urls_actualiser
+ *
+ * @package SPIP\Urls_etendues\Action
+**/
+
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-// http://doc.spip.org/@action_instituer_syndic_article_dist
+/**
+ * Action qui actualise toutes URLs
+ *
+ * Actualise les éléments (objet/id_objet) de la table des urls,
+ * ajoutant donc à chacun une URL plus récente si son calcul
+ * est différent de ce qui est stocké.
+ *
+ * Cette action ne supprime pas les anciennes urls.
+ * Elle n'invalide pas non plus les URLs «permanentes».
+**/
 function action_urls_actualiser_dist() {
 
 	$securiser_action = charger_fonction('securiser_action', 'inc');
