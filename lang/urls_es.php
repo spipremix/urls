@@ -9,9 +9,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
 	'actualiser_toutes' => 'Actualización de todas las URLs',
-	'actualiser_toutes_explication' => 'Vous pouvez recalculer les URLs.
-		Si une URL a changé, une nouvelle entrée sera créée (sans perdre les URLs déjà
-		présentes et sans affecter les URLs définies manuellement.', # NEW
+	'actualiser_toutes_explication' => 'Puede recalcular las URLs. Si una URL ha cambiado, se creará una nueva entrada (sin perder las URLS ya existentes y sin afectar a las URLs definidas manualmente.',
 
 	// B
 	'bouton_supprimer_url' => 'Suprimir esta URL',
