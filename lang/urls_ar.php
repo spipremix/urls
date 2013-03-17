@@ -9,9 +9,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
 	'actualiser_toutes' => 'تحديث كل عناوين URL',
-	'actualiser_toutes_explication' => 'Vous pouvez recalculer les URLs.
-		Si une URL a changé, une nouvelle entrée sera créée (sans perdre les URLs déjà
-		présentes et sans affecter les URLs définies manuellement.', # NEW
+	'actualiser_toutes_explication' => 'يمكنك إعادة حساب عناوين URL.
+		إذا كان أحد العناوين قد تغير، يتم إنشاء سجل جديد (دون فقدان العناوين الموجودة ودون اي تأثير على العناوين المنشأة يدوياً).
+',
 
 	// B
 	'bouton_supprimer_url' => 'حذف هذا العنوان',
