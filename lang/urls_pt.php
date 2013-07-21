@@ -50,16 +50,16 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_urls_nb_max_car' => 'Si le titre est plus long, il sera coupé.', # NEW
 	'texte_urls_nb_min_car' => 'Si le titre est plus court, c\'est son Numéro identifiant qui sera utilisé.', # NEW
 	'titre_gestion_des_urls' => 'Gestão dos URLs',
-	'titre_type_arbo' => 'URLs Arborescentes', # NEW
+	'titre_type_arbo' => 'URLs Arborescentes',
 	'titre_type_html' => 'URLs Objectos HTML',
 	'titre_type_libres' => 'URLs Livres',
 	'titre_type_page' => 'Página URLs ',
 	'titre_type_propres' => 'URLs Limpos',
-	'titre_type_propres2' => 'URLs Propres+<tt>.html</tt>', # NEW
-	'titre_type_propres_qs' => 'URLs Propres en query-string', # NEW
+	'titre_type_propres2' => 'URLs Limpos+<tt>.html</tt>',
+	'titre_type_propres_qs' => 'URLs Limpos em query-string',
 	'titre_type_simple' => 'URLs Simples',
 	'titre_type_standard' => 'URLs Históricos',
-	'titre_type_urls' => 'Type d\'adresses URL', # NEW
+	'titre_type_urls' => 'Tipo de endereços URL',
 	'tout_voir' => 'Ver todos os URLs',
 
 	// U
