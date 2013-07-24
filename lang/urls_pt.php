@@ -47,7 +47,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'texte_type_urls' => 'Vous pouvez choisir ci-dessous le mode de calcul de l\'adresse des pages.', # NEW
 	'texte_type_urls_attention' => 'Attention ce réglage ne fonctionnera que si le fichier @htaccess@ est correctement installé à la racine du site.', # NEW
-	'texte_urls_nb_max_car' => 'Si le titre est plus long, il sera coupé.', # NEW
+	'texte_urls_nb_max_car' => 'Se o título é mais longo, será cortado.',
 	'texte_urls_nb_min_car' => 'Si le titre est plus court, c\'est son Numéro identifiant qui sera utilisé.', # NEW
 	'titre_gestion_des_urls' => 'Gestão dos URLs',
 	'titre_type_arbo' => 'URLs Arborescentes',
