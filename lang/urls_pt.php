@@ -8,10 +8,9 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'actualiser_toutes' => 'Actualizar todos os urls',
-	'actualiser_toutes_explication' => 'Vous pouvez recalculer les URLs.
-		Si une URL a changé, une nouvelle entrée sera créée (sans perdre les URLs déjà
-		présentes et sans affecter les URLs définies manuellement.', # NEW
+	'actualiser_toutes' => 'Actualizar todos os URLs',
+	'actualiser_toutes_explication' => 'Pode re-calcular os URLs.
+Se um URL mudou, uma nova entrada será criada (sem perder os URLs já presentes e sem os URLs definidos manualmente).',
 
 	// B
 	'bouton_supprimer_url' => 'Eliminar este URL',
@@ -19,7 +18,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// E
 	'erreur_arbo_2_segments_max' => 'Não pode usar mais de dois segmentos  URL para um objecto.',
 	'erreur_config_url_forcee' => 'A configuração dos URLs está fixada no ficheiro <tt>mes_options.php</tt>.',
-	'explication_editer' => 'La gestion avancée des urls vous permet d\'éditer l\'url des pages de chaque objet éditorial, et de gérer l\'historique de leur évolution.', # NEW
+	'explication_editer' => 'A gestão avançada de URLs permite editar o URL das páginas de cada objecto editorial, e gerir o histórico da sua evolução.',
 
 	// I
 	'icone_configurer_urls' => 'Configurar os URLs',
@@ -36,7 +35,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_url' => 'Novo URL',
 	'label_url_minuscules_0' => 'Conservar maiúsculas/minúsculas do título',
 	'label_url_minuscules_1' => 'Forçar os urls em minúsculas',
-	'label_url_permanente' => 'Verrouiller cette URL (pas de mise a jour après edition de l\'objet)', # NEW
+	'label_url_permanente' => 'Bloquear este URL (sem actualizações após a modificação do objecto)',
 	'label_url_sep_id' => 'Caracter para separar o número adicionado em caso de duplicado',
 	'label_urls_activer_controle_oui' => 'Activar a gestão avançada de URLs',
 	'label_urls_nb_max_car' => 'Número máximo de caracteres',
@@ -45,10 +44,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'liste_des_urls' => 'Todos os URLs',
 
 	// T
-	'texte_type_urls' => 'Vous pouvez choisir ci-dessous le mode de calcul de l\'adresse des pages.', # NEW
-	'texte_type_urls_attention' => 'Attention ce réglage ne fonctionnera que si le fichier @htaccess@ est correctement installé à la racine du site.', # NEW
+	'texte_type_urls' => 'Pode escolher como os URLs das páginas serão calculados.',
+	'texte_type_urls_attention' => 'Atenção: esta opção apenas funcionará se o ficheiro @htaccess@ estiver correctamente instalado no directório raiz do seu sítio.',
 	'texte_urls_nb_max_car' => 'Se o título é mais longo, será cortado.',
-	'texte_urls_nb_min_car' => 'Si le titre est plus court, c\'est son Numéro identifiant qui sera utilisé.', # NEW
+	'texte_urls_nb_min_car' => 'Se o título for demasiado curto, o número de identificação será utilizado.',
 	'titre_gestion_des_urls' => 'Gestão dos URLs',
 	'titre_type_arbo' => 'URLs Arborescentes',
 	'titre_type_html' => 'URLs Objectos HTML',
@@ -63,11 +62,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_voir' => 'Ver todos os URLs',
 
 	// U
-	'url_ajout_impossible' => 'Une erreur est survenue. Il n\'a pas &t& possible d\'enregistrer cette URL', # NEW
+	'url_ajout_impossible' => 'Ocorreu um erro. Este URL não pôde ser guardado.',
 	'url_ajoutee' => 'O URL foi adicionado',
 
 	// V
-	'verifier_url_nettoyee' => 'L\'URL a été corrigée, vous pouvez verifier avant de l\'enregistrer.', # NEW
+	'verifier_url_nettoyee' => 'O URL foi corrigido. Pode verificar antes de guardar.',
 	'verrouiller_url' => 'Bloquear'
 );
 
