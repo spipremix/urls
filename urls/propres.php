@@ -276,7 +276,7 @@ function urls_propres_dist($i, $entite, $args='', $ancre='') {
 			$url_propre = generer_url_entite($id_objet, $type);
 			if (strlen($url_propre)
 			AND !strstr($url,$url_propre)) {
-				list(,$hash) = explode('#', $url_propre);
+				list(,$hash) = array_pad(explode('#', $url_propre), 2, null);
 				$args = array();
 				foreach(array_filter(explode('&', $suite)) as $fragment) {
 					if ($fragment != "$_id=$id_objet")
