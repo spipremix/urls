@@ -607,7 +607,8 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 				$col_id = id_table_objet($entite);
 				$url_new = generer_url_entite($contexte[$col_id],$entite);
 				// securite contre redirection infinie
-				if ($url_new!==$url_propre)
+				if ($url_new!==$url_propre
+					AND rtrim($url_new,"/")!==rtrim($url_propre,"/"))
 					$url_redirect = url_absolue($url_new);
 			}
 			else {
