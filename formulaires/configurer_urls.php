@@ -13,7 +13,7 @@
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
 function formulaires_configurer_urls_charger_dist(){
-	if ($GLOBALS['type_urls'] != 'page') // fixe par mes_options
+	if (isset($GLOBALS['type_urls'])) // priorité au fichier d'options
 		return "<p>"._T('urls:erreur_config_url_forcee')."</p>";
 
 	$valeurs = array(
