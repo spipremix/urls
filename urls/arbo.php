@@ -89,7 +89,7 @@ if (!defined('_terminaison_urls_arbo')) define('_terminaison_urls_arbo', '');
 if (!defined('_url_arbo_sep_id')) define('_url_arbo_sep_id',isset($config_urls_arbo['url_arbo_sep_id'])?$config_urls_arbo['url_arbo_sep_id']:'-');
 // option pour tout passer en minuscules
 if (!defined('_url_arbo_minuscules')) define('_url_arbo_minuscules',isset($config_urls_arbo['url_arbo_minuscules'])?$config_urls_arbo['url_arbo_minuscules']:1);
-if (!defined('_URLS_ARBO_MAX')) define('_URLS_ARBO_MAX', isset($config_urls_arbo['URLS_ARBO_MAX'])?$config_urls_arbo['URLS_ARBO_MAX']:35);
+if (!defined('_URLS_ARBO_MAX')) define('_URLS_ARBO_MAX', isset($config_urls_arbo['URLS_ARBO_MAX'])?$config_urls_arbo['URLS_ARBO_MAX']:80);
 if (!defined('_URLS_ARBO_MIN')) define('_URLS_ARBO_MIN', isset($config_urls_arbo['URLS_ARBO_MIN'])?$config_urls_arbo['URLS_ARBO_MIN']:3);
 
 if (!defined('_url_sep_id')) define('_url_sep_id',_url_arbo_sep_id);
