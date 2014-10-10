@@ -233,6 +233,12 @@ function _generer_url_propre($type, $id, $args='', $ancre='') {
 			. $marqueur2
 			. _terminaison_urls_propres;
 
+		// les urls de type /1234 sont interpretees comme urls courte vers article 1234
+		// on les encadre d'un - : /-1234-
+		if (is_numeric($url)){
+			$url = "-".$url."-";
+		}
+
 		if (!defined('_SET_HTML_BASE') OR !_SET_HTML_BASE)
 			// Repositionne l'URL par rapport a la racine du site (#GLOBALS)
 			$url = str_repeat('../', $GLOBALS['profondeur_url']).$url;
