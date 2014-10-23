@@ -64,7 +64,6 @@ function urls_html_dist($i, $entite, $args='', $ancre='') {
 	if ($GLOBALS['profondeur_url']>0 AND $entite=='sommaire'){
 		return array(array(),'404');
 	}
-	$url = $i;
 
 	// voir s'il faut recuperer le id_* implicite et les &debut_xx;
 	include_spip('inc/urls');
@@ -86,14 +85,7 @@ function urls_html_dist($i, $entite, $args='', $ancre='') {
 	 */
 	// Si on est revenu en mode html, mais c'est une ancienne url_propre
 	// on ne redirige pas, on assume le nouveau contexte (si possible)
-	$url_propre = isset($url)
-		? $url
-		: (isset($_SERVER['REDIRECT_url_propre'])
-			? $_SERVER['REDIRECT_url_propre']
-			: (isset($_ENV['url_propre'])
-				? $_ENV['url_propre']
-				: ''
-				));
+	$url_propre = $i;
 	if ($url_propre) {
 		if ($GLOBALS['profondeur_url']<=0)
 			$urls_anciennes = charger_fonction('propres','urls');

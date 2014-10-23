@@ -478,19 +478,7 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 	/* Fin compatibilite anciennes urls */
 
 	// Chercher les valeurs d'environnement qui indiquent l'url-propre
-	if (isset($_SERVER['REDIRECT_url_propre']))
-		$url_propre = $_SERVER['REDIRECT_url_propre'];
-	elseif (isset($_ENV['url_propre']))
-		$url_propre = $_ENV['url_propre'];
-	else {
-		// ne prendre que le segment d'url qui correspond, en fonction de la profondeur calculee
-		$url = ltrim($url,'/');
-		$url = explode('/',$url);
-		while (count($url)>$GLOBALS['profondeur_url']+1)
-			array_shift($url);
-		$url = implode('/',$url);
-		$url_propre = preg_replace(',[?].*,', '', $url);
-	}
+	$url_propre = preg_replace(',[?].*,', '', $url);
 
 	// Mode Query-String ?
 	if (!$url_propre
