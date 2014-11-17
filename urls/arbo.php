@@ -526,7 +526,9 @@ function urls_arbo_dist($i, $entite, $args='', $ancre='') {
 			// d'abord recherche avec prefixe parent, en une requete car aucun risque de colision
 			$row=sql_fetsel('id_objet, type, url',
 											'spip_urls',
-											is_null($type)?"url=".sql_quote($url_segment):sql_in('url',array("$type/$url_segment",$type)),
+											is_null($type)
+												? "url=".sql_quote($url_segment, '', 'TEXT')
+												: sql_in('url',array("$type/$url_segment",$type)),
 											'',
 											// en priorite celui qui a le bon parent et les deux segments
 											// puis le bon parent avec 1 segment

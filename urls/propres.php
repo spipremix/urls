@@ -342,11 +342,11 @@ function urls_propres_dist($i, $entite, $args='', $ancre='') {
 
 	// Compatibilite avec les anciens marqueurs d'URL propres
 	// Tester l'entree telle quelle (avec 'url_libre' des sites ont pu avoir des entrees avec marqueurs dans la table spip_urls)
-	if (!$row = sql_fetsel('id_objet, type, date, url', 'spip_urls', 'url='.sql_quote($url_propre))) {
+	if (!$row = sql_fetsel('id_objet, type, date, url', 'spip_urls', 'url='.sql_quote($url_propre, '', 'TEXT'))) {
 		// Sinon enlever les marqueurs eventuels
 		$url_propre2 = retirer_marqueurs_url_propre($url_propre);
 
-		$row = sql_fetsel('id_objet, type, date, url', 'spip_urls', 'url='.sql_quote($url_propre2));
+		$row = sql_fetsel('id_objet, type, date, url', 'spip_urls', 'url='.sql_quote($url_propre2, '', 'TEXT'));
 	}
 
 	if ($row) {
@@ -357,9 +357,9 @@ function urls_propres_dist($i, $entite, $args='', $ancre='') {
 
 		// Si l'url est vieux, donner le nouveau
 		if ($recent = sql_fetsel('url, date', 'spip_urls',
-		'type='.sql_quote($row['type']).' AND id_objet='.sql_quote($row['id_objet'])
-		.' AND date>'.sql_quote($row['date'])
-		.' AND url<>'.sql_quote($row['url']), '', 'date DESC', 1)) {
+		'type='.sql_quote($row['type'], '', 'TEXT').' AND id_objet='.sql_quote($row['id_objet'])
+		.' AND date>'.sql_quote($row['date'], '', 'TEXT')
+		.' AND url<>'.sql_quote($row['url'], '', 'TEXT'), '', 'date DESC', 1)) {
 			// Mode compatibilite pour conserver la distinction -Rubrique-
 			if (_MARQUEUR_URL) {
 				$marqueur = unserialize(_MARQUEUR_URL);
