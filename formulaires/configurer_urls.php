@@ -18,7 +18,7 @@ function formulaires_configurer_urls_charger_dist(){
 
 	$valeurs = array(
 		'type_urls' => $GLOBALS['meta']['type_urls'],
-		'urls_activer_controle' => $GLOBALS['meta']['urls_activer_controle'],
+		'urls_activer_controle' => (isset($GLOBALS['meta']['urls_activer_controle']) ? $GLOBALS['meta']['urls_activer_controle'] : ''),
 		'_urls_dispos'=>type_urls_lister(),
 	);
 
