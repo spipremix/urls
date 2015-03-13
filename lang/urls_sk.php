@@ -10,7 +10,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// A
 	'actualiser_toutes' => 'Aktualizovať všetky URL',
 	'actualiser_toutes_explication' => 'Môžete obnoviť adresy URL.
-		Ak sa nejaká adresa zmenila, bude vytvorený nový záznam (bez toho, aby ste stratili zaznamenané adresy URL a bez vplyvu na adresy zadané ručne.',
+		Ak sa nejaká adresa zmenila, bude vytvorený nový záznam (bez straty už uložených adries URL a bez vplyvu na adresy zadané ručne).',
 
 	// B
 	'bouton_supprimer_url' => 'Odstrániť túto URL',
