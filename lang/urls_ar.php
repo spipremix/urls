@@ -11,7 +11,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actualiser_toutes' => 'تحديث كل عناوين URL',
 	'actualiser_toutes_explication' => 'يمكنك إعادة حساب عناوين URL.
 		إذا كان أحد العناوين قد تغير، يتم إنشاء سجل جديد (دون فقدان العناوين الموجودة ودون اي تأثير على العناوين المنشأة يدوياً).
-',
+', # MODIF
 
 	// B
 	'bouton_supprimer_url' => 'حذف هذا العنوان',
