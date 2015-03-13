@@ -30,6 +30,9 @@
 		<traducteur nom="gerbrand" lien="http://trad.spip.net/auteur/gerbrand" />
 		<traducteur nom="Suske" lien="http://trad.spip.net/auteur/suske" />
 	</langue>
+	<langue code="oc_ni_mis" url="http://trad.spip.net/tradlang_module/paquet-urls?lang_cible=oc_ni_mis" total="2" traduits="2" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="sylvain" lien="http://trad.spip.net/auteur/sylvain" />
+	</langue>
 	<langue code="pt_br" url="http://trad.spip.net/tradlang_module/paquet-urls?lang_cible=pt_br" total="2" traduits="2" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
 		<traducteur nom="Ricardo Porto" lien="http://trad.spip.net/auteur/ricardo-porto" />
 	</langue>
