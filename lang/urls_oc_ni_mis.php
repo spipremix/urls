@@ -60,7 +60,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_type_simple' => 'URL Simpli',
 	'titre_type_standard' => 'URL Istòriqui',
 	'titre_type_urls' => 'Tìpou d’adressa URL',
-	'tout_voir' => 'Vèire touti li URL',
+	'tout_voir' => 'Veire touti li URL',
 
 	// U
 	'url_ajout_impossible' => 'Una errour s’es prouducha. L’URL noun a pouscut estre registrada.',
