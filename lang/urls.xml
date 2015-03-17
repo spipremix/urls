@@ -42,7 +42,8 @@
 	</langue>
 	<langue code="gl" url="http://trad.spip.net/tradlang_module/urls?lang_cible=gl" total="45" traduits="3" relire="0" modifs="0" nouveaux="42" pourcent="6.67">
 	</langue>
-	<langue code="it" url="http://trad.spip.net/tradlang_module/urls?lang_cible=it" total="45" traduits="44" relire="0" modifs="1" nouveaux="0" pourcent="97.78">
+	<langue code="it" url="http://trad.spip.net/tradlang_module/urls?lang_cible=it" total="45" traduits="45" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="Julia14" lien="http://trad.spip.net/auteur/julia14" />
 		<traducteur nom="phante" lien="http://trad.spip.net/auteur/phante" />
 	</langue>
 	<langue code="it_fem" url="http://trad.spip.net/tradlang_module/urls?lang_cible=it_fem" total="45" traduits="3" relire="0" modifs="0" nouveaux="42" pourcent="6.67">
