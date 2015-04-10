@@ -11,7 +11,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actualiser_toutes' => 'Update all urls',
 	'actualiser_toutes_explication' => 'You can re-process the URLs.
 		If a URL has changed, a new entry will be created (without loosing the URLs already 
-		present and without affecting the manually defined URLs).', # MODIF
+		present and without affecting the manually defined URLs).',
 
 	// B
 	'bouton_supprimer_url' => 'Delete this URL',
