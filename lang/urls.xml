@@ -13,7 +13,8 @@
 	</langue>
 	<langue code="cs" url="http://trad.spip.net/tradlang_module/urls?lang_cible=cs" total="45" traduits="1" relire="0" modifs="0" nouveaux="44" pourcent="2.22">
 	</langue>
-	<langue code="de" url="http://trad.spip.net/tradlang_module/urls?lang_cible=de" total="45" traduits="44" relire="0" modifs="1" nouveaux="0" pourcent="97.78">
+	<langue code="de" url="http://trad.spip.net/tradlang_module/urls?lang_cible=de" total="45" traduits="45" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="kennethkeen" lien="http://trad.spip.net/auteur/kennethkeen" />
 		<traducteur nom="klaus++" lien="http://trad.spip.net/auteur/klaus" />
 		<traducteur nom="Torsten Willmann" lien="http://trad.spip.net/auteur/torsten-willmann" />
 	</langue>
