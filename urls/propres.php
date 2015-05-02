@@ -68,7 +68,7 @@ if (!defined('_MARQUEUR_URL')) define('_MARQUEUR_URL', serialize(array('rubrique
 
 // Retire les marqueurs de type dans une URL propre ancienne maniere
 
-// http://doc.spip.org/@retirer_marqueurs_url_propre
+// http://code.spip.net/@retirer_marqueurs_url_propre
 function retirer_marqueurs_url_propre($url_propre) {
 	if (preg_match(',^[+][-](.*?)[-][+]$,', $url_propre, $regs)) {
 		return $regs[1];
@@ -85,7 +85,7 @@ function retirer_marqueurs_url_propre($url_propre) {
 // precedent, un tableau indiquant le titre de l'objet, son type, son id,
 // et doit donner en retour une chaine d'url, sans se soucier de la
 // duplication eventuelle, qui sera geree apres
-// http://doc.spip.org/@creer_chaine_url
+// http://code.spip.net/@creer_chaine_url
 function urls_propres_creer_chaine_url($x) {
 	// NB: ici url_old ne sert pas, mais un plugin qui ajouterait une date
 	// pourrait l'utiliser pour juste ajouter la 
@@ -104,7 +104,7 @@ function urls_propres_creer_chaine_url($x) {
 
 // Trouver l'URL associee a la n-ieme cle primaire d'une table SQL
 
-// http://doc.spip.org/@declarer_url_propre
+// http://code.spip.net/@declarer_url_propre
 function declarer_url_propre($type, $id_objet) {
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table(table_objet($type));
@@ -204,7 +204,7 @@ function declarer_url_propre($type, $id_objet) {
 	return $set['url'];
 }
 
-// http://doc.spip.org/@_generer_url_propre
+// http://code.spip.net/@_generer_url_propre
 function _generer_url_propre($type, $id, $args='', $ancre='') {
 
 	if ($generer_url_externe = charger_fonction("generer_url_$type",'urls',true)) {
@@ -266,7 +266,7 @@ function _generer_url_propre($type, $id, $args='', $ancre='') {
 // retrouve le fond et les parametres d'une URL propre
 // ou produit une URL propre si on donne un parametre
 // @return array([contexte],[type],[url_redirect],[fond]) : url decodee
-// http://doc.spip.org/@urls_propres_dist
+// http://code.spip.net/@urls_propres_dist
 function urls_propres_dist($i, $entite, $args='', $ancre='') {
 
 	if (is_numeric($i))
