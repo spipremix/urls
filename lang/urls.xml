@@ -70,7 +70,8 @@
 	</langue>
 	<langue code="ro" url="http://trad.spip.net/tradlang_module/urls?lang_cible=ro" total="45" traduits="3" relire="0" modifs="0" nouveaux="42" pourcent="6.67">
 	</langue>
-	<langue code="ru" url="http://trad.spip.net/tradlang_module/urls?lang_cible=ru" total="45" traduits="44" relire="0" modifs="1" nouveaux="0" pourcent="97.78">
+	<langue code="ru" url="http://trad.spip.net/tradlang_module/urls?lang_cible=ru" total="45" traduits="41" relire="0" modifs="4" nouveaux="0" pourcent="91.11">
+		<traducteur nom="olly" lien="http://trad.spip.net/auteur/olly" />
 		<traducteur nom="Serge Markitanenko" lien="http://trad.spip.net/auteur/serge-markitanenko" />
 	</langue>
 	<langue code="sk" url="http://trad.spip.net/tradlang_module/urls?lang_cible=sk" total="45" traduits="45" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
