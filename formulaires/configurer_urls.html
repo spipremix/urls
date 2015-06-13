@@ -10,7 +10,7 @@
 		#ACTION_FORMULAIRE{#ENV{action}}
 		<fieldset>
 			<legend><:urls:titre_type_urls:></legend>
-			<ul>
+			<ul class="editer-groupe">
 				#SET{htaccess,'<tt>.htaccess</tt>'}
 				#SET{name,type_urls}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
@@ -26,7 +26,7 @@
 		<fieldset>
 			<legend><:urls:titre_gestion_des_urls:></legend>
 			<p><:urls:explication_editer:></p>
-			<ul>
+			<ul class="editer-groupe">
 				<!--EX10-->
 				#SET{name,urls_activer_controle}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 				<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
