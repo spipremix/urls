@@ -11,7 +11,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actualiser_toutes' => 'Alle URLs aanpassen',
 	'actualiser_toutes_explication' => 'Je kan de URLs opnieuw verwerken.
 		Als een URL wijzigt, wordt een nieuwe entry gemaakt (de reeds aanwezige URLs en  
-		handmatige gedefinieerde URLs blijven behouden).', # MODIF
+		handmatige gedefinieerde URLs blijven behouden).',
 
 	// B
 	'bouton_supprimer_url' => 'Deze URL verwijderen',
