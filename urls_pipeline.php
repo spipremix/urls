@@ -33,7 +33,7 @@ function urls_afficher_fiche_objet($flux){
 	  AND objet_info($objet,'page')){
 		$p = strpos($flux['data'],'fiche_objet');
 		$p = strpos($flux['data'],'<!--/hd-->',$p);
-		$p = strrpos(substr($flux['data'],0,$p),'<div');
+		//$p = strrpos(substr($flux['data'],0,$p),'<div');
 
 		$res = recuperer_fond('prive/objets/editer/url',array('id_objet'=>$id_objet,'objet'=>$objet),array('ajax'=>true));
 		$flux['data'] = substr_replace($flux['data'],$res, $p, 0);
