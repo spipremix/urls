@@ -21,7 +21,7 @@ function action_editer_url_dist() {
 }
 
 
-function url_nettoyer($titre,$longueur_maxi,$longueur_min=0,$separateur='-',$filtre=''){
+function url_nettoyer($titre, $longueur_maxi, $longueur_min = 0, $separateur = '-', $filtre = ''){
 
 	$titre = supprimer_tags(supprimer_numero(extraire_multi($titre)));
 	$url = translitteration(corriger_caracteres($titre));
@@ -74,7 +74,7 @@ function url_nettoyer($titre,$longueur_maxi,$longueur_min=0,$separateur='-',$fil
 	return $url;
 }
 
-function url_insert(&$set,$confirmer,$separateur){
+function url_insert(&$set, $confirmer, $separateur){
 	$has_parent = true;
 	# assurer la coherence des champs techniques si non fournis
 	if (!isset($set['id_parent'])){
@@ -185,7 +185,7 @@ function url_sql_quote_like($url){
 	return sql_quote(str_replace(array("%","_"),array("\\%","\\_"),$url))." ESCAPE ".sql_quote('\\');
 }
 
-function url_verrouiller($objet,$id_objet,$url){
+function url_verrouiller($objet, $id_objet, $url){
 	$where = "id_objet=".intval($id_objet)." AND type=".sql_quote($objet);
 	$where .= " AND url=".sql_quote($url);
 
@@ -193,7 +193,7 @@ function url_verrouiller($objet,$id_objet,$url){
 	sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s',time()+10*365.25*24*3600)), $where);
 }
 
-function url_delete($objet,$id_objet,$url=""){
+function url_delete($objet, $id_objet, $url = ""){
 	$where = "id_objet=".intval($id_objet)." AND type=".sql_quote($objet);
 	if (strlen($url))
 		$where .= " AND url=".sql_quote($url);

@@ -26,7 +26,7 @@ if (!defined('_terminaison_urls_propres'))
 	define ('_terminaison_urls_propres', '.html');
 
 // http://code.spip.net/@urls_propres2_dist
-function urls_propres2_dist($i, &$entite, $args='', $ancre='') {
+function urls_propres2_dist($i, &$entite, $args = '', $ancre = '') {
 	$f = charger_fonction('propres', 'urls');
 	return $f($i, $entite, $args, $ancre);
 }

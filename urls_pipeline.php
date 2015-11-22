@@ -13,7 +13,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 function urls_autoriser($f){return $f;}
 
-function autoriser_url_administrer($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+function autoriser_url_administrer($faire, $type = '', $id = 0, $qui = NULL, $opt = NULL){
 	return (
 		isset($GLOBALS['meta']['urls_activer_controle'])
 		AND $GLOBALS['meta']['urls_activer_controle']=='oui'
@@ -21,7 +21,7 @@ function autoriser_url_administrer($faire, $type='', $id=0, $qui = NULL, $opt = 
 	  AND !$qui['restreint']);
 }
 
-function autoriser_controlerurls_menu_dist($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+function autoriser_controlerurls_menu_dist($faire, $type = '', $id = 0, $qui = NULL, $opt = NULL){
 	return autoriser('administrer','url');
 }
 

@@ -19,13 +19,13 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param int $id
  * @return array
  */
-function formulaires_editer_url_objet_charger($type,$id){
+function formulaires_editer_url_objet_charger($type, $id){
 	$valeurs = array('url'=>'','_objet'=>$type,'_id_objet'=>$id);
 
 	return $valeurs;
 }
 
-function formulaires_editer_url_objet_verifier($type,$id){
+function formulaires_editer_url_objet_verifier($type, $id){
 	$erreurs = array();
 	include_spip('action/editer_url');
 	if (!$url = _request('url')){
@@ -63,7 +63,7 @@ function formulaires_editer_url_objet_verifier($type,$id){
  * @param int $id
  * @return array
  */
-function formulaires_editer_url_objet_traiter($type,$id){
+function formulaires_editer_url_objet_traiter($type, $id){
 	$valeurs = array('editable'=>true);
 
 	include_spip('action/editer_url');

@@ -22,7 +22,7 @@ define ('_debut_urls_simple', get_spip_script('./').'?'._SPIP_PAGE.'=');
 #######
 
 
-function _generer_url_simple($type,$id, $args='', $ancre='') {
+function _generer_url_simple($type, $id, $args = '', $ancre = '') {
 
 	if ($generer_url_externe = charger_fonction("generer_url_$type",'urls',true)) {
 		$url = $generer_url_externe($id, $args, $ancre);
@@ -40,7 +40,7 @@ function _generer_url_simple($type,$id, $args='', $ancre='') {
 // retrouve le fond et les parametres d'une URL abregee
 // le contexte deja existant est fourni dans args sous forme de tableau ou query string
 // http://code.spip.net/@urls_page_dist
-function urls_simple_dist($i, &$entite, $args='', $ancre='')
+function urls_simple_dist($i, &$entite, $args = '', $ancre = '')
 {
 	if (is_numeric($i)){
 		include_spip('urls/page');

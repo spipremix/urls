@@ -210,7 +210,7 @@ function urls_arbo_creer_chaine_url($x) {
  * @param string $type_parent
  * @return string
  */
-function declarer_url_arbo_rec($url,$type,$parent,$type_parent){
+function declarer_url_arbo_rec($url, $type, $parent, $type_parent){
 	if (is_null($parent)){
 		return $url;
 	}
@@ -231,7 +231,7 @@ function declarer_url_arbo_rec($url,$type,$parent,$type_parent){
  * @param int $id_objet
  * @return bool|null|array
  */
-function renseigner_url_arbo($type,$id_objet){
+function renseigner_url_arbo($type, $id_objet){
 	$urls = array();
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table(table_objet($type));
@@ -382,7 +382,7 @@ function declarer_url_arbo($type, $id_objet) {
  * @param string $ancre
  * @return string
  */
-function _generer_url_arbo($type, $id, $args='', $ancre='') {
+function _generer_url_arbo($type, $id, $args = '', $ancre = '') {
 
 	if ($generer_url_externe = charger_fonction("generer_url_$type",'urls',true)) {
 		$url = $generer_url_externe($id, $args, $ancre);
@@ -431,7 +431,7 @@ function _generer_url_arbo($type, $id, $args='', $ancre='') {
  * @param string $ancre
  * @return array|string
  */
-function urls_arbo_dist($i, $entite, $args='', $ancre='') {
+function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 	if (is_numeric($i))
 		return _generer_url_arbo($entite, $i, $args, $ancre);
 

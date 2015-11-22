@@ -205,7 +205,7 @@ function declarer_url_propre($type, $id_objet) {
 }
 
 // http://code.spip.net/@_generer_url_propre
-function _generer_url_propre($type, $id, $args='', $ancre='') {
+function _generer_url_propre($type, $id, $args = '', $ancre = '') {
 
 	if ($generer_url_externe = charger_fonction("generer_url_$type",'urls',true)) {
 		$url = $generer_url_externe($id, $args, $ancre);
@@ -267,7 +267,7 @@ function _generer_url_propre($type, $id, $args='', $ancre='') {
 // ou produit une URL propre si on donne un parametre
 // @return array([contexte],[type],[url_redirect],[fond]) : url decodee
 // http://code.spip.net/@urls_propres_dist
-function urls_propres_dist($i, $entite, $args='', $ancre='') {
+function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 
 	if (is_numeric($i))
 		return _generer_url_propre($entite, $i, $args, $ancre);

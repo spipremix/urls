@@ -33,7 +33,7 @@ function formulaires_configurer_urls_traiter_dist(){
 	return array('message_ok'=>_T('config_info_enregistree'),'editable'=>true);
 }
 
-function type_url_choisir($liste,$name,$selected){
+function type_url_choisir($liste, $name, $selected){
 	$res = '<dl class="choix">';
 	foreach($liste as $url){
 		$k = $url[0];

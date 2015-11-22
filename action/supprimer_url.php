@@ -12,7 +12,7 @@
 
 if (!defined("_ECRIRE_INC_VERSION")) return;
 
-function action_supprimer_url_dist($arg=null) {
+function action_supprimer_url_dist($arg = null) {
 
 	if (is_null($arg)){
 		// Rien a faire ici pour le moment
