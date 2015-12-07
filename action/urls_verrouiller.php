@@ -19,12 +19,11 @@ function action_urls_verrouiller_dist() {
 	$arg = $securiser_action();
 
 	include_spip('inc/autoriser');
-	if (autoriser('modifier',$type,$id)){
-		$arg = explode('-',$arg);
-		$type = array_shift($arg);
-		$id = array_shift($arg);
-		$url = implode('-',$arg);
-
+	$arg = explode('-',$arg);
+	$type = array_shift($arg);
+	$id = array_shift($arg);
+	$url = implode('-',$arg);
+	if (autoriser('modifierurl',$type,$id)){
 		include_spip('action/editer_url');
 		url_verrouiller($type, $id, $url);
 	}

@@ -25,6 +25,24 @@ function autoriser_controlerurls_menu_dist($faire, $type = '', $id = 0, $qui = N
 	return autoriser('administrer','url');
 }
 
+function autoriser_modifierurl($faire, $type='', $id=0, $qui = NULL, $opt = NULL){
+	if (autoriser('modifier',$type,$id,$qui,$opt)){
+		return true;
+	}
+
+	// si pas le droit de 'modifier', regarder d'un peu plus pres pourquoi
+	if (!$type OR !intval($id)) {
+		return false;
+	}
+	// verifier si l'objet existe encore en base
+	$table_sql = table_objet_sql($type);
+	$primary = id_table_objet($type);
+	if (!sql_countsel($table_sql,"$primary=".intval($id))){
+		return autoriser('administrer','url');
+	}
+	return false;
+}
+
 function urls_afficher_fiche_objet($flux){
 	if (isset($GLOBALS['meta']['urls_activer_controle'])
 		AND $GLOBALS['meta']['urls_activer_controle']=='oui'

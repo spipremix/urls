@@ -32,7 +32,7 @@ function action_supprimer_url_dist($arg = null) {
 	$where = 'id_parent='.intval($id_parent)." AND url=".sql_quote($url);
 	if($row = sql_fetsel('*','spip_urls',$where)){
 
-		if (autoriser('modifier',$row['type'],$row['id_objet'])){
+		if (autoriser('modifierurl',$row['type'],$row['id_objet'])){
 			sql_delete('spip_urls',$where);
 		}
 		else
