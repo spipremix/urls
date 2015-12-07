@@ -534,7 +534,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 											// puis le bon parent avec 1 segment
 											// puis un parent indefini (le 0 de preference) et les deux segments
 											// puis un parent indefini (le 0 de preference) et 1 segment
-											(intval($cp)?"id_parent=".intval($cp)." DESC, ":"")."segments DESC, id_parent"
+											(intval($cp)?"id_parent=".intval($cp)." DESC, ":"id_parent>=0 DESC, ")."segments DESC, id_parent"
 			);
 			if ($row){
 				if (!is_null($type) AND $row['url']==$type){

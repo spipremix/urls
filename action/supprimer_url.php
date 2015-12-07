@@ -19,9 +19,15 @@ function action_supprimer_url_dist($arg = null) {
 		$securiser_action = charger_fonction('securiser_action', 'inc');
 		$arg = $securiser_action();
 	}
-	$arg = explode('-',$arg);
-	$id_parent = array_shift($arg);
-	$url = implode('-',$arg);
+	if (strncmp($arg,"-1-",3)==0){
+		$id_parent = -1;
+		$url = substr($arg,3);
+	}
+	else {
+		$arg = explode('-',$arg);
+		$id_parent = array_shift($arg);
+		$url = implode('-',$arg);
+	}
 
 	$where = 'id_parent='.intval($id_parent)." AND url=".sql_quote($url);
 	if($row = sql_fetsel('*','spip_urls',$where)){
