@@ -18,9 +18,9 @@ function urls_autoriser($f) { return $f; }
 function autoriser_url_administrer($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 	return (
 		isset($GLOBALS['meta']['urls_activer_controle'])
-		AND $GLOBALS['meta']['urls_activer_controle'] == 'oui'
-		AND $qui['statut'] == '0minirezo'
-		AND !$qui['restreint']);
+		and $GLOBALS['meta']['urls_activer_controle'] == 'oui'
+		and $qui['statut'] == '0minirezo'
+		and !$qui['restreint']);
 }
 
 function autoriser_controlerurls_menu_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
@@ -33,7 +33,7 @@ function autoriser_modifierurl($faire, $type = '', $id = 0, $qui = null, $opt = 
 	}
 
 	// si pas le droit de 'modifier', regarder d'un peu plus pres pourquoi
-	if (!$type OR !intval($id)) {
+	if (!$type or !intval($id)) {
 		return false;
 	}
 	// verifier si l'objet existe encore en base
@@ -48,10 +48,10 @@ function autoriser_modifierurl($faire, $type = '', $id = 0, $qui = null, $opt = 
 
 function urls_afficher_fiche_objet($flux) {
 	if (isset($GLOBALS['meta']['urls_activer_controle'])
-		AND $GLOBALS['meta']['urls_activer_controle'] == 'oui'
-		AND $objet = $flux['args']['type']
-		AND $id_objet = $flux['args']['id']
-		AND objet_info($objet, 'page')
+		and $GLOBALS['meta']['urls_activer_controle'] == 'oui'
+		and $objet = $flux['args']['type']
+		and $id_objet = $flux['args']['id']
+		and objet_info($objet, 'page')
 	) {
 		$p = strpos($flux['data'], 'fiche_objet');
 		$p = strpos($flux['data'], '<!--/hd-->', $p);
@@ -64,5 +64,3 @@ function urls_afficher_fiche_objet($flux) {
 
 	return $flux;
 }
-
-?>

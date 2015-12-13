@@ -34,5 +34,3 @@ function urls_libres_dist($i, &$entite, $args = '', $ancre = '') {
 
 	return $f($i, $entite, $args, $ancre);
 }
-
-?>

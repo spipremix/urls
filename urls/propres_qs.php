@@ -43,5 +43,3 @@ function urls_propres_qs_dist($i, &$entite, $args = '', $ancre = '') {
 
 	return $f($i, $entite, $args, $ancre);
 }
-
-?>

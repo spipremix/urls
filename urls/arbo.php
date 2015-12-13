@@ -136,7 +136,7 @@ function url_arbo_parent($type) {
 			'breve' => array('id_rubrique', 'rubrique'),
 			'site' => array('id_rubrique', 'rubrique')
 		);
-		if (isset($GLOBALS['url_arbo_parents']) AND !isset($_REQUEST['url_arbo_parents'])) {
+		if (isset($GLOBALS['url_arbo_parents']) and !isset($_REQUEST['url_arbo_parents'])) {
 			$parents = array_merge($parents, $GLOBALS['url_arbo_parents']);
 		}
 	}
@@ -189,7 +189,7 @@ function url_arbo_type($type) {
 	static $synonymes_types = null;
 	if (!$synonymes_types) {
 		$synonymes_types = array('rubrique' => '');
-		if (isset($GLOBALS['url_arbo_types']) AND is_array($GLOBALS['url_arbo_types'])) {
+		if (isset($GLOBALS['url_arbo_types']) and is_array($GLOBALS['url_arbo_types'])) {
 			$synonymes_types = array_merge($synonymes_types, $GLOBALS['url_arbo_types']);
 		}
 	}
@@ -323,9 +323,9 @@ function declarer_url_arbo($type, $id_objet) {
 	// l'autorisation est verifiee apres avoir calcule la nouvelle url propre
 	// car si elle ne change pas, cela ne sert a rien de verifier les autorisations
 	// qui requetent en base
-	$modifier_url = (defined('_VAR_URLS') AND _VAR_URLS);
+	$modifier_url = (defined('_VAR_URLS') and _VAR_URLS);
 
-	if (!isset($urls[$type][$id_objet]) OR $modifier_url) {
+	if (!isset($urls[$type][$id_objet]) or $modifier_url) {
 		$r = renseigner_url_arbo($type, $id_objet);
 		// Quand $type ne reference pas une table
 		if ($r === false) {
@@ -347,8 +347,8 @@ function declarer_url_arbo($type, $id_objet) {
 	// et que le parent est bon
 	// et (permanente ou pas de demande de modif)
 	if (!is_null($url_propre)
-		AND $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
-		AND ($urls[$type][$id_objet]['perma'] OR !$modifier_url)
+		and $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
+		and ($urls[$type][$id_objet]['perma'] or !$modifier_url)
 	) {
 		return declarer_url_arbo_rec($url_propre, $type,
 			isset($urls[$type][$id_objet]['parent']) ? $urls[$type][$id_objet]['parent'] : 0,
@@ -357,7 +357,7 @@ function declarer_url_arbo($type, $id_objet) {
 
 	// Si URL inconnue ou maj forcee sur une url non permanente, recreer une url
 	$url = $url_propre;
-	if (is_null($url_propre) OR ($modifier_url AND !$urls[$type][$id_objet]['perma'])) {
+	if (is_null($url_propre) or ($modifier_url and !$urls[$type][$id_objet]['perma'])) {
 		$url = pipeline('arbo_creer_chaine_url',
 			array(
 				'data' => $url_propre,  // le vieux url_propre
@@ -372,7 +372,7 @@ function declarer_url_arbo($type, $id_objet) {
 		include_spip('inc/urls');
 		$objets = urls_liste_objets();
 		if (preg_match(',^(' . $objets . ')[0-9]*$,', $url, $r)
-			AND $r[1] != $type
+			and $r[1] != $type
 		) {
 			$url = $url . _url_arbo_sep_id . $id_objet;
 		}
@@ -381,7 +381,7 @@ function declarer_url_arbo($type, $id_objet) {
 
 	// Pas de changement d'url ni de parent
 	if ($url == $url_propre
-		AND $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
+		and $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
 	) {
 		return declarer_url_arbo_rec($url_propre, $type, $urls[$type][$id_objet]['parent'],
 			$urls[$type][$id_objet]['type_parent']);
@@ -394,18 +394,18 @@ function declarer_url_arbo($type, $id_objet) {
 	}
 	// Verifier si l'utilisateur veut effectivement changer l'URL
 	if ($modifier_url
-		AND CONFIRMER_MODIFIER_URL
-		AND $url_propre
+		and CONFIRMER_MODIFIER_URL
+		and $url_propre
 		// on essaye pas de regenerer une url en -xxx (suffixe id anti collision)
-		AND $url != preg_replace('/' . preg_quote(_url_propres_sep_id, '/') . '.*/', '', $url_propre)
+		and $url != preg_replace('/' . preg_quote(_url_propres_sep_id, '/') . '.*/', '', $url_propre)
 	) {
 		$confirmer = true;
 	} else {
 		$confirmer = false;
 	}
 
-	if ($confirmer AND !_request('ok')) {
-		die ("vous changez d'url ? $url_propre -&gt; $url");
+	if ($confirmer and !_request('ok')) {
+		die("vous changez d'url ? $url_propre -&gt; $url");
 	}
 
 	$set = array(
@@ -501,7 +501,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 	}
 
 	// traiter les injections du type domaine.org/spip.php/cestnimportequoi/ou/encore/plus/rubrique23
-	if ($GLOBALS['profondeur_url'] > 0 AND $entite == 'sommaire') {
+	if ($GLOBALS['profondeur_url'] > 0 and $entite == 'sommaire') {
 		$entite = 'type_urls';
 	}
 
@@ -519,7 +519,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 	// Migration depuis anciennes URLs ?
 	// traiter les injections domain.tld/spip.php/n/importe/quoi/rubrique23
 	if ($GLOBALS['profondeur_url'] <= 0
-		AND $_SERVER['REQUEST_METHOD'] != 'POST'
+		and $_SERVER['REQUEST_METHOD'] != 'POST'
 	) {
 		include_spip('inc/urls');
 		$r = nettoyer_url_page($i, $contexte);
@@ -529,7 +529,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 			$id_objet = $contexte[$_id];
 			$url_propre = generer_url_entite($id_objet, $type);
 			if (strlen($url_propre)
-				AND !strstr($url, $url_propre)
+				and !strstr($url, $url_propre)
 			) {
 				list(, $hash) = array_pad(explode('#', $url_propre), 2, null);
 				$args = array();
@@ -551,14 +551,14 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 
 	// Mode Query-String ?
 	if (!$url_propre
-		AND preg_match(',[?]([^=/?&]+)(&.*)?$,', $url, $r)
+		and preg_match(',[?]([^=/?&]+)(&.*)?$,', $url, $r)
 	) {
 		$url_propre = $r[1];
 	}
 
 	if (!$url_propre
-		OR $url_propre == _DIR_RESTREINT_ABS
-		OR $url_propre == _SPIP_SCRIPT
+		or $url_propre == _DIR_RESTREINT_ABS
+		or $url_propre == _SPIP_SCRIPT
 	) {
 		return;
 	} // qu'est-ce qu'il veut ???
@@ -576,7 +576,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 			. implode('|', array_map('preg_quote', $t)) . ')$}i', '', $url_propre);
 	}
 
-	if (strlen($url_propre) AND !preg_match(',^[^/]*[.]php,', $url_propre)) {
+	if (strlen($url_propre) and !preg_match(',^[^/]*[.]php,', $url_propre)) {
 		$parents_vus = array();
 
 		// recuperer tous les objets de larbo xxx/article/yyy/mot/zzzz
@@ -613,7 +613,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 				(intval($cp) ? "id_parent=" . intval($cp) . " DESC, " : "id_parent>=0 DESC, ") . "segments DESC, id_parent"
 			);
 			if ($row) {
-				if (!is_null($type) AND $row['url'] == $type) {
+				if (!is_null($type) and $row['url'] == $type) {
 					array_unshift($url_arbo, $url_segment);
 					$url_segment = $type;
 					$type = null;
@@ -632,7 +632,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 				// sinon c'est un segment contextuel supplementaire a ignorer
 				// ex : rub1/article/art1/mot1 : il faut ignorer le mot1, la vrai url est celle de l'article
 				if (!$entite
-					OR $dernier_parent_vu == $type_parent
+					or $dernier_parent_vu == $type_parent
 				) {
 					if ($objet_segments == 0) {
 						$entite = $type;
@@ -650,7 +650,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 				$parents_vus[$dernier_parent_vu = $type] = $row['id_objet'];
 			} else {
 				// un segment est inconnu
-				if ($entite == '' OR $entite == 'type_urls') {
+				if ($entite == '' or $entite == 'type_urls') {
 					// on genere une 404 comme il faut si on ne sait pas ou aller
 					return array(array(), '404');
 				}
@@ -668,14 +668,14 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 			// si on est appele par un autre module d'url c'est du decodage d'une ancienne URL
 			// ne pas regenerer des segments arbo, mais rediriger vers la nouvelle URL
 			// dans la nouvelle forme
-			if (strncmp($caller, "urls_", 5) == 0 AND $caller !== "urls_decoder_url") {
+			if (strncmp($caller, "urls_", 5) == 0 and $caller !== "urls_decoder_url") {
 				// en absolue, car assembler ne gere pas ce cas particulier
 				include_spip('inc/filtres_mini');
 				$col_id = id_table_objet($entite);
 				$url_new = generer_url_entite($contexte[$col_id], $entite);
 				// securite contre redirection infinie
 				if ($url_new !== $url_propre
-					AND rtrim($url_new, "/") !== rtrim($url_propre, "/")
+					and rtrim($url_new, "/") !== rtrim($url_propre, "/")
 				) {
 					$url_redirect = url_absolue($url_new);
 				}
@@ -699,15 +699,15 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 		}
 
 		// gerer le retour depuis des urls propres
-		if (($entite == '' OR $entite == 'type_urls')
-			AND $GLOBALS['profondeur_url'] <= 0
+		if (($entite == '' or $entite == 'type_urls')
+			and $GLOBALS['profondeur_url'] <= 0
 		) {
 			$urls_anciennes = charger_fonction('propres', 'urls');
 
 			return $urls_anciennes($url_propre, $entite, $contexte);
 		}
 	}
-	if ($entite == '' OR $entite == 'type_urls' /* compat .htaccess 2.0 */) {
+	if ($entite == '' or $entite == 'type_urls' /* compat .htaccess 2.0 */) {
 		if ($type) {
 			$entite = objet_type($type);
 		} else {
@@ -723,5 +723,3 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 
 	return array($contexte, $entite, $url_redirect, null);
 }
-
-?>

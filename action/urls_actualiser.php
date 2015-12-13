@@ -42,7 +42,7 @@ function action_urls_actualiser_dist() {
 	$res = sql_select("type,id_objet", "spip_urls", "", "", "type,id_objet");
 	while ($row = sql_fetch($res)) {
 		if ($row['id_objet'] !== $id
-			OR $row['type'] !== $type
+			or $row['type'] !== $type
 		) {
 			$id = $row['id_objet'];
 			$type = $row['type'];
@@ -50,5 +50,3 @@ function action_urls_actualiser_dist() {
 		}
 	}
 }
-
-?>

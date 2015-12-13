@@ -28,8 +28,8 @@ function urls_upgrade($nom_meta_base_version, $version_cible) {
 	if (!isset($GLOBALS['meta'][$nom_meta_base_version])) {
 		$trouver_table = charger_fonction('trouver_table', 'base');
 		if ($desc = $trouver_table('spip_urls')
-			AND isset($desc['exist']) AND $desc['exist']
-			AND !isset($desc['field']['id_parent'])
+			and isset($desc['exist']) and $desc['exist']
+			and !isset($desc['field']['id_parent'])
 		) {
 			ecrire_meta($nom_meta_base_version, '1.0.0');
 		}
@@ -73,7 +73,7 @@ function urls_migre_arbo_prefixes() {
 			"id_parent=" . intval($row['id_parent']) . " AND url=" . sql_quote($row['url']))
 		) {
 			if ($set['id_parent'] == 0
-				AND sql_countsel('spip_urls',
+				and sql_countsel('spip_urls',
 					"id_parent=" . intval($set['id_parent']) . " AND url=" . sql_quote($set['url']) . " AND type=" . sql_quote($row['type']) . " AND id_objet=" . sql_quote($row['id_objet']))
 			) {
 				spip_log('suppression url doublon ' . var_export($row, 1), 'urls.' . _LOG_INFO_IMPORTANTE);
@@ -116,5 +116,3 @@ function urls_vider_tables($nom_meta_base_version) {
 	sql_drop_table("spip_urls");
 	effacer_meta($nom_meta_base_version);
 }
-
-?>

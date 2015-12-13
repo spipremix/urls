@@ -34,7 +34,7 @@ function formulaires_editer_url_objet_verifier($type, $id) {
 		$erreurs['url'] = _T('info_obligatoire');
 	} else {
 		$type_urls = (isset($GLOBALS['type_urls']) ? $GLOBALS['type_urls'] : $GLOBALS['meta']['type_urls']);
-		if ($type_urls == 'arbo' AND strpos($url, '/') !== false) {
+		if ($type_urls == 'arbo' and strpos($url, '/') !== false) {
 			$url = explode('/', $url);
 			if (count($url) > 2) {
 				$erreurs['url'] = _T('urls:erreur_arbo_2_segments_max');
@@ -48,7 +48,7 @@ function formulaires_editer_url_objet_verifier($type, $id) {
 		} else {
 			$url_clean = url_nettoyer($url, 255);
 		}
-		if (!isset($erreurs['url']) AND $url != $url_clean) {
+		if (!isset($erreurs['url']) and $url != $url_clean) {
 			set_request('url', $url_clean);
 			$erreurs['url'] = _T('urls:verifier_url_nettoyee');
 		}
@@ -73,9 +73,9 @@ function formulaires_editer_url_objet_traiter($type, $id) {
 
 	$type_urls = (isset($GLOBALS['type_urls']) ? $GLOBALS['type_urls'] : $GLOBALS['meta']['type_urls']);
 	if (include_spip("urls/$type_urls")
-		AND function_exists($renseigner_url = "renseigner_url_$type_urls")
-		AND $r = $renseigner_url($type, $id)
-		AND isset($r['parent'])
+		and function_exists($renseigner_url = "renseigner_url_$type_urls")
+		and $r = $renseigner_url($type, $id)
+		and isset($r['parent'])
 	) {
 		$set['id_parent'] = $r['parent'];
 	}

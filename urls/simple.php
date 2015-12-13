@@ -54,7 +54,7 @@ function urls_simple_dist($i, &$entite, $args = '', $ancre = '') {
 		return _generer_url_simple($entite, $i, $args, $ancre);
 	}
 	// traiter les injections du type domaine.org/spip.php/cestnimportequoi/ou/encore/plus/rubrique23
-	if ($GLOBALS['profondeur_url'] > 0 AND $entite == 'sommaire') {
+	if ($GLOBALS['profondeur_url'] > 0 and $entite == 'sommaire') {
 		return array(array(), '404');
 	}
 
@@ -72,8 +72,8 @@ function urls_simple_dist($i, &$entite, $args = '', $ancre = '') {
 	}
 
 	if ($type = _request(_SPIP_PAGE)
-		AND $_id = id_table_objet($type)
-		AND $id = _request($_id)
+		and $_id = id_table_objet($type)
+		and $id = _request($_id)
 	) {
 		$contexte[$_id] = $id;
 
@@ -100,5 +100,3 @@ function urls_simple_dist($i, &$entite, $args = '', $ancre = '') {
 	}
 	/* Fin du bloc compatibilite url-propres */
 }
-
-?>

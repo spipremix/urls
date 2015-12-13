@@ -12,5 +12,3 @@ function urls_ieconfig_metas($table) {
 
 	return $table;
 }
-
-?>

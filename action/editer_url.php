@@ -93,7 +93,7 @@ function url_insert(&$set, $confirmer, $separateur) {
 		$set['segments'] = count(explode('/', $set['url']));
 	}
 	$perma = false;
-	if (isset($set['perma']) AND $set['perma']) {
+	if (isset($set['perma']) and $set['perma']) {
 		unset($set['perma']);
 		$perma = true;
 	}
@@ -110,25 +110,25 @@ function url_insert(&$set, $confirmer, $separateur) {
 	if (
 		// si pas de parent defini, il faut que cette url soit unique, independamment de id_parent
 		// il faut utiliser un LIKE pour etre case unsensitive en sqlite
-		(!$has_parent AND sql_countsel("spip_urls", $where_urllike))
-		OR @sql_insertq('spip_urls', $set) <= 0
+		(!$has_parent and sql_countsel("spip_urls", $where_urllike))
+		or @sql_insertq('spip_urls', $set) <= 0
 	) {
 
 		// On veut chiper une ancienne adresse ou prendre celle d'un repertoire deja present?
 		if (
-			(!is_dir(_DIR_RACINE . $set['url']) AND !file_exists(_DIR_RACINE . $set['url']))
+			(!is_dir(_DIR_RACINE . $set['url']) and !file_exists(_DIR_RACINE . $set['url']))
 			// un vieux url
-			AND $vieux = sql_fetsel('*', 'spip_urls', $where_thisurl, '', 'perma DESC')
+			and $vieux = sql_fetsel('*', 'spip_urls', $where_thisurl, '', 'perma DESC')
 			// qui n'est pas permanente
-			AND !$vieux['perma']
+			and !$vieux['perma']
 			// et dont l'objet a une url plus recente
-			AND $courant = sql_fetsel('*', 'spip_urls',
+			and $courant = sql_fetsel('*', 'spip_urls',
 				'type=' . sql_quote($vieux['type']) . ' AND id_objet=' . sql_quote($vieux['id_objet'])
 				. ' AND url<>' . sql_quote($set['url'])
 				. ' AND date>' . sql_quote($vieux['date']), '', 'date DESC', 1)
 		) {
-			if ($confirmer AND !_request('ok2')) {
-				die ("Vous voulez chiper l'URL de l'objet " . $courant['type'] . " "
+			if ($confirmer and !_request('ok2')) {
+				die("Vous voulez chiper l'URL de l'objet " . $courant['type'] . " "
 					. $courant['id_objet'] . " qui a maintenant l'url "
 					. $courant['url']);
 			}
@@ -154,8 +154,8 @@ function url_insert(&$set, $confirmer, $separateur) {
 				. " AND id_parent=" . intval($set['id_parent'])
 				. " AND url LIKE ";
 			if (
-				!is_dir(_DIR_RACINE . $set['url']) AND !file_exists(_DIR_RACINE . $set['url'])
-				AND sql_countsel('spip_urls', $where . url_sql_quote_like($set['url']))
+				!is_dir(_DIR_RACINE . $set['url']) and !file_exists(_DIR_RACINE . $set['url'])
+				and sql_countsel('spip_urls', $where . url_sql_quote_like($set['url']))
 			) {
 				sql_updateq('spip_urls', array('url' => $set['url'], 'date' => date('Y-m-d H:i:s')),
 					$where . url_sql_quote_like($set['url']));
@@ -211,7 +211,7 @@ function url_verrouiller($objet, $id_objet, $url) {
 	$where .= " AND url=" . sql_quote($url);
 
 	// pour verrouiller une url, on fixe sa date dans le futur, dans 10 ans
-	sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s', time()+10*365.25*24*3600)), $where);
+	sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s', time() + 10 * 365.25 * 24 * 3600)), $where);
 }
 
 function url_delete($objet, $id_objet, $url = "") {
@@ -222,5 +222,3 @@ function url_delete($objet, $id_objet, $url = "") {
 
 	sql_delete("spip_urls", $where);
 }
-
-?>

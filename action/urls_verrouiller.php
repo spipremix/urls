@@ -30,5 +30,3 @@ function action_urls_verrouiller_dist() {
 		url_verrouiller($type, $id, $url);
 	}
 }
-
-?>

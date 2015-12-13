@@ -175,7 +175,7 @@ function declarer_url_propre($type, $id_objet) {
 	$url_propre = $row['url'];
 
 	// si url_propre connue mais avec id_parent non nul, essayer de reinserer tel quel avec id_parent=0
-	if ($url_propre AND $row['id_parent']) {
+	if ($url_propre and $row['id_parent']) {
 		include_spip('action/editer_url');
 		$set = array('url' => $url_propre, 'type' => $type, 'id_objet' => $id_objet, 'perma' => $row['perma']);
 		// si on arrive pas a reinserer tel quel, on annule url_propre pour forcer un recalcul d'url
@@ -192,8 +192,8 @@ function declarer_url_propre($type, $id_objet) {
 	// l'autorisation est verifiee apres avoir calcule la nouvelle url propre
 	// car si elle ne change pas, cela ne sert a rien de verifier les autorisations
 	// qui requetent en base
-	$modifier_url = (defined('_VAR_URLS') AND _VAR_URLS AND !$row['perma']);
-	if ($url_propre AND !$modifier_url) {
+	$modifier_url = (defined('_VAR_URLS') and _VAR_URLS and !$row['perma']);
+	if ($url_propre and !$modifier_url) {
 		return $url_propre;
 	}
 
@@ -212,7 +212,7 @@ function declarer_url_propre($type, $id_objet) {
 	include_spip('inc/urls');
 	$objets = urls_liste_objets();
 	if (preg_match(',^(' . $objets . ')[0-9]+$,', $url, $r)
-		AND $r[1] != $type
+		and $r[1] != $type
 	) {
 		$url = $url . _url_propres_sep_id . $id_objet;
 	}
@@ -230,17 +230,17 @@ function declarer_url_propre($type, $id_objet) {
 
 	// Verifier si l'utilisateur veut effectivement changer l'URL
 	if ($modifier_url
-		AND CONFIRMER_MODIFIER_URL
-		AND $url_propre
-		AND $url != preg_replace('/' . preg_quote(_url_propres_sep_id, '/') . '.*/', '', $url_propre)
+		and CONFIRMER_MODIFIER_URL
+		and $url_propre
+		and $url != preg_replace('/' . preg_quote(_url_propres_sep_id, '/') . '.*/', '', $url_propre)
 	) {
 		$confirmer = true;
 	} else {
 		$confirmer = false;
 	}
 
-	if ($confirmer AND !_request('ok')) {
-		die ("vous changez d'url ? $url_propre -&gt; $url");
+	if ($confirmer and !_request('ok')) {
+		die("vous changez d'url ? $url_propre -&gt; $url");
 	}
 
 	$set = array('url' => $url, 'type' => $type, 'id_objet' => $id_objet);
@@ -292,7 +292,7 @@ function _generer_url_propre($type, $id, $args = '', $ancre = '') {
 			$url = "-" . $url . "-";
 		}
 
-		if (!defined('_SET_HTML_BASE') OR !_SET_HTML_BASE) // Repositionne l'URL par rapport a la racine du site (#GLOBALS)
+		if (!defined('_SET_HTML_BASE') or !_SET_HTML_BASE) // Repositionne l'URL par rapport a la racine du site (#GLOBALS)
 		{
 			$url = str_repeat('../', $GLOBALS['profondeur_url']) . $url;
 		} else {
@@ -343,7 +343,7 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 	// Migration depuis anciennes URLs ?
 	// traiter les injections domain.tld/spip.php/n/importe/quoi/rubrique23
 	if ($GLOBALS['profondeur_url'] <= 0
-		AND $_SERVER['REQUEST_METHOD'] != 'POST'
+		and $_SERVER['REQUEST_METHOD'] != 'POST'
 	) {
 		include_spip('inc/urls');
 		$r = nettoyer_url_page($i, $contexte);
@@ -353,7 +353,7 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 			$id_objet = $contexte[$_id];
 			$url_propre = generer_url_entite($id_objet, $type);
 			if (strlen($url_propre)
-				AND !strstr($url, $url_propre)
+				and !strstr($url, $url_propre)
 			) {
 				list(, $hash) = array_pad(explode('#', $url_propre), 2, null);
 				$args = array();
@@ -376,15 +376,15 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 	// Mode Query-String ?
 	$is_qs = false;
 	if (!$url_propre
-		AND preg_match(',[?]([^=/?&]+)(&.*)?$,', $url, $r)
+		and preg_match(',[?]([^=/?&]+)(&.*)?$,', $url, $r)
 	) {
 		$url_propre = $r[1];
 		$is_qs = true;
 	}
 
 	if (!$url_propre
-		OR $url_propre == _DIR_RESTREINT_ABS
-		OR $url_propre == _SPIP_SCRIPT
+		or $url_propre == _DIR_RESTREINT_ABS
+		or $url_propre == _SPIP_SCRIPT
 	) {
 		return;
 	} // qu'est-ce qu'il veut ???
@@ -392,7 +392,7 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 
 	// gerer le cas de retour depuis des urls arbos
 	// mais si url arbo ne trouve pas, on veut une 404 par securite
-	if ($GLOBALS['profondeur_url'] > 0 AND !defined('_FORCE_URLS_PROPRES')) {
+	if ($GLOBALS['profondeur_url'] > 0 and !defined('_FORCE_URLS_PROPRES')) {
 		$urls_anciennes = charger_fonction('arbo', 'urls');
 
 		return $urls_anciennes($url_propre, $entite, $contexte);
@@ -439,7 +439,7 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 		}
 	}
 
-	if ($entite == '' OR $entite == 'type_urls' /* compat .htaccess 2.0 */) {
+	if ($entite == '' or $entite == 'type_urls' /* compat .htaccess 2.0 */) {
 		if ($type) {
 			$entite = objet_type($type);
 		} else {
@@ -455,9 +455,9 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 				if (_MARQUEUR_URL) {
 					$fmarqueur = @array_flip(unserialize(_MARQUEUR_URL));
 					preg_match(',^([+][-]|[-+@_]),', $url_propre, $regs);
-					$objet = $regs ? substr($fmarqueur[$regs[1]], 0, n-1) : 'article';
+					$objet = $regs ? substr($fmarqueur[$regs[1]], 0, n - 1) : 'article';
 					$contexte['erreur'] = _T(
-						($objet == 'rubrique' OR $objet == 'breve')
+						($objet == 'rubrique' or $objet == 'breve')
 							? 'public:aucune_' . $objet
 							: 'public:aucun_' . $objet
 					);
@@ -468,5 +468,3 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 
 	return array($contexte, $entite, $url_redirect, $is_qs ? $entite : null);
 }
-
-?>

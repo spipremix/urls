@@ -59,7 +59,7 @@ function type_urls_lister() {
 	$dispo = array();
 	foreach (find_all_in_path('urls/', '\w+\.php$', array()) as $f) {
 		$r = basename($f, '.php');
-		if ($r == 'index' OR strncmp('generer_', $r, 8) == 0 OR $r == "standard") {
+		if ($r == 'index' or strncmp('generer_', $r, 8) == 0 or $r == "standard") {
 			continue;
 		}
 		include_once $f;
@@ -72,5 +72,3 @@ function type_urls_lister() {
 
 	return $dispo;
 }
-
-?>

@@ -30,5 +30,3 @@ function action_urls_liberer_dist() {
 		url_delete($type, $id, $url);
 	}
 }
-
-?>
