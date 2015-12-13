@@ -10,7 +10,9 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return; // securiser
+if (!defined("_ECRIRE_INC_VERSION")) {
+	return;
+} // securiser
 
 /*
 Ce jeu d'URLs est une variation de inc-urls-propres mais les urls 
@@ -22,12 +24,14 @@ define('URLS_LIBRES_EXEMPLE', 'Titre-de-l-article Rubrique');
 # specifier le form de config utilise pour ces urls
 define('URLS_LIBRES_CONFIG', 'propres');
 
-if (!defined('_MARQUEUR_URL'))
+if (!defined('_MARQUEUR_URL')) {
 	define('_MARQUEUR_URL', false);
+}
 
 // http://code.spip.net/@urls_libres_dist
 function urls_libres_dist($i, &$entite, $args = '', $ancre = '') {
 	$f = charger_fonction('propres', 'urls');
+
 	return $f($i, $entite, $args, $ancre);
 }
 

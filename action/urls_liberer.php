@@ -10,7 +10,9 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) return;
+if (!defined("_ECRIRE_INC_VERSION")) {
+	return;
+}
 
 // http://code.spip.net/@action_instituer_syndic_article_dist
 function action_urls_liberer_dist() {
@@ -19,11 +21,11 @@ function action_urls_liberer_dist() {
 	$arg = $securiser_action();
 
 	include_spip('inc/autoriser');
-	$arg = explode('-',$arg);
+	$arg = explode('-', $arg);
 	$type = array_shift($arg);
 	$id = array_shift($arg);
-	$url = implode('-',$arg);
-	if (autoriser('modifierurl',$type,$id)){
+	$url = implode('-', $arg);
+	if (autoriser('modifierurl', $type, $id)) {
 		include_spip('action/editer_url');
 		url_delete($type, $id, $url);
 	}

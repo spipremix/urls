@@ -31,38 +31,44 @@ pouvez l'editer pour ne conserver que la partie concernant les URLS 'html'.
 
 */
 
-if (!defined("_ECRIRE_INC_VERSION")) return; // securiser
+if (!defined("_ECRIRE_INC_VERSION")) {
+	return;
+} // securiser
 
 # donner un exemple d'url pour le formulaire de choix
 define('URLS_HTML_EXEMPLE', 'article12.html');
 
 // http://code.spip.net/@_generer_url_html
 function _generer_url_html($type, $id, $args = '', $ancre = '') {
-	if ($generer_url_externe = charger_fonction("generer_url_$type",'urls',true)) {
+	if ($generer_url_externe = charger_fonction("generer_url_$type", 'urls', true)) {
 		$url = $generer_url_externe($id, $args, $ancre);
-		if (NULL != $url) return $url;
+		if (null != $url) {
+			return $url;
+		}
 	}
 
-	return _DIR_RACINE . $type . $id . '.html' . ($args ? "?$args" : '') .($ancre ? "#$ancre" : '');
+	return _DIR_RACINE . $type . $id . '.html' . ($args ? "?$args" : '') . ($ancre ? "#$ancre" : '');
 }
 
 // retrouver les parametres d'une URL dite "html"
 // http://code.spip.net/@urls_html_dist
 function urls_html_dist($i, $entite, $args = '', $ancre = '') {
 
-	if (is_numeric($i))
+	if (is_numeric($i)) {
 		return _generer_url_html($entite, $i, $args, $ancre);
+	}
 
 	// recuperer les &debut_xx;
-	if (is_array($args))
+	if (is_array($args)) {
 		$contexte = $args;
-	else
-		parse_str($args,$contexte);
+	} else {
+		parse_str($args, $contexte);
+	}
 
 
 	// traiter les injections du type domaine.org/spip.php/cestnimportequoi/ou/encore/plus/rubrique23
-	if ($GLOBALS['profondeur_url']>0 AND $entite=='sommaire'){
-		return array(array(),'404');
+	if ($GLOBALS['profondeur_url'] > 0 AND $entite == 'sommaire') {
+		return array(array(), '404');
 	}
 
 	// voir s'il faut recuperer le id_* implicite et les &debut_xx;
@@ -72,8 +78,10 @@ function urls_html_dist($i, $entite, $args = '', $ancre = '') {
 		array_pop($r); // nettoyer_url_page renvoie un argument de plus inutile ici
 		// il n'est pas necessaire de forcer le fond en 4eme arg car l'url n'est pas query string
 		// sauf si pas de fond connu
-		if ($entite)
+		if ($entite) {
 			array_pop($r);
+		}
+
 		return $r;
 	}
 
@@ -87,10 +95,12 @@ function urls_html_dist($i, $entite, $args = '', $ancre = '') {
 	// on ne redirige pas, on assume le nouveau contexte (si possible)
 	$url_propre = $i;
 	if ($url_propre) {
-		if ($GLOBALS['profondeur_url']<=0)
-			$urls_anciennes = charger_fonction('propres','urls');
-		else
-			$urls_anciennes = charger_fonction('arbo','urls');
+		if ($GLOBALS['profondeur_url'] <= 0) {
+			$urls_anciennes = charger_fonction('propres', 'urls');
+		} else {
+			$urls_anciennes = charger_fonction('arbo', 'urls');
+		}
+
 		return $urls_anciennes($url_propre, $entite, $contexte);
 	}
 	/* Fin du bloc compatibilite url-propres */
