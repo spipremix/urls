@@ -26,7 +26,7 @@ function action_editer_url_dist() {
 function url_nettoyer($titre, $longueur_maxi, $longueur_min = 0, $separateur = '-', $filtre = '') {
 
 	$titre = supprimer_tags(supprimer_numero(extraire_multi($titre)));
-	$url = translitteration(corriger_caracteres($titre));
+	$url = translitteration($titre);
 
 	if ($filtre) {
 		$url = $filtre($url);
