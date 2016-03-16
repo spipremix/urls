@@ -222,7 +222,7 @@ function urls_arbo_creer_chaine_url($x) {
 
 	include_spip('action/editer_url');
 	if (!$url = url_nettoyer($objet['titre'], _URLS_ARBO_MAX, _URLS_ARBO_MIN, '-',
-		_url_arbo_minuscules ? 'mb_strtolower' : '')
+		_url_arbo_minuscules ? 'spip_strtolower' : '')
 	) {
 		$url = $objet['id_objet'];
 	}
