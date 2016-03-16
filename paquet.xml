@@ -1,7 +1,7 @@
 <paquet
 	prefix="urls"
 	categorie="statistique"
-	version="1.5.8"
+	version="1.5.9"
 	etat="stable"
 	compatibilite="[3.1.0;3.1.*]"
 	logo="prive/themes/spip/images/url-32.png"
