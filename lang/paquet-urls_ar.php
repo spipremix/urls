@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'urls_slogan' => 'إدارة تنوعات عناوين URL ذات المعنى ام لا'
 );
 
-?>

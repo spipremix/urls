@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'urls_slogan' => 'Gerenciamento das variantes de URLs significantes ou não'
 );
 
-?>

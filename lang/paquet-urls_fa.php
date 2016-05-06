@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'urls_slogan' => 'مديريت يو.آر.ال‌هاي مهم يا غيرمهم'
 );
 
-?>
