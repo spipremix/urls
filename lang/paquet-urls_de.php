@@ -13,4 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'urls_description' => 'Verwaltung von URL-Varianten',
 	'urls_slogan' => 'Verwaltung von URL-Varianten'
 );
-

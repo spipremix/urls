@@ -13,4 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'urls_description' => 'Riadenie variantov URL, či už sémantických, alebo nie',
 	'urls_slogan' => 'Riadenie variantov URL, či už sémantických, alebo nie'
 );
-

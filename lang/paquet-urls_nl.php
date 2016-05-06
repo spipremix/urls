@@ -13,4 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'urls_description' => 'Beheer van de URL’s varianten (betekenisdragend of niet)  ',
 	'urls_slogan' => 'Beheer van de URL varianten (betekenisdragend of niet)'
 );
-

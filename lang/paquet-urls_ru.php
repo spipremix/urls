@@ -13,4 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'urls_description' => 'SEO-friendly URLs (ЧПУ ссылки)',
 	'urls_slogan' => 'SEO-friendly URLs (ЧПУ ссылки)'
 );
-
