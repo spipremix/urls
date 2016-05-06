@@ -13,4 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_type_urls' => 'Tipo de retadreso'
 );
 
-?>

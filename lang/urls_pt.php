@@ -72,4 +72,3 @@ Se um URL mudou, uma nova entrada será criada (sem perder os URLs já presentes
 	'verrouiller_url' => 'Bloquear'
 );
 
-?>

@@ -15,4 +15,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_type_urls' => 'Tip de adrese URL'
 );
 
-?>

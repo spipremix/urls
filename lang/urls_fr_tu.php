@@ -72,4 +72,3 @@ Si une URL a changé, une nouvelle entrée sera créée (sans perdre les URLs d�
 	'verrouiller_url' => 'Verrouiller'
 );
 
-?>
