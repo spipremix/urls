@@ -71,4 +71,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'URL bola opravená, môžete ju pred uložením skontrolovať.',
 	'verrouiller_url' => 'Zamknúť'
 );
-

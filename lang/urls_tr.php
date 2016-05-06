@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Dikkat bu ayar sadece @htaccess@ dosyası kök dizine düzgün biçimde kurulmuşsa çalışacaktır.',
 	'titre_type_urls' => 'URL adres tipi'
 );
-

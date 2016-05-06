@@ -71,4 +71,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'URL был изменен, проверьте правильность перед сохранением.',
 	'verrouiller_url' => 'Заблокировать'
 );
-

@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Aviso, esta regraxe non funcionará se o ficheiro @htaccess@ non está correctamente instalado na raíz do web.',
 	'titre_type_urls' => 'Tipo de enderezos URL'
 );
-

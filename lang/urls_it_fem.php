@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Attenzione: questa impostazione funziona solamente se il file @htaccess@ è installato correttamente alla radice del sito.',
 	'titre_type_urls' => 'Tipo di indirizzi URL'
 );
-

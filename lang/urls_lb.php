@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Opgepasst, dës Astellung fonktionnéiert nëmmen wann den @htaccess@-Fichier richteg an der Root vum Site ugeluegt ass.',
 	'titre_type_urls' => 'Format vun den URL-Adressen'
 );
-

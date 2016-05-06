@@ -71,4 +71,3 @@ Si une URL a changé, une nouvelle entrée sera créée (sans perdre les URLs d�
 	'verifier_url_nettoyee' => 'L’URL a été corrigée, tu peux vérifier avant de l’enregistrer.',
 	'verrouiller_url' => 'Verrouiller'
 );
-

@@ -72,4 +72,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'L’URL a été corrigée, vous pouvez vérifier avant de l’enregistrer.',
 	'verrouiller_url' => 'Verrouiller'
 );
-

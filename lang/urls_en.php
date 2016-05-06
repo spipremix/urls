@@ -72,4 +72,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'The URL has been corrected, you can check before saving.',
 	'verrouiller_url' => 'Lock'
 );
-

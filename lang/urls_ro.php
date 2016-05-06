@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Atenţie: acest reglaj nu va funcţiona corect decât dacă fişierul @htaccess@  este instalat în rădăcina site-ului.',
 	'titre_type_urls' => 'Tip de adrese URL'
 );
-

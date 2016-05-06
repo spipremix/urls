@@ -72,4 +72,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'تم تصحيح العنوان، يمكنك التأكد قبل تسجيله.',
 	'verrouiller_url' => 'إقفال'
 );
-

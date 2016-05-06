@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Attenti : St’opzione viaghja solu s’ellu hè stallatu cum’ellu ci vole u schedariu @htaccess@, à a ràdica di u situ.',
 	'titre_type_urls' => 'Tippu d’indirizzi URL'
 );
-

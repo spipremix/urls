@@ -71,4 +71,3 @@ Se um URL mudou, uma nova entrada será criada (sem perder os URLs já presentes
 	'verifier_url_nettoyee' => 'O URL foi corrigido. Pode verificar antes de guardar.',
 	'verrouiller_url' => 'Bloquear'
 );
-

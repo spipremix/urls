@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Atenció, aquest ajust només funcionarà si el fitxer @htaccess@ està instal·lat correctament a l’arrel del lloc. ',
 	'titre_type_urls' => 'Tipus d’adreça URL'
 );
-

@@ -72,4 +72,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'L’URL es estada courregida, poudès verificà denant de la registrà.',
 	'verrouiller_url' => 'Ferouià'
 );
-

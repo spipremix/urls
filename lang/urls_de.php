@@ -70,4 +70,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'Der URL wurde geändert. Sie können ihn vor dem Speichern überprüfen.',
 	'verrouiller_url' => 'Fixieren'
 );
-

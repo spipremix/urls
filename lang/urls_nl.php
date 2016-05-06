@@ -72,4 +72,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'De URL is aangepast, je kunt hem eerst controleren.',
 	'verrouiller_url' => 'Vergrendelen'
 );
-

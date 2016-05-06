@@ -70,4 +70,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'يو.آر.ال تصحيح شد. مي‌توانيد قبل از ثبت چك كنيد.',
 	'verrouiller_url' => 'توقيف'
 );
-

@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Diwallit, ne’z aio an dra-mañ en-dro nemet ma vez staliet mat ar restr @htaccess@ e gwrizienn al lec’hienn.',
 	'titre_type_urls' => 'Seurt chomlec’hioù URL'
 );
-

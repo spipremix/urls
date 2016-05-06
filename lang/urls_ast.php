@@ -14,4 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Atención esti axuste nun funcionará más que si l’archivu @htaccess@ ta correutamente instaláu na raiz del sitiu.',
 	'titre_type_urls' => 'Tipu de señes URL'
 );
-

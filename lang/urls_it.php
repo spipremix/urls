@@ -70,4 +70,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'L’URL è stato corretto, puoi controllarlo prima di salvare.',
 	'verrouiller_url' => 'Bloccato'
 );
-
