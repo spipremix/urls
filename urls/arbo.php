@@ -263,9 +263,11 @@ function declarer_url_arbo_rec($url, $type, $parent, $type_parent) {
  *
  * @param string $type
  * @param int $id_objet
+ * @param array $contexte
+ *   id_parent : rubrique parent
  * @return bool|null|array
  */
-function renseigner_url_arbo($type, $id_objet) {
+function renseigner_url_arbo($type, $id_objet, $contexte = array()) {
 	$urls = array();
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table(table_objet($type));
@@ -276,6 +278,8 @@ function renseigner_url_arbo($type, $id_objet) {
 	} // Quand $type ne reference pas une table
 	$id_objet = intval($id_objet);
 
+	$id_parent = (isset($contexte['id_parent'])?$contexte['id_parent']:null);
+
 	$champ_titre = $desc['titre'] ? $desc['titre'] : 'titre';
 
 	// parent
@@ -283,9 +287,21 @@ function renseigner_url_arbo($type, $id_objet) {
 	$sel_parent = ', 0 as parent';
 	$order_by_parent = "";
 	if ($champ_parent) {
-		$sel_parent = ", O." . reset($champ_parent) . ' as parent';
-		// trouver l'url qui matche le parent en premier
-		$order_by_parent = "O." . reset($champ_parent) . "=U.id_parent DESC, ";
+		// si un parent est fourni est qu'il est legitime, on recherche une URL pour ce parent
+		if ($id_parent
+			and $type_parent = end($champ_parent)
+			and $url_verifier_parent_objet = charger_fonction('url_verifier_parent_objet', 'inc', true)
+			and $url_verifier_parent_objet($type, $id_objet, $type_parent, $id_parent)) {
+			$sel_parent = ", ".intval($id_parent) . ' as parent';
+			// trouver l'url qui matche le parent en premier
+			$order_by_parent = "U.id_parent=".intval($id_parent)." DESC, ";
+		}
+		// sinon on prend son parent direct fourni par $champ_parent
+		else {
+			$sel_parent = ", O." . reset($champ_parent) . ' as parent';
+			// trouver l'url qui matche le parent en premier
+			$order_by_parent = "O." . reset($champ_parent) . "=U.id_parent DESC, ";
+		}
 	}
 	//  Recuperer une URL propre correspondant a l'objet.
 	$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, $champ_titre $sel_parent",
@@ -308,14 +324,18 @@ function renseigner_url_arbo($type, $id_objet) {
  *
  * @param string $type
  * @param int $id_objet
+ * @param array $contexte
+ *   id_parent : rubrique parent
  * @return string
  */
-function declarer_url_arbo($type, $id_objet) {
+function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 	static $urls = array();
 	// utiliser un cache memoire pour aller plus vite
 	if (!is_null($C = Cache())) {
 		return $C;
 	}
+	ksort($contexte);
+	$hash = json_encode($contexte);
 
 	// Se contenter de cette URL si elle existe ;
 	// sauf si on invoque par "voir en ligne" avec droit de modifier l'url
@@ -325,23 +345,23 @@ function declarer_url_arbo($type, $id_objet) {
 	// qui requetent en base
 	$modifier_url = (defined('_VAR_URLS') and _VAR_URLS);
 
-	if (!isset($urls[$type][$id_objet]) or $modifier_url) {
-		$r = renseigner_url_arbo($type, $id_objet);
+	if (!isset($urls[$type][$id_objet][$hash]) or $modifier_url) {
+		$r = renseigner_url_arbo($type, $id_objet, $contexte);
 		// Quand $type ne reference pas une table
 		if ($r === false) {
 			return false;
 		}
 
 		if (!is_null($r)) {
-			$urls[$type][$id_objet] = $r;
+			$urls[$type][$id_objet][$hash] = $r;
 		}
 	}
 
-	if (!isset($urls[$type][$id_objet])) {
+	if (!isset($urls[$type][$id_objet][$hash])) {
 		return "";
 	} # objet inexistant
 
-	$u = &$urls[$type][$id_objet];
+	$u = &$urls[$type][$id_objet][$hash];
 	$url_propre = $u['url'];
 
 	// si on a trouve l'url
@@ -448,7 +468,25 @@ function _generer_url_arbo($type, $id, $args = '', $ancre = '') {
 	}
 
 	// Mode propre
-	$propre = declarer_url_arbo($type, $id);
+	$c = array();
+	$propre = declarer_url_arbo($type, $id, $c);
+
+	// si le parent est fourni en contexte dans le $args, verifier si l'URL relative a ce parent est la meme ou non
+	parse_str($args, $contexte);
+	$champ_parent = url_arbo_parent($type);
+	if ($champ_parent
+	  and $champ_parent = reset($champ_parent)
+	  and isset($contexte[$champ_parent]) and $contexte[$champ_parent]) {
+		$c['id_parent'] = $contexte[$champ_parent];
+		$propre_contexte = declarer_url_arbo($type, $id, $c);
+		// si l'URL est differente on la prend et on enleve l'argument de l'URL (redondance puisque parent defini par l'URL elle meme)
+		if ($propre_contexte !== $propre) {
+			$propre = $propre_contexte;
+			unset($contexte[$champ_parent]);
+			$args = http_build_query($contexte);
+		}
+	}
+
 
 	if ($propre === false) {
 		return '';
@@ -679,7 +717,12 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 				}
 			} else {
 				foreach ($url_arbo_new as $k => $o) {
-					if ($s = declarer_url_arbo($o['objet'], $o['id_objet'])) {
+					// tenir compte de l'eventuel parent vu quand on verifie l'URL, car il peut influer
+					$c = array();
+					if (isset($parents_vus['rubrique'])) {
+						$c['id_parent'] = $parents_vus['rubrique'];
+					}
+					if ($s = declarer_url_arbo($o['objet'], $o['id_objet'], $c)) {
 						$url_arbo_new[$k] = $s;
 					} else {
 						$url_arbo_new[$k] = implode('/', $o['segment']);
