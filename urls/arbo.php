@@ -341,28 +341,28 @@ function declarer_url_arbo($type, $id_objet) {
 		return "";
 	} # objet inexistant
 
-	$url_propre = $urls[$type][$id_objet]['url'];
+	$u = &$urls[$type][$id_objet];
+	$url_propre = $u['url'];
 
 	// si on a trouve l'url
 	// et que le parent est bon
 	// et (permanente ou pas de demande de modif)
 	if (!is_null($url_propre)
-		and $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
-		and ($urls[$type][$id_objet]['perma'] or !$modifier_url)
+		and $u['id_parent'] == $u['parent']
+		and ($u['perma'] or !$modifier_url)
 	) {
 		return declarer_url_arbo_rec($url_propre, $type,
-			isset($urls[$type][$id_objet]['parent']) ? $urls[$type][$id_objet]['parent'] : 0,
-			isset($urls[$type][$id_objet]['type_parent']) ? $urls[$type][$id_objet]['type_parent'] : null);
+			isset($u['parent']) ? $u['parent'] : 0,
+			isset($u['type_parent']) ? $u['type_parent'] : null);
 	}
 
 	// Si URL inconnue ou maj forcee sur une url non permanente, recreer une url
 	$url = $url_propre;
-	if (is_null($url_propre) or ($modifier_url and !$urls[$type][$id_objet]['perma'])) {
+	if (is_null($url_propre) or ($modifier_url and !$u['perma'])) {
 		$url = pipeline('arbo_creer_chaine_url',
 			array(
 				'data' => $url_propre,  // le vieux url_propre
-				'objet' => array_merge($urls[$type][$id_objet],
-					array('type' => $type, 'id_objet' => $id_objet)
+				'objet' => array_merge($u, array('type' => $type, 'id_objet' => $id_objet)
 				)
 			)
 		);
@@ -381,10 +381,9 @@ function declarer_url_arbo($type, $id_objet) {
 
 	// Pas de changement d'url ni de parent
 	if ($url == $url_propre
-		and $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
+		and $u['id_parent'] == $u['parent']
 	) {
-		return declarer_url_arbo_rec($url_propre, $type, $urls[$type][$id_objet]['parent'],
-			$urls[$type][$id_objet]['type_parent']);
+		return declarer_url_arbo_rec($url_propre, $type, $u['parent'], $u['type_parent']);
 	}
 
 	// verifier l'autorisation, maintenant qu'on est sur qu'on va agir
@@ -412,21 +411,20 @@ function declarer_url_arbo($type, $id_objet) {
 		'url' => $url,
 		'type' => $type,
 		'id_objet' => $id_objet,
-		'id_parent' => $urls[$type][$id_objet]['parent'],
-		'perma' => intval($urls[$type][$id_objet]['perma'])
+		'id_parent' => $u['parent'],
+		'perma' => intval($u['perma'])
 	);
 	include_spip('action/editer_url');
 	if (url_insert($set, $confirmer, _url_arbo_sep_id)) {
-		$urls[$type][$id_objet]['url'] = $set['url'];
-		$urls[$type][$id_objet]['id_parent'] = $set['id_parent'];
+		$u['url'] = $set['url'];
+		$u['id_parent'] = $set['id_parent'];
 	} else {
 		// l'insertion a echoue,
 		//serveur out ? retourner au mieux
-		$urls[$type][$id_objet]['url'] = $url_propre;
+		$u['url'] = $url_propre;
 	}
 
-	return declarer_url_arbo_rec($urls[$type][$id_objet]['url'], $type, $urls[$type][$id_objet]['parent'],
-		$urls[$type][$id_objet]['type_parent']);
+	return declarer_url_arbo_rec($u['url'], $type, $u['parent'], $u['type_parent']);
 }
 
 /**
