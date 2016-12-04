@@ -227,9 +227,13 @@ function urls_arbo_creer_chaine_url($x) {
 		$url = $objet['id_objet'];
 	}
 
-	$x['data'] =
-		url_arbo_type($objet['type']) // le type ou son synonyme
-		. $url; // le titre
+	// le type ou son synonyme
+	$prefixe = url_arbo_type($objet['type']);
+	if (strpos($prefixe,'<') !== false) {
+		$prefixe = extraire_multi($prefixe);
+		$prefixe = textebrut($prefixe);
+	}
+	$x['data'] = $prefixe . $url; // le titre
 
 	return $x;
 }
