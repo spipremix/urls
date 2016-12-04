@@ -242,14 +242,19 @@ function urls_arbo_creer_chaine_url($x) {
  * @param string $type
  * @param string $parent
  * @param string $type_parent
+ * @param array $contexte
  * @return string
  */
-function declarer_url_arbo_rec($url, $type, $parent, $type_parent) {
+function declarer_url_arbo_rec($url, $type, $parent, $type_parent, $contexte = array()) {
 	if (is_null($parent)) {
 		return $url;
 	}
+	// le contexte parent ne se transmet pas
+	if (isset($contexte['id_parent'])) {
+		unset($contexte['id_parent']);
+	}
 	// Si pas de parent ou si son URL est vide, on ne renvoit que l'URL de l'objet en court
-	if ($parent == 0 or !($url_parent = declarer_url_arbo($type_parent ? $type_parent : 'rubrique', $parent))) {
+	if ($parent == 0 or !($url_parent = declarer_url_arbo($type_parent ? $type_parent : 'rubrique', $parent, $contexte))) {
 		return rtrim($url, '/');
 	} // Sinon on renvoit l'URL de l'objet concaténée avec celle du parent
 	else {
@@ -373,7 +378,7 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 	) {
 		return declarer_url_arbo_rec($url_propre, $type,
 			isset($u['parent']) ? $u['parent'] : 0,
-			isset($u['type_parent']) ? $u['type_parent'] : null);
+			isset($u['type_parent']) ? $u['type_parent'] : null, $contexte);
 	}
 
 	// Si URL inconnue ou maj forcee sur une url non permanente, recreer une url
@@ -403,7 +408,7 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 	if ($url == $url_propre
 		and $u['id_parent'] == $u['parent']
 	) {
-		return declarer_url_arbo_rec($url_propre, $type, $u['parent'], $u['type_parent']);
+		return declarer_url_arbo_rec($url_propre, $type, $u['parent'], $u['type_parent'], $contexte);
 	}
 
 	// verifier l'autorisation, maintenant qu'on est sur qu'on va agir
@@ -444,7 +449,7 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 		$u['url'] = $url_propre;
 	}
 
-	return declarer_url_arbo_rec($u['url'], $type, $u['parent'], $u['type_parent']);
+	return declarer_url_arbo_rec($u['url'], $type, $u['parent'], $u['type_parent'], $contexte);
 }
 
 /**
