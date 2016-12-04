@@ -288,6 +288,7 @@ function renseigner_url_arbo($type, $id_objet, $contexte = array()) {
 	$id_objet = intval($id_objet);
 
 	$id_parent = (isset($contexte['id_parent'])?$contexte['id_parent']:null);
+	$langue = (isset($contexte['langue'])?$contexte['langue']:'');
 
 	$champ_titre = $desc['titre'] ? $desc['titre'] : 'titre';
 
@@ -312,12 +313,17 @@ function renseigner_url_arbo($type, $id_objet, $contexte = array()) {
 			$order_by_parent = "O." . reset($champ_parent) . "=U.id_parent DESC, ";
 		}
 	}
+	$order_by_langue = "U.langue='' DESC, ";
+	if ($langue) {
+		$order_by_langue = 'U.langue='.sql_quote($langue).' DESC, ' . $order_by_langue;
+	}
+
 	//  Recuperer une URL propre correspondant a l'objet.
-	$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, $champ_titre $sel_parent",
+	$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, U.langue, $champ_titre $sel_parent",
 		"$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
 		"O.$col_id=$id_objet",
 		'',
-		$order_by_parent . 'U.perma DESC, U.langue=\'\' DESC, U.date DESC', 1);
+		$order_by_parent . 'U.perma DESC, ' . $order_by_langue . 'U.date DESC', 1);
 	if ($row) {
 		$urls[$type][$id_objet] = $row;
 		$urls[$type][$id_objet]['type_parent'] = $champ_parent ? end($champ_parent) : '';
