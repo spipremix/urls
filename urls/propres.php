@@ -422,11 +422,8 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 		$entite = $row['type'];
 
 		// Si l'url est vieux, donner le nouveau
-		if ($recent = sql_fetsel('url, date', 'spip_urls',
-			'type=' . sql_quote($row['type'], '', 'TEXT') . ' AND id_objet=' . sql_quote($row['id_objet'])
-			. ' AND date>' . sql_quote($row['date'], '', 'TEXT')
-			. ' AND url<>' . sql_quote($row['url'], '', 'TEXT'), '', 'date DESC', 1)
-		) {
+		if ($recent = declarer_url_propre($row['type'], $row['id_objet'])
+			and $recent !== $row['url']) {
 			// Mode compatibilite pour conserver la distinction -Rubrique-
 			if (_MARQUEUR_URL) {
 				$marqueur = unserialize(_MARQUEUR_URL);
@@ -435,7 +432,7 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 			} else {
 				$marqueur1 = $marqueur2 = '';
 			}
-			$url_redirect = $marqueur1 . $recent['url'] . $marqueur2;
+			$url_redirect = $marqueur1 . $recent . $marqueur2;
 		}
 	}
 
