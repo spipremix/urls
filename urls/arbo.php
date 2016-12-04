@@ -110,6 +110,22 @@ if (!defined('_url_sep_id')) {
 	define('_url_sep_id', _url_arbo_sep_id);
 }
 
+// peut prendre plusieurs valeurs :
+// - false pour ne pas gerer le multilinguisme => fonctionnement historique
+//    define('_url_arbo_multilang',false);
+// - la valeur d'une langue pour forcer le calcul des URLs dans une langue donnee
+//    define('_url_arbo_multilang','en');
+// - true pour forcer la gestion complete du multilinguisme :
+//   calcul des URLs dans toutes les langues possibles,
+//   ajout d'un premier segment fr/ dans les URLs pour definir la langue
+//   prise en compte de l'argument lang=xx dans $args au moment de generer l'URL
+//    define('_url_arbo_multilang',true);
+
+if (!defined('_url_arbo_multilang')) {
+	define('_url_arbo_multilang',false);
+}
+
+
 // Ces chaines servaient de marqueurs a l'epoque ou les URL propres devaient
 // indiquer la table ou les chercher (articles, auteurs etc),
 // et elles etaient retirees par les preg_match dans la fonction ci-dessous.
@@ -341,6 +357,7 @@ function renseigner_url_arbo($type, $id_objet, $contexte = array()) {
  * @param int $id_objet
  * @param array $contexte
  *   id_parent : rubrique parent
+ *   langue : langue courante pour laquelle on veut l'URL
  * @return string
  */
 function declarer_url_arbo($type, $id_objet, $contexte = array()) {
@@ -348,6 +365,18 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 	// utiliser un cache memoire pour aller plus vite
 	if (!is_null($C = Cache())) {
 		return $C;
+	}
+	// contexte de langue si pas defini, en fonction de la configuration
+	if (!isset($contexte['langue'])) {
+		if (!_url_arbo_multilang) {
+			$contexte['langue'] = '';
+		}
+		elseif (_url_arbo_multilang === true) {
+			$contexte['langue'] = $GLOBALS['spip_lang'];
+		}
+		else {
+			$contexte['langue'] = _url_arbo_multilang;
+		}
 	}
 	ksort($contexte);
 	$hash = json_encode($contexte);
@@ -394,23 +423,52 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 	// Si URL inconnue ou maj forcee sur une url non permanente, recreer une url
 	$url = $url_propre;
 	if (is_null($url_propre) or ($modifier_url and !$u['perma'])) {
-		$url = pipeline('arbo_creer_chaine_url',
-			array(
-				'data' => $url_propre,  // le vieux url_propre
-				'objet' => array_merge($u, array('type' => $type, 'id_objet' => $id_objet)
-				)
-			)
-		);
 
-		// Eviter de tamponner les URLs a l'ancienne (cas d'un article
-		// intitule "auteur2")
+		$langues = array();
+		if (_url_arbo_multilang === true) {
+			include_spip('inc/lang');
+			$langues = (isset($GLOBALS['meta']['langues_utilisees'])?$GLOBALS['meta']['langues_utilisees']:'');
+			$langues = explode(',',$langues);
+			if ($k = array_search(_LANGUE_PAR_DEFAUT, $langues)) {
+				unset($langues[$k]);
+				array_unshift($langues, _LANGUE_PAR_DEFAUT);
+			}
+		}
+		if (!in_array($contexte['langue'], $langues)) {
+			$langues[] = $contexte['langue'];
+		}
+
+		// on calcule l'URL de chaque langue utile (langue courante, langue forcee ou toutes les langues utilises)
+		$urls = array();
+		$langue_courante = $GLOBALS['spip_lang'];
+
 		include_spip('inc/urls');
 		$objets = urls_liste_objets();
-		if (preg_match(',^(' . $objets . ')[0-9]*$,', $url, $r)
-			and $r[1] != $type
-		) {
-			$url = $url . _url_arbo_sep_id . $id_objet;
+
+		foreach($langues as $l) {
+			if ($l) {
+				changer_langue($l);
+			}
+			$urls[$l] = pipeline('arbo_creer_chaine_url',
+				array(
+					'data' => $url_propre,  // le vieux url_propre
+					'objet' => array_merge($u, array('type' => $type, 'id_objet' => $id_objet))
+				)
+			);
+
+			// Eviter de tamponner les URLs a l'ancienne (cas d'un article
+			// intitule "auteur2")
+			if (preg_match(',^(' . $objets . ')[0-9]*$,', $urls[$l], $r)
+				and $r[1] != $type
+			) {
+				$urls[$l] = $urls[$l] . _url_arbo_sep_id . $id_objet;
+			}
+
 		}
+		// retablir la $langue_courante par securite, au cas ou on a change de langue
+		changer_langue($langue_courante);
+
+		$url = $urls[$contexte['langue']];
 	}
 
 
@@ -442,21 +500,28 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 		die("vous changez d'url ? $url_propre -&gt; $url");
 	}
 
-	$set = array(
-		'url' => $url,
-		'type' => $type,
-		'id_objet' => $id_objet,
-		'id_parent' => $u['parent'],
-		'perma' => intval($u['perma'])
-	);
+	// on enregistre toutes les langues
 	include_spip('action/editer_url');
-	if (url_insert($set, $confirmer, _url_arbo_sep_id)) {
-		$u['url'] = $set['url'];
-		$u['id_parent'] = $set['id_parent'];
-	} else {
-		// l'insertion a echoue,
-		//serveur out ? retourner au mieux
-		$u['url'] = $url_propre;
+	foreach($urls as $langue => $url) {
+		$set = array(
+			'url' => $url,
+			'type' => $type,
+			'id_objet' => $id_objet,
+			'id_parent' => $u['parent'],
+			'langue' => $langue,
+			'perma' => intval($u['perma'])
+		);
+		$res = url_insert($set, $confirmer, _url_arbo_sep_id);
+		if ($langue == $contexte['langue']) {
+			if ($res) {
+				$u['url'] = $set['url'];
+				$u['id_parent'] = $set['id_parent'];
+			} else {
+				// l'insertion a echoue,
+				//serveur out ? retourner au mieux
+				$u['url'] = $url_propre;
+			}
+		}
 	}
 
 	return declarer_url_arbo_rec($u['url'], $type, $u['parent'], $u['type_parent'], $contexte);
@@ -482,12 +547,32 @@ function _generer_url_arbo($type, $id, $args = '', $ancre = '') {
 		}
 	}
 
+	$debut_langue = '';
+
 	// Mode propre
 	$c = array();
+
+	parse_str($args, $contexte);
+	// choisir le contexte de langue en fonction de la configuration
+	$c['langue'] = '';
+	if (_url_arbo_multilang === true) {
+		if (isset($contexte['lang']) and $contexte['lang']) {
+			$c['langue'] = $contexte['lang'];
+			$debut_langue = $c['langue'] .'/';
+			unset($contexte['lang']);
+			$args = http_build_query($contexte);
+		}
+		elseif(isset($GLOBALS['spip_lang']) and $GLOBALS['spip_lang']) {
+			$c['langue'] = $GLOBALS['spip_lang'];
+			$debut_langue = $c['langue'] .'/';
+		}
+	}
+	elseif (_url_arbo_multilang){
+		$c['langue'] = _url_arbo_multilang;
+	}
 	$propre = declarer_url_arbo($type, $id, $c);
 
 	// si le parent est fourni en contexte dans le $args, verifier si l'URL relative a ce parent est la meme ou non
-	parse_str($args, $contexte);
 	$champ_parent = url_arbo_parent($type);
 	if ($champ_parent
 	  and $champ_parent = reset($champ_parent)
@@ -509,6 +594,7 @@ function _generer_url_arbo($type, $id, $args = '', $ancre = '') {
 
 	if ($propre) {
 		$url = _debut_urls_arbo
+			. $debut_langue
 			. rtrim($propre, '/')
 			. url_arbo_terminaison($type);
 	} else {
@@ -559,6 +645,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 	// recuperer les &debut_xx;
 	if (is_array($args)) {
 		$contexte = $args;
+		$args = http_build_query($contexte);
 	} else {
 		parse_str($args, $contexte);
 	}
@@ -637,6 +724,29 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 		$url_arbo_new = array();
 		$dernier_parent_vu = false;
 		$objet_segments = 0;
+
+		$langue = '';
+		if (_url_arbo_multilang === true) {
+			// la langue : si fourni en QS prioritaire car vient du skel ou de forcer_lang
+			if (isset($contexte['lang'])) {
+				$langue = $contexte['lang'];
+			}
+			// le premier segment peut etre la langue : l'extraire
+			// on le prend en compte si lang non fournie par la QS sinon on l'ignore
+			include_spip('action/editer_url'); // pour url_verifier_langue
+			if (count($url_arbo) > 1
+				and $first = reset($url_arbo)
+			  and url_verifier_langue($first)) {
+				array_shift($url_arbo);
+				if (!$langue) {
+					$contexte['lang'] = $langue = $first;
+				}
+			}
+		}
+		elseif(_url_arbo_multilang) {
+			$langue = _url_arbo_multilang;
+		}
+
 		while (count($url_arbo) > 0) {
 			$type = null;
 			if (count($url_arbo) > 1) {
@@ -657,11 +767,14 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 					? "url=" . sql_quote($url_segment, '', 'TEXT')
 					: sql_in('url', array("$type/$url_segment", $type)),
 				'',
-				// en priorite celui qui a le bon parent et les deux segments
-				// puis le bon parent avec 1 segment
-				// puis un parent indefini (le 0 de preference) et les deux segments
-				// puis un parent indefini (le 0 de preference) et 1 segment
-				(intval($cp) ? "id_parent=" . intval($cp) . " DESC, " : "id_parent>=0 DESC, ") . "segments DESC, id_parent"
+				// en priorite celui qui a le bon parent
+				// puis la bonne langue puis la langue ''
+				// puis les deux segments puis 1 seul segment
+			  //
+				// si parent indefini on privilegie id_parent=0 avec la derniere clause du order
+				(intval($cp) ? "id_parent=" . intval($cp) . " DESC, " : "id_parent>=0 DESC, ")
+				. ($langue?'langue='.sql_quote($langue).' DESC, ':'') ."langue='' DESC,"
+				. "segments DESC, id_parent"
 			);
 			if ($row) {
 				if (!is_null($type) and $row['url'] == $type) {
@@ -723,7 +836,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 				// en absolue, car assembler ne gere pas ce cas particulier
 				include_spip('inc/filtres_mini');
 				$col_id = id_table_objet($entite);
-				$url_new = generer_url_entite($contexte[$col_id], $entite);
+				$url_new = generer_url_entite($contexte[$col_id], $entite, $args);
 				// securite contre redirection infinie
 				if ($url_new !== $url_propre
 					and rtrim($url_new, "/") !== rtrim($url_propre, "/")
@@ -732,8 +845,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 				}
 			} else {
 				foreach ($url_arbo_new as $k => $o) {
-					// tenir compte de l'eventuel parent vu quand on verifie l'URL, car il peut influer
-					$c = array();
+					$c = array( 'langue' => $langue );
 					if (isset($parents_vus['rubrique'])) {
 						$c['id_parent'] = $parents_vus['rubrique'];
 					}
@@ -744,9 +856,20 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 					}
 				}
 				$url_arbo_new = ltrim(implode('/', $url_arbo_new), '/');
-
+				if ($langue and _url_arbo_multilang === true) {
+					$url_arbo_new = "$langue/" . $url_arbo_new;
+					if (strpos($args,'lang=') !== false) {
+						parse_str($args, $cl);
+						unset($cl['lang']);
+						$args = http_build_query($cl);
+					}
+				}
 				if ($url_arbo_new !== $url_propre) {
-					$url_redirect = $url_arbo_new;
+					//var_dump($url_arbo_new,$url_propre);
+					$url_redirect = _debut_urls_arbo
+						. $url_arbo_new
+						. url_arbo_terminaison($entite)
+						. ($args?"?$args":'');
 					// en absolue, car assembler ne gere pas ce cas particulier
 					include_spip('inc/filtres_mini');
 					$url_redirect = url_absolue($url_redirect);
