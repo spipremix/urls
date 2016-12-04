@@ -439,7 +439,7 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 		}
 
 		// on calcule l'URL de chaque langue utile (langue courante, langue forcee ou toutes les langues utilises)
-		$urls = array();
+		$urls_langues = array();
 		$langue_courante = $GLOBALS['spip_lang'];
 
 		include_spip('inc/urls');
@@ -449,7 +449,7 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 			if ($l) {
 				changer_langue($l);
 			}
-			$urls[$l] = pipeline('arbo_creer_chaine_url',
+			$urls_langues[$l] = pipeline('arbo_creer_chaine_url',
 				array(
 					'data' => $url_propre,  // le vieux url_propre
 					'objet' => array_merge($u, array('type' => $type, 'id_objet' => $id_objet))
@@ -458,17 +458,17 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 
 			// Eviter de tamponner les URLs a l'ancienne (cas d'un article
 			// intitule "auteur2")
-			if (preg_match(',^(' . $objets . ')[0-9]*$,', $urls[$l], $r)
+			if (preg_match(',^(' . $objets . ')[0-9]*$,', $urls_langues[$l], $r)
 				and $r[1] != $type
 			) {
-				$urls[$l] = $urls[$l] . _url_arbo_sep_id . $id_objet;
+				$urls_langues[$l] = $urls_langues[$l] . _url_arbo_sep_id . $id_objet;
 			}
 
 		}
 		// retablir la $langue_courante par securite, au cas ou on a change de langue
 		changer_langue($langue_courante);
 
-		$url = $urls[$contexte['langue']];
+		$url = $urls_langues[$contexte['langue']];
 	}
 
 
@@ -502,7 +502,7 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 
 	// on enregistre toutes les langues
 	include_spip('action/editer_url');
-	foreach($urls as $langue => $url) {
+	foreach($urls_langues as $langue => $url) {
 		$set = array(
 			'url' => $url,
 			'type' => $type,
