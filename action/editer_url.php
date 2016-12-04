@@ -23,6 +23,28 @@ function action_editer_url_dist() {
 }
 
 /**
+ * Verifier si une langue presumee est valide
+ * - utile pour l'edition manuelle d'une URL ou pour le decodage
+ * @param string $langue
+ * @return bool
+ */
+function url_verifier_langue($langue) {
+	include_spip('inc/lang');
+	if (!match_langue($langue)) {
+		return false;
+	}
+
+	if (isset($GLOBALS['meta']['langues_proposees']) and $GLOBALS['meta']['langues_proposees']) {
+		$all_langs = explode(',',$GLOBALS['meta']['langues_proposees']);
+		if (!in_array($langue, $all_langs)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
  * Nettoyer une URL :
  * supprimer le html, le rang, extraire les multi, translitterer
  * @param string $titre

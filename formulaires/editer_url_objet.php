@@ -27,22 +27,6 @@ function formulaires_editer_url_objet_charger_dist($type, $id) {
 	return $valeurs;
 }
 
-function urls_verifier_langue($langue) {
-	include_spip('inc/lang');
-	if (!match_langue($langue)) {
-		return false;
-	}
-
-	if (isset($GLOBALS['meta']['langues_proposees']) and $GLOBALS['meta']['langues_proposees']) {
-		$all_langs = explode(',',$GLOBALS['meta']['langues_proposees']);
-		if (!in_array($langue, $all_langs)) {
-			return false;
-		}
-	}
-
-	return true;
-}
-
 /**
  * Verifier la saisie de l'URL
  * on peut prefixer par une langue au format
@@ -61,7 +45,7 @@ function formulaires_editer_url_objet_verifier_dist($type, $id) {
 		$erreurs['url'] = _T('info_obligatoire');
 	} else {
 		if (preg_match(";^([a-z_]{2,9}):;", $url, $m)
-		  and urls_verifier_langue($m[1])) {
+		  and url_verifier_langue($m[1])) {
 			$langue = trim($m[1]);
 			$url = substr($url, strlen($m[0]));
 		}
@@ -99,16 +83,16 @@ function formulaires_editer_url_objet_verifier_dist($type, $id) {
  */
 function formulaires_editer_url_objet_traiter_dist($type, $id) {
 	$valeurs = array('editable' => true);
+	include_spip('action/editer_url');
 
 	$url = _request('url');
 	$langue = '';
 	if (preg_match(";^([a-z_]{2,9}):;", $url, $m)
-	  and urls_verifier_langue($m[1])) {
+	  and url_verifier_langue($m[1])) {
 		$langue = trim($m[1]);
 		$url = substr($url, strlen($m[0]));
 	}
 
-	include_spip('action/editer_url');
 	// les urls manuelles sont toujours permanentes
 	$set = array('url' => $url, 'type' => $type, 'id_objet' => $id, 'perma' => 1, 'langue' => $langue);
 
