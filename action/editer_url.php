@@ -331,12 +331,21 @@ function url_verrouiller($url, $id_parent=0) {
  * @param $objet
  * @param $id_objet
  * @param string $url
+ * @param int $id_parent
  */
-function url_delete($objet, $id_objet, $url = "") {
+function url_delete($objet, $id_objet, $url = "", $id_parent=0) {
 	$where = "id_objet=" . intval($id_objet) . " AND type=" . sql_quote($objet);
 	if (strlen($url)) {
-		$where .= " AND url=" . sql_quote($url);
+		$where .= " AND url=" . sql_quote($url) . " AND id_parent=" . intval($id_parent);
 	}
 
 	sql_delete("spip_urls", $where);
+
+	// si on a supprime une seule URL, s'assurer qu'on a toujours au moins une URL avec lang=''
+	$where = "id_objet=" . intval($id_objet) . " AND type=" . sql_quote($objet);
+	if (!$nb = sql_countsel('spip_urls',$where .' AND langue=\'\'')) {
+		if ($last = sql_fetsel('*','spip_urls',$where,'','perma=1 DESC, langue=\'\' DESC, id_parent=0 DESC, date DESC','0,1')) {
+			sql_updateq('spip_urls',array('langue'=>''),'url='.sql_quote($last['url']) . ' AND id_parent='.intval($last['id_parent']));
+		}
+	}
 }
