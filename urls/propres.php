@@ -154,10 +154,10 @@ function declarer_url_propre($type, $id_objet) {
 
 	// Recuperer une URL propre correspondant a l'objet.
 	// mais urls a 1 segment uniquement (pas d'urls /)
-	// de preference avec id_parent=0, puis perma, puis par date desc
+	// de preference avec id_parent=0, puis perma, puis langue='' puis par date desc
 	$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, $champ_titre",
 		"$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
-		"O.$col_id=$id_objet AND (U.segments IS NULL OR U.segments=1)", '', 'U.id_parent=0 DESC, U.perma DESC, U.date DESC',
+		"O.$col_id=$id_objet AND (U.segments IS NULL OR U.segments=1)", '', 'U.id_parent=0 DESC, U.perma DESC, U.langue=\'\' DESC, U.date DESC',
 		1);
 
 	// en SQLite le left join retourne du vide si il y a une url mais qui ne correspond pas pour la condition sur le segment

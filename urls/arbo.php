@@ -313,7 +313,7 @@ function renseigner_url_arbo($type, $id_objet, $contexte = array()) {
 		"$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
 		"O.$col_id=$id_objet",
 		'',
-		$order_by_parent . 'U.perma DESC, U.date DESC', 1);
+		$order_by_parent . 'U.perma DESC, U.langue=\'\' DESC, U.date DESC', 1);
 	if ($row) {
 		$urls[$type][$id_objet] = $row;
 		$urls[$type][$id_objet]['type_parent'] = $champ_parent ? end($champ_parent) : '';

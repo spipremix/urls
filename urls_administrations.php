@@ -60,6 +60,11 @@ function urls_upgrade($nom_meta_base_version, $version_cible) {
 		array('sql_alter', "table spip_urls CHANGE `type` `type` varchar(25) DEFAULT 'article' NOT NULL"),
 	);
 
+	$maj['2.0.0'] = array(
+		array('sql_alter', "table spip_urls ADD langue VARCHAR(10) DEFAULT '' NOT NULL"),
+		array('sql_alter', "table spip_urls ADD KEY langue (langue)"),
+	);
+
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }

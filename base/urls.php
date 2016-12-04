@@ -50,11 +50,16 @@ function urls_declarer_tables_auxiliaires($tables_auxiliaires) {
 		"segments" => "SMALLINT(3) DEFAULT '1' NOT NULL",
 		// URL permanente, prioritaire
 		"perma" => "TINYINT(1) DEFAULT '0' NOT NULL",
+		// langue des urls : on le nomme langue et pas lang pour eviter les ambiguites avec le champ lang des objets
+		// qui apparait dans les jointures sans prefixe de table, via le champ titre "titre, lang"
+		'langue' => "VARCHAR(10) DEFAULT '' NOT NULL",
+
 	);
 
 	$spip_urls_key = array(
 		"PRIMARY KEY" => "id_parent, url",
-		"KEY type" => "type, id_objet"
+		"KEY type" => "type, id_objet",
+		'KEY langue' => 'langue',
 	);
 
 	$tables_auxiliaires['spip_urls'] = array(

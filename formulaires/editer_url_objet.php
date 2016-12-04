@@ -27,12 +27,45 @@ function formulaires_editer_url_objet_charger_dist($type, $id) {
 	return $valeurs;
 }
 
+function urls_verifier_langue($langue) {
+	include_spip('inc/lang');
+	if (!match_langue($langue)) {
+		return false;
+	}
+
+	if (isset($GLOBALS['meta']['langues_proposees']) and $GLOBALS['meta']['langues_proposees']) {
+		$all_langs = explode(',',$GLOBALS['meta']['langues_proposees']);
+		if (!in_array($langue, $all_langs)) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
+ * Verifier la saisie de l'URL
+ * on peut prefixer par une langue au format
+ * fr:Mon-URL-fr
+ * en:My-english-url
+ * pour specifier la langue de l'URL (mais il faut que le module d'URL la prenne en charge)
+ * @param $type
+ * @param $id
+ * @return array
+ */
 function formulaires_editer_url_objet_verifier_dist($type, $id) {
 	$erreurs = array();
 	include_spip('action/editer_url');
+	$langue = '';
 	if (!$url = _request('url')) {
 		$erreurs['url'] = _T('info_obligatoire');
 	} else {
+		if (preg_match(";^([a-z_]{2,9}):;", $url, $m)
+		  and urls_verifier_langue($m[1])) {
+			$langue = trim($m[1]);
+			$url = substr($url, strlen($m[0]));
+		}
+
 		$type_urls = (isset($GLOBALS['type_urls']) ? $GLOBALS['type_urls'] : $GLOBALS['meta']['type_urls']);
 		if ($type_urls == 'arbo' and strpos($url, '/') !== false) {
 			$url = explode('/', $url);
@@ -49,7 +82,7 @@ function formulaires_editer_url_objet_verifier_dist($type, $id) {
 			$url_clean = url_nettoyer($url, 255);
 		}
 		if (!isset($erreurs['url']) and $url != $url_clean) {
-			set_request('url', $url_clean);
+			set_request('url', ($langue?"$langue:":"") . $url_clean);
 			$erreurs['url'] = _T('urls:verifier_url_nettoyee');
 		}
 	}
@@ -67,9 +100,17 @@ function formulaires_editer_url_objet_verifier_dist($type, $id) {
 function formulaires_editer_url_objet_traiter_dist($type, $id) {
 	$valeurs = array('editable' => true);
 
+	$url = _request('url');
+	$langue = '';
+	if (preg_match(";^([a-z_]{2,9}):;", $url, $m)
+	  and urls_verifier_langue($m[1])) {
+		$langue = trim($m[1]);
+		$url = substr($url, strlen($m[0]));
+	}
+
 	include_spip('action/editer_url');
 	// les urls manuelles sont toujours permanentes
-	$set = array('url' => _request('url'), 'type' => $type, 'id_objet' => $id, 'perma' => 1);
+	$set = array('url' => $url, 'type' => $type, 'id_objet' => $id, 'perma' => 1, 'langue' => $langue);
 
 	$type_urls = (isset($GLOBALS['type_urls']) ? $GLOBALS['type_urls'] : $GLOBALS['meta']['type_urls']);
 	if (include_spip("urls/$type_urls")

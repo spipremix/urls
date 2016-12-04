@@ -22,7 +22,16 @@ function action_editer_url_dist() {
 
 }
 
-
+/**
+ * Nettoyer une URL :
+ * supprimer le html, le rang, extraire les multi, translitterer
+ * @param string $titre
+ * @param int $longueur_maxi
+ * @param int $longueur_min
+ * @param string $separateur
+ * @param string $filtre
+ * @return string
+ */
 function url_nettoyer($titre, $longueur_maxi, $longueur_min = 0, $separateur = '-', $filtre = '') {
 
 	$titre = supprimer_tags(supprimer_numero(extraire_multi($titre)));
@@ -82,6 +91,14 @@ function url_nettoyer($titre, $longueur_maxi, $longueur_min = 0, $separateur = '
 	return $url;
 }
 
+/**
+ * Inserer une URL en base avec multiples controles et gestion des collisions
+ * en essayant d'eviter des problemes de race condition
+ * @param array $set
+ * @param bool $confirmer
+ * @param string $separateur
+ * @return bool
+ */
 function url_insert(&$set, $confirmer, $separateur) {
 	$has_parent = true;
 	# assurer la coherence des champs techniques si non fournis
@@ -91,6 +108,9 @@ function url_insert(&$set, $confirmer, $separateur) {
 	}
 	if (!isset($set['segments'])) {
 		$set['segments'] = count(explode('/', $set['url']));
+	}
+	if (!isset($set['langue'])) {
+		$set['langue'] = '';
 	}
 	$perma = false;
 	if (isset($set['perma']) and $set['perma']) {
@@ -155,65 +175,141 @@ function url_insert(&$set, $confirmer, $separateur) {
 				. " AND url LIKE ";
 			if (
 				!is_dir(_DIR_RACINE . $set['url']) and !file_exists(_DIR_RACINE . $set['url'])
-				and sql_countsel('spip_urls', $where . url_sql_quote_like($set['url']))
+				and $existing = sql_fetsel('*','spip_urls', $where . url_sql_quote_like($set['url']))
 			) {
-				sql_updateq('spip_urls', array('url' => $set['url'], 'date' => date('Y-m-d H:i:s')),
-					$where . url_sql_quote_like($set['url']));
-				spip_log("reordonne " . $set['type'] . " " . $set['id_objet'], "urls");
+				$refresh = array(
+					'url' => $set['url'],
+					'date' => date('Y-m-d H:i:s'),
+				);
+				// si c'est une URL avec langue est qu'ici on a pas de langue, on ecrase
+				if ($existing['langue']) {
+					if (!$set['langue']){
+						$refresh['langue'] = '';
+					}
+					elseif($set['langue'] !== $existing['langue']) {
+						$set['url'] .= $separateur . $set['langue'];
+						return url_insert_replay($set, $confirmer, $separateur, $has_parent, $perma);
+					}
+				}
+				// sinon c'est une URL sans langue (generique)
+				else {
+					// si c'est pas une URL perma manuelle,
+					// on ignore la langue de cette URL, l'URL generique s'appliquera
+					if (!$perma) {
+						unset($set['langue']);
+					}
+					else {
+						$refresh['langue'] = $set['langue'];
+					}
+				}
+				sql_updateq('spip_urls', $refresh, $where . url_sql_quote_like($set['url']));
+				spip_log("refresh " . $set['type'] . " " . $set['id_objet'].' refresh:'.serialize($refresh), "urls");
 				$redate = false;
 			} else {
 				$set['url'] .= $separateur . $set['id_objet'];
-				if (strlen($set['url']) > 200) //serveur out ? retourner au mieux
-				{
-					return false;
-				} elseif (sql_countsel('spip_urls', $where . url_sql_quote_like($set['url']))) {
-					sql_updateq('spip_urls', array('url' => $set['url'], 'date' => date('Y-m-d H:i:s')),
-						$where . url_sql_quote_like($set['url']));
-					$redate = false;
-				} else {
-					// remettre id_parent et perma comme il faut si besoin
-					if (!$has_parent) {
-						unset($set['id_parent']);
-					}
-					if ($perma) {
-						$set['perma'] = true;
-					}
-
-					return url_insert($set, $confirmer, $separateur);
-				}
+				return url_insert_replay($set, $confirmer, $separateur, $has_parent, $perma);
 			}
 		}
 	}
 
-	$where_thisurl = 'url=' . sql_quote($set['url']) . " AND id_parent=" . intval($set['id_parent']); // maj
+	$reset = array();
+	// si on a fixe une langue pour cette URL mais qu'il n'y a pas d'URL generique pour cet objet (avec langue='')
+	// on retire la langue car c'est l'URL generique par defaut
+	if ($set['langue']) {
+		if (!sql_countsel('spip_urls',
+			"type=" . sql_quote($set['type'])
+			. " AND id_objet=" . intval($set['id_objet'])
+			. " AND id_parent=" . intval($set['id_parent'])
+			. " AND langue=" . sql_quote(''))){
+			$set['langue'] = $reset['langue'] = '';
+		}
+	}
 	if ($redate) {
-		sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s')), $where_thisurl);
+		$reset['date'] = date('Y-m-d H:i:s');
 	}
 
-	// si url perma, poser le flag sur la seule url qu'on vient de mettre
+	$where_thisurl = 'url=' . sql_quote($set['url']) . " AND id_parent=" . intval($set['id_parent']); // maj
+	if ($reset) {
+		sql_updateq('spip_urls', $reset, $where_thisurl);
+	}
+
+	// si url perma, poser le flag sur la seule url qu'on vient de mettre (au sein de celles qui ont la meme langue)
 	if ($perma) {
 		sql_update('spip_urls', array('perma' => "($where_thisurl)"),
-			"type=" . sql_quote($set['type']) . " AND id_objet=" . intval($set['id_objet']));
+			"type=" . sql_quote($set['type']) . " AND id_objet=" . intval($set['id_objet'])." AND langue=" . sql_quote($set['langue']));
 	}
 
-	spip_log("Creation de l'url propre '" . $set['url'] . "' pour " . $set['type'] . " " . $set['id_objet'] . " (parent " . $set['id_parent'] . " perma " . ($perma ? "1" : "0") . ")",
-		"urls");
+	spip_log("Creation de l'url propre '" . $set['url'] . "' pour "
+		. $set['type'] . " " . $set['id_objet']
+		. " (parent [" . $set['id_parent'] . "] langue [" . $set['langue'] . "] perma [" . ($perma ? "1" : "0") . "])", "urls");
 
 	return true;
 }
 
+/**
+ * Rejouer une insertion qui a echoue avec une url modifiee (rallongee)
+ * on s'assure que la longueur de l'URL n'est pas problematique, et on remet le $set comme il faut
+ * @param array $set
+ * @param bool $confirmer
+ * @param string $separateur
+ * @param bool $has_parent
+ * @param bool $perma
+ * @return bool
+ */
+function url_insert_replay($set, $confirmer, $separateur, $has_parent, $perma) {
+	//var_dump('url_insert_replay');
+	if (strlen($set['url']) > 200) //serveur out ? retourner au mieux
+	{
+		return false;
+	}
+	else {
+		// remettre id_parent et perma comme il faut si besoin
+		if (!$has_parent) {
+			unset($set['id_parent']);
+		}
+		if ($perma) {
+			$set['perma'] = true;
+		}
+		//var_dump($set);
+		return url_insert($set, $confirmer, $separateur);
+	}
+}
+
+/**
+ * Faire un quote de l'URL pour une condition LIKE, donc en echapant les caracteres specifiques aux like
+ * @param $url
+ * @return string
+ */
 function url_sql_quote_like($url) {
 	return sql_quote(str_replace(array("%", "_"), array("\\%", "\\_"), $url)) . " ESCAPE " . sql_quote('\\');
 }
 
-function url_verrouiller($objet, $id_objet, $url) {
-	$where = "id_objet=" . intval($id_objet) . " AND type=" . sql_quote($objet);
-	$where .= " AND url=" . sql_quote($url);
+/**
+ * Verrouiller une URL
+ * poser le flag sur une unique url d'un objet
+ * (au sein de celles qui ont la meme langue : on peut avoir plusieurs URLs perma, une par langue)
+ *
+ * @param string $url
+ * @param int $id_parent
+ * @param $url
+ */
+function url_verrouiller($url, $id_parent=0) {
+	$where_thisurl = 'url=' . sql_quote($url) . " AND id_parent=" . intval($id_parent);
+	$row = sql_fetsel('*','spip_urls',$where_thisurl);
 
-	// pour verrouiller une url, on fixe sa date dans le futur, dans 10 ans
-	sql_updateq('spip_urls', array('date' => date('Y-m-d H:i:s', time() + 10 * 365.25 * 24 * 3600)), $where);
+	// on fait un update unique pour changer toutes les URLs concernees d'un coup
+	if ($row) {
+		sql_update('spip_urls', array('perma' => "($where_thisurl)"),
+			"type=" . sql_quote($row['type']) . " AND id_objet=" . intval($row['id_objet'])." AND langue=" . sql_quote($row['langue']));
+	}
 }
 
+/**
+ * Supprimer une URL
+ * @param $objet
+ * @param $id_objet
+ * @param string $url
+ */
 function url_delete($objet, $id_objet, $url = "") {
 	$where = "id_objet=" . intval($id_objet) . " AND type=" . sql_quote($objet);
 	if (strlen($url)) {
