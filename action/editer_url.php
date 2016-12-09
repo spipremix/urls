@@ -237,7 +237,7 @@ function url_insert(&$set, $confirmer, $separateur) {
 	$reset = array();
 	// si on a fixe une langue pour cette URL mais qu'il n'y a pas d'URL generique pour cet objet (avec langue='')
 	// on retire la langue car c'est l'URL generique par defaut
-	if ($set['langue']) {
+	if (!empty($set['langue'])) {
 		if (!sql_countsel('spip_urls',
 			"type=" . sql_quote($set['type'])
 			. " AND id_objet=" . intval($set['id_objet'])
@@ -245,6 +245,8 @@ function url_insert(&$set, $confirmer, $separateur) {
 			. " AND langue=" . sql_quote(''))){
 			$set['langue'] = $reset['langue'] = '';
 		}
+	} else {
+		$set['langue'] = '';
 	}
 	if ($redate) {
 		$reset['date'] = date('Y-m-d H:i:s');
