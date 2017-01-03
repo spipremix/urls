@@ -31,7 +31,7 @@ pouvez l'editer pour ne conserver que la partie concernant les URLS 'html'.
 
 */
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 } // securiser
 

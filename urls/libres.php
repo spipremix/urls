@@ -10,12 +10,12 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 } // securiser
 
 /*
-Ce jeu d'URLs est une variation de inc-urls-propres mais les urls 
+Ce jeu d'URLs est une variation de inc-urls-propres mais les urls
 de differents types ne sont PAS distinguees par des marqueurs (_,-,+, etc.) ;
 */
 
