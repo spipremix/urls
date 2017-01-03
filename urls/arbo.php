@@ -231,7 +231,7 @@ function url_arbo_type($type) {
  */
 function urls_arbo_creer_chaine_url($x) {
 	// NB: ici url_old ne sert pas, mais un plugin qui ajouterait une date
-	// pourrait l'utiliser pour juste ajouter la 
+	// pourrait l'utiliser pour juste ajouter la
 	$url_old = $x['data'];
 	$objet = $x['objet'];
 	include_spip('inc/filtres');
@@ -422,6 +422,7 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 
 	// Si URL inconnue ou maj forcee sur une url non permanente, recreer une url
 	$url = $url_propre;
+	$urls_langues = array();
 	if (is_null($url_propre) or ($modifier_url and !$u['perma'])) {
 
 		$langues = array();
@@ -439,7 +440,6 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 		}
 
 		// on calcule l'URL de chaque langue utile (langue courante, langue forcee ou toutes les langues utilises)
-		$urls_langues = array();
 		$langue_courante = $GLOBALS['spip_lang'];
 
 		include_spip('inc/urls');
