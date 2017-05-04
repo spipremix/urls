@@ -27,6 +27,10 @@ function autoriser_controlerurls_menu_dist($faire, $type = '', $id = 0, $qui = n
 	return autoriser('administrer', 'url');
 }
 
+function autoriser_configurerurls_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_urls', $id, $qui, $opt);
+}
+
 function autoriser_modifierurl($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 	if (autoriser('modifier', $type, $id, $qui, $opt)) {
 		return true;
