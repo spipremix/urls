@@ -37,7 +37,7 @@ if (!defined('_terminaison_urls_propres')) {
 
 defined('_debut_urls_propres') || define('_debut_urls_propres', './?');
 
-// http://code.spip.net/@urls_propres_qs_dist
+// https://code.spip.net/@urls_propres_qs_dist
 function urls_propres_qs_dist($i, &$entite, $args = '', $ancre = '') {
 	$f = charger_fonction('propres', 'urls');
 
