@@ -548,7 +548,6 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
  * @return string
  */
 function _generer_url_arbo($type, $id, $args = '', $ancre = '') {
-
 	if ($generer_url_externe = charger_fonction("generer_url_$type", 'urls', true)) {
 		$url = $generer_url_externe($id, $args, $ancre);
 		if (null != $url) {
@@ -674,6 +673,10 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 			$url_propre = generer_url_entite($id_objet, $type);
 			if (strlen($url_propre)
 				and !strstr($url, $url_propre)
+				and (
+					objet_test_si_publie($type, $id_objet)
+					OR (defined('_VAR_PREVIEW') and _VAR_PREVIEW and autoriser('voir', $type, $id_objet))
+				)
 			) {
 				list(, $hash) = array_pad(explode('#', $url_propre), 2, null);
 				$args = array();

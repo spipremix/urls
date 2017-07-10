@@ -365,6 +365,10 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 			$url_propre = generer_url_entite($id_objet, $type);
 			if (strlen($url_propre)
 				and !strstr($url, $url_propre)
+				and (
+					objet_test_si_publie($type, $id_objet)
+					OR (defined('_VAR_PREVIEW') and _VAR_PREVIEW and autoriser('voir', $type, $id_objet))
+				)
 			) {
 				list(, $hash) = array_pad(explode('#', $url_propre), 2, null);
 				$args = array();
