@@ -437,7 +437,7 @@ function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 		$langues = array();
 		if (_url_arbo_multilang === true) {
 			include_spip('inc/lang');
-			$langues = (isset($GLOBALS['meta']['langues_utilisees']) ? $GLOBALS['meta']['langues_utilisees'] : '');
+			$langues = (isset($GLOBALS['meta']['langues_multilingue']) ? $GLOBALS['meta']['langues_multilingue'] : '');
 			$langues = explode(',', $langues);
 			if ($k = array_search(_LANGUE_PAR_DEFAUT, $langues)) {
 				unset($langues[$k]);
