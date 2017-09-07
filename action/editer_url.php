@@ -34,11 +34,10 @@ function url_verifier_langue($langue) {
 		return false;
 	}
 
-	if (isset($GLOBALS['meta']['langues_proposees']) and $GLOBALS['meta']['langues_proposees']) {
-		$all_langs = explode(',',$GLOBALS['meta']['langues_proposees']);
-		if (!in_array($langue, $all_langs)) {
-			return false;
-		}
+	include_spip('inc/lang_liste');
+	$all_langs = array_keys($GLOBALS['codes_langues']);
+	if (!in_array($langue, $all_langs)) {
+		return false;
 	}
 
 	return true;
