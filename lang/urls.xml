@@ -4,7 +4,8 @@
 	</langue>
 	<langue code="ast" url="https://trad.spip.net/tradlang_module/urls?lang_cible=ast" total="45" traduits="3" relire="0" modifs="0" nouveaux="42" pourcent="6.67">
 	</langue>
-	<langue code="br" url="https://trad.spip.net/tradlang_module/urls?lang_cible=br" total="45" traduits="3" relire="0" modifs="0" nouveaux="42" pourcent="6.67">
+	<langue code="br" url="https://trad.spip.net/tradlang_module/urls?lang_cible=br" total="45" traduits="34" relire="0" modifs="0" nouveaux="11" pourcent="75.56">
+		<traducteur nom="nonobreizh" lien="https://trad.spip.net/auteur/nonobreizh" />
 	</langue>
 	<langue code="ca" url="https://trad.spip.net/tradlang_module/urls?lang_cible=ca" total="45" traduits="3" relire="0" modifs="0" nouveaux="42" pourcent="6.67">
 		<traducteur nom="merce" lien="https://trad.spip.net/auteur/merce" />
