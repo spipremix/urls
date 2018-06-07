@@ -15,7 +15,7 @@
 
 	<traduire module="urls" reference="fr" gestionnaire="salvatore" />
 
-	<pipeline nom="autoriser" inclure="urls_pipeline.php" />
+	<pipeline nom="autoriser" inclure="urls_autoriser.php" />
 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/urls.php" />
 	<pipeline nom="declarer_tables_interfaces" inclure="base/urls.php" />
 	<pipeline nom="arbo_creer_chaine_url" action="arbo_creer_chaine_url" inclure="urls/arbo.php" />
