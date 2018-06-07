@@ -38,7 +38,7 @@ function urls_autoriser() {
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  */
-function autoriser_url_administrer($faire, $type = '', $id = 0, $qui = null, $opt = null) {
+function autoriser_url_administrer_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 	return (
 		isset($GLOBALS['meta']['urls_activer_controle'])
 		and $GLOBALS['meta']['urls_activer_controle'] == 'oui'
@@ -84,7 +84,7 @@ function autoriser_configurerurls_menu_dist($faire, $type, $id, $qui, $opt) {
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  */
-function autoriser_modifierurl($faire, $type = '', $id = 0, $qui = null, $opt = null) {
+function autoriser_modifierurl_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 	if (autoriser('modifier', $type, $id, $qui, $opt)) {
 		return true;
 	}
