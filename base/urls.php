@@ -60,6 +60,7 @@ function urls_declarer_tables_auxiliaires($tables_auxiliaires) {
 		"PRIMARY KEY" => "id_parent, url",
 		"KEY type" => "type, id_objet",
 		'KEY langue' => 'langue',
+		'KEY url' => 'url',
 	);
 
 	$tables_auxiliaires['spip_urls'] = array(
