@@ -65,6 +65,10 @@ function urls_upgrade($nom_meta_base_version, $version_cible) {
 		array('sql_alter', "table spip_urls ADD KEY langue (langue)"),
 	);
 
+	$maj['2.0.1'] = array(
+		array('sql_alter', "table spip_urls ADD KEY url (url)"),
+	);
+
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }
