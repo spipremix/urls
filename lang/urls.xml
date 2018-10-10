@@ -55,6 +55,9 @@
 	</langue>
 	<langue code="it_fem" url="https://trad.spip.net/tradlang_module/urls?lang_cible=it_fem" total="45" traduits="3" relire="0" modifs="0" nouveaux="42" pourcent="6.67">
 	</langue>
+	<langue code="ja" url="https://trad.spip.net/tradlang_module/urls?lang_cible=ja" total="45" traduits="45" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
+		<traducteur nom="origenius" lien="https://trad.spip.net/auteur/origenius" />
+	</langue>
 	<langue code="lb" url="https://trad.spip.net/tradlang_module/urls?lang_cible=lb" total="45" traduits="3" relire="0" modifs="0" nouveaux="42" pourcent="6.67">
 	</langue>
 	<langue code="nl" url="https://trad.spip.net/tradlang_module/urls?lang_cible=nl" total="45" traduits="45" relire="0" modifs="0" nouveaux="0" pourcent="100.00">
