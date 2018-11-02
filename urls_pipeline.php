@@ -32,3 +32,32 @@ function urls_afficher_fiche_objet($flux) {
 
 	return $flux;
 }
+
+
+/**
+ * Optimiser la base de donnée en supprimant les urls orphelines
+ *
+ * @param array $flux
+ * @return array
+ */
+function urls_optimiser_base_disparus($flux) {
+	$n = &$flux['data'];
+	# les urls lies a un id_objet inexistant
+	$types = sql_allfetsel("DISTINCT type", 'spip_urls');
+	$types = array_column($types, 'type');
+	$types = array_filter($types);
+	foreach ($types as $type) {
+		$table = table_objet_sql($type);
+		$primary = id_table_objet($type);
+		if (lister_tables_objets_sql($table)) {
+			$n += $i = sql_delete('spip_urls', [
+				'type=' . sql_quote($type),
+				sql_in('id_objet', sql_get_select($primary, $table), 'NOT')
+			]);
+			if ($i) {
+				spip_log("Suppression de $i urls $type inexistants", "urls." . _LOG_INFO_IMPORTANTE);
+			}
+		}
+	}
+	return $flux;
+}
