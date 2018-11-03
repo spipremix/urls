@@ -41,6 +41,7 @@ function urls_afficher_fiche_objet($flux) {
  * @return array
  */
 function urls_optimiser_base_disparus($flux) {
+	/*
 	$n = &$flux['data'];
 	# les urls lies a un id_objet inexistant
 	$types = sql_allfetsel("DISTINCT type", 'spip_urls');
@@ -59,5 +60,6 @@ function urls_optimiser_base_disparus($flux) {
 			}
 		}
 	}
+	*/
 	return $flux;
 }
