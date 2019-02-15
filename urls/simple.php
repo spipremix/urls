@@ -39,9 +39,9 @@ function _generer_url_simple($type, $id, $args = '', $ancre = '') {
 
 	if ($args) {
 		$args = strpos($url, '?') ? "&$args" : "?$args";
-	}
-	else
+	} else {
 		$args = '';
+	}
 
 	return _DIR_RACINE . $url . $args . ($ancre ? "#$ancre" : '');
 }
