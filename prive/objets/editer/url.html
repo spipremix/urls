@@ -6,7 +6,7 @@
 		<a href="#"
 		title="Modifier l'URL"
 		onclick="jQuery(this).closest('.editer_urls').find('.edition').toggle('fast').closest('.editer_urls').delay(300).toggleClass('open');return false;"
-						>]<span class="edit"><:bouton_modifier:></span><span class="url" id="url-#OBJET-#ID_OBJET">(#ID_OBJET|generer_url_entite{#OBJET,'','',#EVAL{true}}|url_absolue)</span>[(#GET{auth})</a>]</span>]
+						><span class="edit"><:bouton_modifier:></span>]<span class="url" id="url-#OBJET-#ID_OBJET">(#ID_OBJET|generer_url_entite{#OBJET,'','',#EVAL{true}}|url_absolue)</span>[(#GET{auth})</a>]</span>]
 	[(#AUTORISER{modifier,#OBJET,#ID_OBJET})
 	<div class="edition">
 		<div class="ajax">
