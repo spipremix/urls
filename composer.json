@@ -1,0 +1,11 @@
+{
+    "name": "spip/urls",
+    "type": "spip-plugin",
+    "description": "Urls Etendues",
+    "license": "GPL-3.0-or-later",
+    "authors": [{
+        "name": "Collectif SPIP",
+        "email": "spip-dev@rezo.net"
+    }],
+    "require": {}
+}
